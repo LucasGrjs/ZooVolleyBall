@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 23 nov. 2021 à 10:43
+-- Généré le : mar. 23 nov. 2021 à 16:27
 -- Version du serveur : 10.4.21-MariaDB
 -- Version de PHP : 8.0.10
 
@@ -30,6 +30,7 @@ USE `zoovolleyball`;
 --
 
 CREATE TABLE `amis` (
+  `id_lien` int(11) NOT NULL,
   `id_utilisateur_1` int(11) NOT NULL,
   `id_utilisateur_2` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -63,20 +64,6 @@ CREATE TABLE `partie` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `stats`
---
-
-CREATE TABLE `stats` (
-  `mmr` int(11) NOT NULL,
-  `nbr_win` int(11) NOT NULL,
-  `nbr_loss` int(11) NOT NULL,
-  `nbr_tourn` int(11) NOT NULL,
-  `nbr_tourn_win` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `user`
 --
 
@@ -85,7 +72,12 @@ CREATE TABLE `user` (
   `pseudo` varchar(32) NOT NULL,
   `password` varchar(32) NOT NULL,
   `email` varchar(64) NOT NULL,
-  `credit` int(11) NOT NULL
+  `credit` int(11) NOT NULL,
+  `mmr` int(11) NOT NULL,
+  `nbrWin` int(11) NOT NULL,
+  `nbrLoss` int(11) NOT NULL,
+  `nbrTourn` int(11) NOT NULL,
+  `nbrTournWin` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -96,6 +88,7 @@ CREATE TABLE `user` (
 -- Index pour la table `amis`
 --
 ALTER TABLE `amis`
+  ADD PRIMARY KEY (`id_lien`),
   ADD KEY `ami_1` (`id_utilisateur_1`),
   ADD KEY `ami_2` (`id_utilisateur_2`);
 
@@ -122,6 +115,12 @@ ALTER TABLE `user`
 --
 -- AUTO_INCREMENT pour les tables déchargées
 --
+
+--
+-- AUTO_INCREMENT pour la table `amis`
+--
+ALTER TABLE `amis`
+  MODIFY `id_lien` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT pour la table `objet`
