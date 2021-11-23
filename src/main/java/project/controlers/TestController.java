@@ -14,7 +14,6 @@ public class TestController
   @RequestMapping("test")
   public String addTypeVehicule(Model model)
   {
-    
     return "testView";
   }
 }
