@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : mar. 23 nov. 2021 à 10:33
+-- Généré le : mar. 23 nov. 2021 à 10:43
 -- Version du serveur : 10.4.21-MariaDB
 -- Version de PHP : 8.0.10
 
@@ -20,6 +20,8 @@ SET time_zone = "+00:00";
 --
 -- Base de données : `zoovolleyball`
 --
+CREATE DATABASE IF NOT EXISTS `zoovolleyball` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `zoovolleyball`;
 
 -- --------------------------------------------------------
 
