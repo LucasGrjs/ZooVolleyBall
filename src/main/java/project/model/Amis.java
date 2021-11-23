@@ -10,18 +10,18 @@ public class Amis {
     long id_lien;
 
     @ManyToOne
-    User id_user_1;
+    User user_1;
 
     @ManyToOne
-    User id_user_2;
+    User user_2;
 
     public Amis() {
 
     }
 
-    public Amis(User id_user_1, User id_user_2) {
-        this.id_user_1 = id_user_1;
-        this.id_user_2 = id_user_2;
+    public Amis(User user_1, User user_2) {
+        this.user_1 = user_1;
+        this.user_2 = user_2;
     }
 
     public long getId_lien() {
@@ -32,11 +32,11 @@ public class Amis {
         this.id_lien = id_lien;
     }
 
-    public User getId_user_1() {
-        return id_user_1;
+    public User getUser_1() {
+        return user_1;
     }
 
-    public User getId_user_2() {
-        return id_user_2;
+    public User getUser_2() {
+        return user_2;
     }
 }
