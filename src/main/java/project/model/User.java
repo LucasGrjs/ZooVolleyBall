@@ -24,7 +24,7 @@ public class User {
     List<Objet> objets;
 
     @OneToMany
-    List<Partie> partie;
+    List<Partie> parties;
 
     @OneToMany
     List<Amis> amis;
@@ -123,8 +123,8 @@ public class User {
         return objets;
     }
 
-    public List<Partie> getPartie() {
-        return partie;
+    public List<Partie> getParties() {
+        return parties;
     }
 
     public List<Amis> getAmis() {
