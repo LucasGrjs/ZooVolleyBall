@@ -1,13 +1,15 @@
 package project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import project.model.User;
-import project.repositories.UserRepository;
+import project.repositories.UsersRepository;
 
+@Service
 public class UserManagement implements IUserManagement {
 
     @Autowired
-    UserRepository userRep;
+    UsersRepository userRep;
 
     @Override
     public Iterable<User> getAllUsers() {
@@ -17,6 +19,11 @@ public class UserManagement implements IUserManagement {
     @Override
     public User addUser(String pseudo, String pwd, String email) {
         User user = new User(pseudo, pwd, email);
+        return userRep.save(user);
+    }
+
+    @Override
+    public User addUser(User user) {
         return userRep.save(user);
     }
 

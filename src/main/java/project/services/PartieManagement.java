@@ -1,10 +1,12 @@
 package project.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import project.model.Partie;
 import project.model.User;
 import project.repositories.PartieRepository;
 
+@Service
 public class PartieManagement implements IPartieManagement {
 
     @Autowired
