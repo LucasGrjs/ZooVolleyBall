@@ -45,30 +45,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    /*@Autowired
-    private DataSource dataSource;
-     
-    @Autowired
-    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().passwordEncoder(new BCryptPasswordEncoder())
-            .dataSource(dataSource)
-            .usersByUsernameQuery("select email, pwd from user where email=?")
-        ;
-    }
- 
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-            .antMatchers("/adduser**").permitAll()
-            .and()
-            .authorizeRequests()
-            .anyRequest().authenticated()
-            .and()
-            .formLogin()
-            .loginPage("/login")
-            .defaultSuccessUrl("/homepage.html", true)
-            .permitAll()
-            .and()
-            .logout().permitAll();
-    }*/
 }
