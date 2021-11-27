@@ -4,6 +4,7 @@ import groovy.util.logging.Slf4j;
 import org.apache.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,12 @@ public class UserController {
     @Autowired
     private IUserManagement userManager;
 
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private static final String ERR_EMAIL = "L'email est déjà utilisé choisissez en un autre.";
+
+    private String error;
+    private boolean fromRedirect = false;
+
     @RequestMapping("adduser")
     public String addUser(@RequestParam(value="pseudo", required=false) String pseudo,
                           @RequestParam(value="pwd", required=false) String pwd,
@@ -33,9 +40,9 @@ public class UserController {
 
         if(pseudo != null && pwd != null && email != null)
         {
-            userManager.addUser(pseudo, pwd, email);
+            userManager.addUser(pseudo, passwordEncoder.encode(pwd), email);
+            return "login";
         }
-
         return "inscription";
     }
 }

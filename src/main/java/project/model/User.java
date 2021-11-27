@@ -1,6 +1,9 @@
 package project.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -9,9 +12,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id_user;
-
     String pseudo;
     String pwd;
+    @Column(name="email", unique=true)
     String email;
     int credit = 0;
     int mmr = 0;
@@ -29,14 +32,19 @@ public class User {
     @OneToMany
     List<Amis> amis;
 
+    @OneToMany(mappedBy = "user")
+    @JsonManagedReference
+    private List<Roles> roles;
+
     public User() {
 
     }
 
-    public User(String pseudo, String pwd, String email) {
+    public User(String pseudo, String pwd, String email, List<Roles> roles) {
         this.pseudo = pseudo;
         this.pwd = pwd;
         this.email = email;
+        this.roles= roles;
     }
 
     public long getId_user() {
@@ -69,6 +77,14 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<Roles> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Roles> roles) {
+        this.roles = roles;
     }
 
     public int getCredit() {
