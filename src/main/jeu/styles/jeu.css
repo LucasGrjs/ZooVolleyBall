@@ -1,0 +1,22 @@
+#content {
+    position: relative;
+    width: 1300px;
+    height: 700px;
+    margin: 10px auto;
+}
+    
+#content canvas {
+    cursor: none;
+    border: solid 1px #000;
+    width: 1300px;
+    height: 700px;
+    position: absolute;
+    top: 0; 
+    left: 0;
+}
+
+#content canvas#jeu {
+    background-image: url('../images/fond.jpg');
+    background-size: 612px 408px;
+	background-repeat: round;
+}
