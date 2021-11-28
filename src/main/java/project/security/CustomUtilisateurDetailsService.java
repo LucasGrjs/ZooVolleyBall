@@ -38,7 +38,7 @@ public class CustomUtilisateurDetailsService implements UserDetailsService {
         }
 
         System.out.println("========================= FIN LOAD =========================");
-        return new org.springframework.security.core.userdetails.User(utilisateur.getPseudo(), utilisateur.getPwd(), getGrantedAuthorities(utilisateur));
+        return new org.springframework.security.core.userdetails.User(utilisateur.getEmail(), utilisateur.getPwd(), getGrantedAuthorities(utilisateur));
     }
     private List<GrantedAuthority> getGrantedAuthorities(User utilisateur) {
 
