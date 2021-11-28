@@ -41,7 +41,7 @@ public class UserController {
         if(pseudo != null && pwd != null && email != null)
         {
             userManager.addUser(pseudo, passwordEncoder.encode(pwd), email);
-            return "login";
+            return "testView";
         }
         return "inscription";
     }

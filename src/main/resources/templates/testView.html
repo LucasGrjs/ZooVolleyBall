@@ -1,35 +1,12 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head> 
-    <title>Type vehicules</title> 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /></meta>
+    <title>Hello</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-	<form method="get" action="addtypevehicule">
-		<h1>Saisie d'un type de vehicule</h1>
-		<label>Libelle :</label><input type="text" id="libelle" name="libelle"/><Br/>
-		<label>Prix horaire :</label><input type="number" id="prix_horaire" name="prix_horaire"/><br/>
-		<input type='submit' name="envoyer"/>
-	</form>
-	
-	<h1>Liste des types de vehicule</h1>
-	
-	<table>
-	  <thead>
-	    <tr>
-	      <th th:text="Libelle">Libelle</th>
-	      <th th:text="Prix_horaire">Prix Horaire</th>
-	    </tr>
-	  </thead>
-	
-	  <tbody>
-	    <tr th:each="typeveh: ${typevehicules}">
-	      <td th:text="${typeveh.libelle}">libelle</td>
-	      <td th:text="${typeveh.prix_horaire}">prix horaire</td>
-	    </tr>
-	  </tbody>
-	</table>
-	
-	<a href="/" >Retour à l'accueil</a><br/>
+	<div>
+		<p>hello</p>
+	</div>
 </body>
 </html>
