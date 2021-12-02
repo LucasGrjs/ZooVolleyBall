@@ -1,14 +1,112 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>TP-NOTE</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"></meta>
+    <title>Login - ZooVolleyBall</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous" />
 </head>
+
 <body>
-    <h1>TP NOTE PAM </h1>	
-	<ul>
-	<li><a href="typesvehicules/addtypevehicule"> Ajouter un type de vehicule</a> </li>
-	<li><a href="vehicules/addvehicule"> Ajouter un vehicule</a> </li>
-	</ul>
+    <main>
+        <div class="container">
+            <div class="row">
+                <button type="button" class="btn btn-primary btn-lg">Jouer</button>
+                <div class="col-sm-5">
+                    Profile
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Rank</th>
+                            <th scope="col">Win/Lose</th>
+                            <th scope="col">Winrate</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <th>
+                                Lucas
+                            </th>
+                            <th>
+                                Diamond 4
+                            </th>
+                            <th>
+                                100/0
+                            </th>
+                            <th>
+                                100%
+                            </th>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-sm-4">
+                    History
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Result</th>
+                            <th scope="col">VS</th>
+                            <th scope="col">Score</th>
+                            <th scope="col">Time</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Win</td>
+                            <td>Eddy</td>
+                            <td>7 - 0</td>
+                            <td>2min36</td>
+                        </tr>
+                        <tr>
+                            <td>Lose</td>
+                            <td>Trash</td>
+                            <td>0 - 7</td>
+                            <td>3min</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-2">
+                    <table class="table">
+                        Amis
+                        <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Rank</th>
+                            <th scope="col">Online</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Diamond</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Bronze</td>
+                            <td>false</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Jaa</td>
+                            <td>Silver</td>
+                            <td>false</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
+
+
+
 </html>
