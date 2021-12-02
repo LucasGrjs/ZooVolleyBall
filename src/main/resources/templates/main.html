@@ -26,17 +26,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                            <th>
-                                Lucas
+                            <th th:text="''+${User.getPseudo()}">
                             </th>
-                            <th>
-                                Diamond 4
+                            <th th:text="''+${User.mmr}">
                             </th>
-                            <th>
-                                100/0
+                            <th th:text="''+${User.nbrWin}+'/'+${User.nbrLoss}">
                             </th>
-                            <th>
-                                100%
+                            <th th:text="'Winrate : '+${Winrate}">
                             </th>
                         </tbody>
                     </table>
@@ -105,6 +101,10 @@
             </div>
         </div>
     </main>
+    <h1>ZooVolleyBall</h1>
+    <ul>
+        <li><a href="chat"> Chat</a> </li>
+    </ul>
 </body>
 
 
