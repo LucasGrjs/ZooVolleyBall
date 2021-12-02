@@ -7,29 +7,47 @@ document.addEventListener("DOMContentLoaded", function(_e) {
 	let ctxjeu = jeu.getContext("2d");
 	
 	ctxoverlay.fillStyle = 'blue';
-	posx = 50;
-	ctxoverlay.fillRect(posx, 800, 80, 70);
+	posb = 50;
+	ctxoverlay.fillRect(posb, 800, 80, 70);
+	
+	ctxoverlay.fillStyle = 'red';
+	posr = 870;
+	ctxoverlay.fillRect(posr, 800, 80, 70);
 	
 	window.onkeydown = function(e) {
 		var key = e.keyCode || e.which;
-		switch (key) {
-			case 37:
-			if (posx>0) {
-				ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);
-				posx = posx-5;
-				ctxoverlay.fillRect(posx, 800, 80, 70);
-			}
-			break;
-		case 39:
-			if (posx<920) {
-				ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);
-				posx = posx+5;
-				ctxoverlay.fillRect(posx, 800, 80, 70);
-			}
-			break;
-		default:
-			break;
-    }
-};
+		if (key == 37 && posb > 0) {
+			ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);
+			posb = posb-10;
+			ctxoverlay.fillStyle = 'blue';
+			ctxoverlay.fillRect(posb, 800, 80, 70);
+			ctxoverlay.fillStyle = 'red';
+			ctxoverlay.fillRect(posr, 800, 80, 70);
+		}
+		if (key == 39 && posb < 420) {
+			ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);
+			posb = posb+10;
+			ctxoverlay.fillStyle = 'blue';
+			ctxoverlay.fillRect(posb, 800, 80, 70);
+			ctxoverlay.fillStyle = 'red';
+			ctxoverlay.fillRect(posr, 800, 80, 70);
+		}
+		if (key == 81 && posr > 500) {
+			ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);
+			posr = posr-10;
+			ctxoverlay.fillStyle = 'red';
+			ctxoverlay.fillRect(posr, 800, 80, 70);
+			ctxoverlay.fillStyle = 'blue';
+			ctxoverlay.fillRect(posb, 800, 80, 70);
+		}
+		if (key == 68 && posr < 920) {
+			ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);
+			posr = posr+10;
+			ctxoverlay.fillStyle = 'red';
+			ctxoverlay.fillRect(posr, 800, 80, 70);
+			ctxoverlay.fillStyle = 'blue';
+			ctxoverlay.fillRect(posb, 800, 80, 70);
+		}
+	};
 
 });
