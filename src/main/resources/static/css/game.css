@@ -16,7 +16,7 @@
 }
 
 #content canvas#jeu {
-    background-image: url('../images/fond.jpg');
+    background-image: url('/images/fond.jpg');
     background-size: 612px 408px;
 	background-repeat: round;
 }
