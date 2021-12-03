@@ -1,4 +1,5 @@
 var stompClient = null;
+var sessionId = randString(32);
 
 function randString(length) {
 	var text = "";
@@ -13,21 +14,29 @@ function randString(length) {
 
 function connect() {
 	console.log("connect function");
-    var socket = new SockJS('/zvb-websocket');
+    var socket = new SockJS('/zvb-websocket', [], {
+	    sessionId: () => {
+	       return sessionId
+	    }
+ 	});
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/zvb/replyjoin', function(replyOutput) {
+        stompClient.subscribe('/zvb/game/replyjoin/' + sessionId, function(replyOutput) {
         	console.log("replyjoin function : " + JSON.parse(replyOutput.body).gameId);
 			var gameId = JSON.parse(replyOutput.body).gameId;
+			
+			stompClient.subscribe('/zvb/game/init/' + gameId, function (data) {
+				console.log(JSON.parse(data.body));
+			});
 
-			stompClient.subscribe('/zvb/move/' + gameId, function (data) {
+			stompClient.subscribe('/zvb/game/move/' + gameId, function (data) {
 				console.log(JSON.parse(data.body));
 			});
 			
-			stompClient.send("/zvb/connected/" + gameId, {}, {});
+			stompClient.send("/zvb/game/connected/" + gameId, {}, {});
         });
-        stompClient.send("/zvb/join", {}, {});
+        stompClient.send("/zvb/game/join", {}, {});
     });
 }
 

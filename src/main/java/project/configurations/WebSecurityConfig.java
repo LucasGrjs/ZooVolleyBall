@@ -1,4 +1,4 @@
-package project;
+package project.configurations;
 
 import javax.sql.DataSource;
 
