@@ -1,0 +1,67 @@
+@startuml
+
+':Utilisateur:
+':Admin:
+left to right direction
+actor "Game manager" as gm
+usecase "Authentification" as auth
+package Authentification {
+    usecase "Créer un compte" as auth1
+    usecase "Modifier un compte" as auth2
+    usecase "Se connecter" as auth3
+}
+
+usecase "Jouer" as j
+package Jouer {
+    usecase "Choisir son animal" as j1
+    usecase "Se deplacer" as j2
+    usecase "Sauter" as j3
+}
+
+usecase "Tournoi" as t
+package Tournoi {
+    usecase "Créer un tournoi" as t1
+    usecase "Rejoindre un tournoi" as t2
+}
+
+usecase "Social" as s
+package Social {
+    usecase "Ajouter un ami" as s1
+    usecase "Supprimer un ami" as s2
+}
+
+usecase "Boutique" as b
+package Boutique {
+    usecase "Acheter un article" as b1
+}
+
+'Admin --> (auth)
+Utilisateur --> (auth)
+(auth) --> (auth1)
+(auth) --> (auth2)
+(auth) --> (auth3)
+
+Utilisateur --> (j)
+(j) --> (j1)
+(j1) --> (j2)
+(j1) --> (j3)
+
+Utilisateur --> (t)
+(t) --> (t1)
+(t) --> (t2)
+
+Utilisateur --> (s)
+(s) --> (s1)
+(s) --> (s2)
+
+Utilisateur --> (b)
+(b) --> (b1)
+
+usecase "Terminer une partie" as termpartie
+gm --> (termpartie)
+(termpartie) --> (Attribuer les points de rang)
+(termpartie) --> (Attribuer les points de la boutique)
+gm --> (Créer une partie)
+gm --> (Mise à jour de la partie)
+
+@enduml
