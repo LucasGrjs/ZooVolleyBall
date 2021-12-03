@@ -4,6 +4,9 @@ import groovy.util.logging.Slf4j;
 import org.apache.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,6 +37,13 @@ public class UserController {
                           @RequestParam(value="email", required=false) String email,
                           Model model)
     {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        
+        if (!(auth instanceof AnonymousAuthenticationToken))
+        {
+          return "redirect:/main";
+        }
+      
         System.out.println("pseudo " +pseudo);
         System.out.println("pwd " +pwd);
         System.out.println("email " +email);
