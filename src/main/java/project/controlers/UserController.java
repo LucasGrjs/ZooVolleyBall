@@ -28,7 +28,7 @@ public class UserController {
     private String error;
     private boolean fromRedirect = false;
 
-    @RequestMapping("adduser")
+    @RequestMapping("register")
     public String addUser(@RequestParam(value="pseudo", required=false) String pseudo,
                           @RequestParam(value="pwd", required=false) String pwd,
                           @RequestParam(value="email", required=false) String email,
@@ -41,8 +41,9 @@ public class UserController {
         if(pseudo != null && pwd != null && email != null)
         {
             userManager.addUser(pseudo, passwordEncoder.encode(pwd), email);
-            return "main";
+            return "redirect:/login";
         }
+        
         return "inscription";
     }
 }
