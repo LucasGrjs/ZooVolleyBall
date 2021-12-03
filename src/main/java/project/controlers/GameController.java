@@ -10,7 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import project.messages.JoinMessage;
 import project.messages.ReplyJoinMessage;
+import project.model.Game;
 import project.services.IGamesManagement;
 
 @Controller
@@ -29,11 +31,27 @@ public class GameController
   }
   
   @MessageMapping("game/join")
-  public void join(SimpMessageHeaderAccessor headerAccessor)
+  public void join(SimpMessageHeaderAccessor headerAccessor, JoinMessage message)
   {
     System.out.println("join playerId : " + headerAccessor.getSessionId());
     
-    simpMessagingTemplate.convertAndSend("/zvb/game/replyjoin/" + headerAccessor.getSessionId(), new ReplyJoinMessage(10));
+    long gameId = message.getGameId();
+    
+    ReplyJoinMessage reply = new ReplyJoinMessage();
+    Game game = gamesManagement.getGameById(gameId);
+    
+    if (game != null)
+    {
+      reply.setError(false);
+      reply.setGameId(gameId);
+    }
+    else
+    {
+      reply.setError(true);
+      reply.setErrorMessage("Can't find game with id " + gameId);
+    }
+    
+    simpMessagingTemplate.convertAndSend("/zvb/game/replyjoin/" + headerAccessor.getSessionId(), reply);
   }
   
   @MessageMapping("game/connected/{gameId}")

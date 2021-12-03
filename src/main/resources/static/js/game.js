@@ -23,20 +23,28 @@ function connect() {
     stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/zvb/game/replyjoin/' + sessionId, function(replyOutput) {
-        	console.log("replyjoin function : " + JSON.parse(replyOutput.body).gameId);
-			var gameId = JSON.parse(replyOutput.body).gameId;
-			
-			stompClient.subscribe('/zvb/game/init/' + gameId, function (data) {
-				console.log(JSON.parse(data.body));
-			});
+        	console.log("replyjoin function");
 
-			stompClient.subscribe('/zvb/game/move/' + gameId, function (data) {
-				console.log(JSON.parse(data.body));
-			});
-			
-			stompClient.send("/zvb/game/connected/" + gameId, {}, {});
+			if (JSON.parse(replyOutput.body).error)
+			{
+				console.log("ERROR : " + JSON.parse(replyOutput.body).errorMessage);
+			}
+			else
+			{
+				var gameId = JSON.parse(replyOutput.body).gameId;
+				
+				stompClient.subscribe('/zvb/game/init/' + gameId, function (data) {
+					console.log(JSON.parse(data.body));
+				});
+	
+				stompClient.subscribe('/zvb/game/move/' + gameId, function (data) {
+					console.log(JSON.parse(data.body));
+				});
+				
+				stompClient.send("/zvb/game/connected/" + gameId, {}, {});
+			}
         });
-        stompClient.send("/zvb/game/join", {}, {});
+        stompClient.send("/zvb/game/join", {}, JSON.stringify({'gameId': 10}));
     });
 }
 
