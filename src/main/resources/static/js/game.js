@@ -33,13 +33,14 @@ function connect() {
 }
 
 function disconnect() {
-    if(stompClient != null) {
-        stompClient.disconnect();
-    }
-    console.log("Disconnected");
+	console.log("Disconnected " + stompClient);
+	
+    if(stompClient != null) stompClient.disconnect();
 }
 
 document.addEventListener("DOMContentLoaded", function(_e) {
+	connect();
+	
 	let overlay = document.getElementById("overlay");
 	let jeu = document.getElementById("jeu");
 	
@@ -71,3 +72,7 @@ document.addEventListener("DOMContentLoaded", function(_e) {
 		}
 	};
 });
+
+window.onunload = function() {
+	disconnect();
+}
