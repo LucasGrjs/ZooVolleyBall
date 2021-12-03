@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import project.messages.JoinMessage;
 import project.messages.ReplyJoinMessage;
 import project.services.IGamesManagement;
 
@@ -27,16 +26,16 @@ public class GameController
   
   @MessageMapping("join")
   @SendTo("/zvb/replyjoin")
-  public ReplyJoinMessage join(SimpMessageHeaderAccessor headerAccessor, JoinMessage message)
+  public ReplyJoinMessage join(SimpMessageHeaderAccessor headerAccessor)
   {
     System.out.println("join playerId : " + headerAccessor.getSessionId());
     
     return new ReplyJoinMessage(10);
   }
   
-  @MessageMapping("connected/{id}")
-  public void connected(SimpMessageHeaderAccessor headerAccessor, @DestinationVariable long id)
+  @MessageMapping("connected/{gameId}")
+  public void connected(SimpMessageHeaderAccessor headerAccessor, @DestinationVariable long gameId)
   {
-    System.out.println("connected playerId : " + headerAccessor.getSessionId() + " id : " + id);
+    System.out.println("connected playerId : " + headerAccessor.getSessionId() + " gameId : " + gameId);
   }
 }

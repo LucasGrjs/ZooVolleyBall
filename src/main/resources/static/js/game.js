@@ -1,5 +1,4 @@
 var stompClient = null;
-var uid = randString(32);
 
 function randString(length) {
 	var text = "";
@@ -28,7 +27,7 @@ function connect() {
 			
 			stompClient.send("/zvb/connected/" + gameId, {}, {});
         });
-        stompClient.send("/zvb/join", {}, JSON.stringify({'player': uid}));
+        stompClient.send("/zvb/join", {}, {});
     });
 }
 
