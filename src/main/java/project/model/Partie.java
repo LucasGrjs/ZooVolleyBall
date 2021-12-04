@@ -58,4 +58,28 @@ public class Partie {
     public void setScore_us_2(int score_us_2) {
         this.score_us_2 = score_us_2;
     }
+
+    public String getResult(User user) {
+        if (user_1.getPseudo().equals(user.getPseudo()) && score_us_1 > score_us_2) {
+            return "Win";
+        }
+        if (user_2.getPseudo().equals(user.getPseudo()) && score_us_2 > score_us_1) {
+            return "Win";
+        }
+        return "Lose";
+    }
+
+    public String getAdvName(User user) {
+        if (user_1.getPseudo().equals(user.getPseudo())) {
+            return user_2.getPseudo();
+        }
+        return user_1.getPseudo();
+    }
+
+    public String getScore(User user) {
+        if (user_1.getPseudo().equals(user.getPseudo())) {
+            return score_us_1 + " - " + score_us_2;
+        }
+        return score_us_2 + "-" + score_us_1;
+    }
 }

@@ -29,8 +29,8 @@ public class User {
     @OneToMany
     List<Partie> parties;
 
-    @OneToMany
-    List<Amis> amis;
+    @ManyToMany
+    List<User> amis;
 
     @OneToMany(mappedBy = "user")
     @JsonManagedReference
@@ -143,7 +143,7 @@ public class User {
         return parties;
     }
 
-    public List<Amis> getAmis() {
+    public List<User> getAmis() {
         return amis;
     }
 }
