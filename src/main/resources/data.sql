@@ -11,4 +11,21 @@ INSERT INTO user_amis(user_id_user, amis_id_user) VALUES
 INSERT INTO user_amis(user_id_user, amis_id_user) VALUES
 (2, 1);
 
-INSERT INTO roles (ref_role, role, user_id_user) VALUES (1, 1, 1);
+INSERT INTO roles (ref_role, role, user_id_user) VALUES
+(1, 1, 1);
+
+INSERT INTO `objet` (`id_objet`, `nom_objet` ,`price`, `type_item`) VALUES
+(1, 'BallBlack', 5, 0),
+(2,' BallWhite', 10, 0),
+(3, 'BallBlue', 15, 0),
+(4, 'BallRed', 15, 0),
+(5, 'Skin1', 150, 1),
+(6, 'Skin2', 150, 1),
+(7, 'BackGround1', 150, 2),
+(8, 'Net1', 150, 3);
+
+
+INSERT INTO `user_objets` (`user_id_user`, `objets_id_objet`) VALUES
+(1, 1),
+(1, 2),
+(1, 3);

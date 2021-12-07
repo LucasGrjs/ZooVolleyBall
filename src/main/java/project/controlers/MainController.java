@@ -30,8 +30,6 @@ public class MainController {
             model.addAttribute("Winrate", "You need to play match");
         }
 
-        
-
         return "main";
     }
 }

@@ -22,6 +22,12 @@ public class ObjetManagement implements IObjetManagement {
     }
 
     @Override
+    public Objet addObjet(String nomObjet, int price, Objet.TypeItem typeItem){
+        Objet objet = new Objet(nomObjet, price, typeItem);
+        return objetRep.save(objet);
+    }
+
+    @Override
     public void removeObjet(long id_objet) {
         objetRep.delete(id_objet);
     }
