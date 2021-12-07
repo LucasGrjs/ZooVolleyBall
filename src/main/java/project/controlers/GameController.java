@@ -1,5 +1,7 @@
 package project.controlers;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -51,7 +53,7 @@ public class GameController
       reply.setErrorMessage("Can't find game with id " + gameId);
     }
     
-    simpMessagingTemplate.convertAndSend("/zvb/game/replyjoin/" + headerAccessor.getSessionId(), reply);
+    simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/queue/replyjoin", reply);
   }
   
   @MessageMapping("game/connected/{gameId}")

@@ -20,9 +20,9 @@ function connect() {
 	    }
  	});
     stompClient = Stomp.over(socket);
-    stompClient.connect({}, function(frame) {
+    stompClient.connect({name: sessionId}, function(frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/zvb/game/replyjoin/' + sessionId, function(replyOutput) {
+        stompClient.subscribe('/user/queue/replyjoin', function(replyOutput) {
         	console.log("replyjoin function");
 
 			if (JSON.parse(replyOutput.body).error)
@@ -32,6 +32,8 @@ function connect() {
 			else
 			{
 				var gameId = JSON.parse(replyOutput.body).gameId;
+				
+				console.log("replyjoin function gameId : " + gameId);
 				
 				stompClient.subscribe('/zvb/game/init/' + gameId, function (data) {
 					console.log(JSON.parse(data.body));
