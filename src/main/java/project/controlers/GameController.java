@@ -53,7 +53,7 @@ public class GameController
       reply.setErrorMessage("Can't find game with id " + gameId);
     }
     
-    simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/queue/replyjoin", reply);
+    simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/game/replyjoin", reply);
   }
   
   @MessageMapping("game/connected/{gameId}")

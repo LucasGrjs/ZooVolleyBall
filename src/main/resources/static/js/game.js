@@ -22,7 +22,7 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({name: sessionId}, function(frame) {
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/user/queue/replyjoin', function(replyOutput) {
+        stompClient.subscribe('/user/game/replyjoin', function(replyOutput) {
         	console.log("replyjoin function");
 
 			if (JSON.parse(replyOutput.body).error)

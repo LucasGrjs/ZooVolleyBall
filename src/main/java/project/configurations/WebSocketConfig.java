@@ -25,7 +25,7 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry config) {
-        config.enableSimpleBroker("/zvb", "/queue", "/user");
+        config.enableSimpleBroker("/zvb", "/game", "/user");
         config.setApplicationDestinationPrefixes("/zvb");
         config.setUserDestinationPrefix("/user");
     }
