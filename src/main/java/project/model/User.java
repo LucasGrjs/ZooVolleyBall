@@ -23,7 +23,7 @@ public class User {
     int nbrTourn = 0;
     int nbrTournWin = 0;
 
-    @ManyToMany
+    @OneToMany
     List<Objet> objets;
 
     @OneToMany

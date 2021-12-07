@@ -6,20 +6,30 @@ import java.util.List;
 @Entity
 public class Objet {
 
+    public enum TypeItem {
+        BALL, SKIN, BACKGROUND, NET
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id_objet;
 
-    String nomObjet;
-    @ManyToMany
-    List<User> users;
+    String nom_objet;
+    int price;
+    TypeItem type_item;
 
     public Objet() {
 
     }
 
+    public Objet(String nomObjet, int price, TypeItem type_item) {
+        this.nom_objet = nom_objet;
+        this.price = price;
+        this.type_item = type_item;
+    }
+
     public Objet(String nomObjet) {
-        this.nomObjet = nomObjet;
+        this.nom_objet = nomObjet;
     }
 
     public long getId_objet() {
@@ -31,14 +41,14 @@ public class Objet {
     }
 
     public String getNomObjet() {
-        return nomObjet;
+        return nom_objet;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     public void setNomObjet(String nomObjet) {
-        this.nomObjet = nomObjet;
-    }
-
-    public List<User> getUsers() {
-        return users;
+        this.nom_objet = nomObjet;
     }
 }
