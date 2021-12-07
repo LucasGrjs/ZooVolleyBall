@@ -64,7 +64,6 @@
                         Amis
                         <thead>
                         <tr>
-                            <th scope="col">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Rank</th>
                             <th scope="col">Online</th>
@@ -83,6 +82,11 @@
         </div>
     </main>
     <h1>ZooVolleyBall</h1>
+    <form th:action="@{/main}" method="post" style="max-width: 350px; margin: 0 auto;">
+        <p>Ajouter un ami :</p>
+        <input type="text" name="friend" class="form-control"/>
+        <input type="submit" value="Rechercher" class="btn btn-primary" />
+    </form>
     <ul>
         <li><a href="chat"> Chat</a> </li>
         <li><a href="game"> Game</a> </li>

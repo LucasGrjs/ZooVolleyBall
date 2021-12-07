@@ -8,4 +8,5 @@ public interface IUserManagement {
     User addUser(User user);
     void removeUser(long id_user);
     User findUserByEmail(String email);
+    User findUserByPseudo(String pseudo);
 }

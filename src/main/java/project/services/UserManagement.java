@@ -46,7 +46,14 @@ public class UserManagement implements IUserManagement {
     }
 
     @Override
+    public User findUserByPseudo(String pseudo) {
+        return userRep.findByPseudo(pseudo);
+    }
+
+    @Override
     public void removeUser(long id_user) {
         userRep.delete(id_user);
     }
+
+
 }
