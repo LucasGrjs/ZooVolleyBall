@@ -31,6 +31,8 @@ public class GamesManagement implements IGamesManagement
   public Game createNewGame(String playerId1, String playerId2)
   {
     long id=getNextId();
-    return games.put(id,new Game(id, playerId1, playerId2));
+    Game g = new Game(id, playerId1, playerId2);
+    games.put(id,g);
+    return g;
   }
 }

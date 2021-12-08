@@ -11,7 +11,7 @@ import java.util.ArrayList;
 @Service
 public class MatchmakingManagement implements IMatchmakingManagement {
 
-    private ArrayList<User> queueCasual = new ArrayList<>();
+    private ArrayList<String> queueCasual = new ArrayList<String>();
 
     @Autowired
     IUserManagement userManagement;
@@ -20,20 +20,16 @@ public class MatchmakingManagement implements IMatchmakingManagement {
      * Retourne l'adversaire si dispo, null si on est mis en attente
       * */
     @Override
-    public User findCasual(User u) {
-        UserDetails userDetails =  (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    public String findCasual(String sessionID) {
+        String adversaireID = null;
 
-        User user = userManagement.findUserByEmail(userDetails.getUsername());
-        User adversaire = null;
-
-        System.out.println(user);
         if(queueCasual.size() > 0){
-            adversaire = queueCasual.get(queueCasual.size()-1);
+            adversaireID = queueCasual.get(queueCasual.size()-1);
             queueCasual.remove(queueCasual.size()-1);
-            return adversaire;
+            return adversaireID;
         }
 
-        queueCasual.add(user);
+        queueCasual.add(sessionID);
         return null;
     }
 }

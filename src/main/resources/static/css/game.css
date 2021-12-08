@@ -1,11 +1,11 @@
-#content {
+#contentGame {
     position: relative;
     width: 1300px;
     height: 700px;
     margin: 10px auto;
 }
     
-#content canvas {
+#contentGame canvas {
     cursor: none;
     border: solid 1px #000;
     width: 1300px;
@@ -15,7 +15,7 @@
     left: 0;
 }
 
-#content canvas#jeu {
+#contentGame canvas#jeu {
     background-image: url('/images/fond.jpg');
     background-size: 612px 408px;
 	background-repeat: round;

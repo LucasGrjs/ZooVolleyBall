@@ -13,7 +13,7 @@
     <main>
         <div class="container">
             <div class="row">
-                <a th:href="findCasual" type="button" class="btn btn-primary btn-lg">Jouer</a>
+                <a th:href="findcasual" type="button" class="btn btn-primary btn-lg">Jouer</a>
                 <div class="col-sm-5">
                     Profile
                     <table class="table">
@@ -91,7 +91,7 @@
                     <tbody>
                     <tr th:each="demande: ${Demandes}">
                         <td th:text="${demande.getDemandeur().getPseudo()}"></td>
-                        <td><button type="button" value=demande.getDemandeur().getPseudo() class="btn btn-danger rounded">Accepter</button></td>
+                        <!--<td><button type="button" value=demande.getDemandeur().getPseudo() class="btn btn-danger rounded">Accepter</button></td>-->
                     </tr>
                     </tbody>
                 </table>

@@ -47,4 +47,13 @@ public class ReplyJoinMessage
   {
     return gameId;
   }
+
+  @Override
+  public String toString() {
+    return "ReplyJoinMessage{" +
+            "error=" + error +
+            ", errorMessage='" + errorMessage + '\'' +
+            ", gameId=" + gameId +
+            '}';
+  }
 }

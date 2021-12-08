@@ -1,5 +1,7 @@
 package project.model;
 
+import java.util.Arrays;
+
 public class Game
 {
   long id;
@@ -11,7 +13,7 @@ public class Game
   long yJ2=800;
   long xBall=430;
   long yBall=100;
-  
+
   public Game(long id, String playerId1, String playerId2)
   {
     this.id = id;
@@ -82,4 +84,13 @@ public class Game
   public void setyBall(long yBall) {
     this.yBall = yBall;
   }
+
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "id=" + id +
+                ", playersId=" + Arrays.toString(playersId) +
+                '}';
+    }
 }

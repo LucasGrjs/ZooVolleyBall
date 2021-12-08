@@ -4,6 +4,6 @@ import project.model.User;
 
 public interface IMatchmakingManagement {
 
-    public User findCasual(User u);
+    public String findCasual(String sessionID);
 
 }
