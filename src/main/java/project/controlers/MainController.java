@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import project.model.User;
 import project.repositories.UsersRepository;
 
@@ -16,11 +17,16 @@ public class MainController {
     UsersRepository usersRepository;
 
     @RequestMapping("main")
-    public String mainPage(Model model)
+    public String mainPage(@RequestParam(value="friend", required=false) String pseudo, Model model)
     {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         User user = usersRepository.findByEmail(userDetails.getUsername());
+
+        if (pseudo != null && !pseudo.equals(user.getPseudo()) && usersRepository.findByPseudo(pseudo) != null &&
+                !user.getAmis().contains(usersRepository.findByPseudo(pseudo))) {
+            
+        }
 
         model.addAttribute("User",user);
         if(!(user.getNbrWin() + user.getNbrLoss() == 0))
@@ -29,6 +35,8 @@ public class MainController {
         }else{
             model.addAttribute("Winrate", "You need to play match");
         }
+
+
 
         return "main";
     }

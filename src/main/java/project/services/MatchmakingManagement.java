@@ -11,7 +11,7 @@ import java.util.ArrayList;
 @Service
 public class MatchmakingManagement implements IMatchmakingManagement {
 
-    private ArrayList<User> queueCasual = new ArrayList<User>();
+    private ArrayList<User> queueCasual = new ArrayList<>();
 
     @Autowired
     IUserManagement userManagement;
