@@ -6,6 +6,8 @@ import project.model.DemandeAmi;
 import project.model.User;
 import project.repositories.DemandeAmiRepository;
 
+import java.util.List;
+
 @Service
 public class DemandeAmiManagement implements IDemandeAmiManagement {
 
@@ -28,7 +30,7 @@ public class DemandeAmiManagement implements IDemandeAmiManagement {
     }
 
     @Override
-    public DemandeAmi findByReceveur(User receveur) {
+    public List<DemandeAmi> findByReceveur(User receveur) {
         return demandeAmiRep.findByReceveur(receveur);
     }
 }

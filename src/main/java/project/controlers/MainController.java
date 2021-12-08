@@ -15,6 +15,8 @@ import project.repositories.UsersRepository;
 import project.services.IDemandeAmiManagement;
 import project.services.IUserManagement;
 
+import java.util.List;
+
 @Controller
 public class MainController {
 
@@ -23,6 +25,9 @@ public class MainController {
 
     @Autowired
     private IDemandeAmiManagement demandeAmiManagement;
+
+    @Autowired
+    DemandeAmiRepository demandeAmiRep;
 
     @RequestMapping("main")
     public String mainPage(@RequestParam(value="friend", required=false) String pseudo, Model model)
@@ -44,7 +49,8 @@ public class MainController {
             model.addAttribute("Winrate", "You need to play match");
         }
 
-
+        List<DemandeAmi> demandes = demandeAmiRep.findByReceveur(user);
+        model.addAttribute("Demandes", demandes);
 
         return "main";
     }

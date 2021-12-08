@@ -79,6 +79,23 @@
                     </table>
                 </div>
             </div>
+            <div class="col-sm-4">
+                Demande d'ami :
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Pseudo</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="demande: ${Demandes}">
+                        <td th:text="${demande.getDemandeur().getPseudo()}"></td>
+
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </main>
     <h1>ZooVolleyBall</h1>
