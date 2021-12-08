@@ -91,7 +91,7 @@
                     <tbody>
                     <tr th:each="demande: ${Demandes}">
                         <td th:text="${demande.getDemandeur().getPseudo()}"></td>
-                        <td><button type="button" class="btn btn-danger rounded">Accepter</button></td>
+                        <td><button type="button" value=demande.getDemandeur().getPseudo() class="btn btn-danger rounded">Accepter</button></td>
                     </tr>
                     </tbody>
                 </table>
