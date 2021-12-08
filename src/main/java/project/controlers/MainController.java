@@ -25,7 +25,7 @@ public class MainController {
 
         if (pseudo != null && !pseudo.equals(user.getPseudo()) && usersRepository.findByPseudo(pseudo) != null &&
                 !user.getAmis().contains(usersRepository.findByPseudo(pseudo))) {
-            
+
         }
 
         model.addAttribute("User",user);
