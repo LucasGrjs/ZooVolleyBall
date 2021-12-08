@@ -5,6 +5,9 @@ INSERT INTO user(id_user, credit, email, mmr, nbr_loss, nbr_tourn, nbr_tourn_win
 INSERT INTO user(id_user, credit, email, mmr, nbr_loss, nbr_tourn, nbr_tourn_win, nbr_win, pseudo, pwd) VALUES
 (2, 0, 'pomme@gmail.com', 0, 0, 0, 0, 0, 'pomme', '$2a$10$4OG.AxZ6Sn.EeRsCSiafVeqFjvEglaB.78p85zArrgWgvlC6mP.ei');
 
+INSERT INTO user(id_user, credit, email, mmr, nbr_loss, nbr_tourn, nbr_tourn_win, nbr_win, pseudo, pwd) VALUES
+(3, 0, 'aaa@gmail.com', 0, 0, 0, 0, 0, 'AmiAAjouter', '$2a$10$1.RCtL11LWHytk8yt1NNru2DzZQo.YYYjXYvwWgUG8jXLFso9Wz12');
+
 INSERT INTO user_amis(user_id_user, amis_id_user) VALUES
 (1, 2);
 

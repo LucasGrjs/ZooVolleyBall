@@ -14,6 +14,15 @@ public class DemandeAmi {
     @ManyToOne
     User receveur;
 
+    public DemandeAmi(User demandeur, User receveur) {
+        this.demandeur = demandeur;
+        this.receveur = receveur;
+    }
+
+    public DemandeAmi() {
+
+    }
+
     public long getId_demande() {
         return id_demande;
     }
