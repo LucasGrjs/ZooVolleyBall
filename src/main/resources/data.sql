@@ -1,5 +1,5 @@
 INSERT INTO user(id_user, credit, email, mmr, nbr_loss, nbr_tourn, nbr_tourn_win, nbr_win, pseudo, pwd) VALUES
-(1, 0, 'ouioui@gmail.com', 0, 0, 0, 0, 0, 'Ouioui', '$2a$10$8v.ZE5Zd3O9lvknSAaKAOuFZEfbJdpBESJ1dgDc80lJIKfRWTkHoW');
+(1, 500, 'ouioui@gmail.com', 0, 0, 0, 0, 0, 'Ouioui', '$2a$10$8v.ZE5Zd3O9lvknSAaKAOuFZEfbJdpBESJ1dgDc80lJIKfRWTkHoW');
 -- pwd = 1234
 
 INSERT INTO user(id_user, credit, email, mmr, nbr_loss, nbr_tourn, nbr_tourn_win, nbr_win, pseudo, pwd) VALUES
@@ -19,7 +19,7 @@ INSERT INTO roles (ref_role, role, user_id_user) VALUES
 
 INSERT INTO `objet` (`id_objet`, `nom_objet` ,`price`, `type_item`) VALUES
 (1, 'BallBlack', 5, 0),
-(2,' BallWhite', 10, 0),
+(2, 'BallWhite', 10, 0),
 (3, 'BallBlue', 15, 0),
 (4, 'BallRed', 15, 0),
 (5, 'Skin1', 150, 1),

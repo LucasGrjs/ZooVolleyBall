@@ -3,8 +3,10 @@ package project.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.model.ERole;
+import project.model.Objet;
 import project.model.Roles;
 import project.model.User;
+import project.repositories.ObjetRepository;
 import project.repositories.RoleRepository;
 import project.repositories.UsersRepository;
 
@@ -15,6 +17,8 @@ public class UserManagement implements IUserManagement {
     IRolesManagement roleService;
     @Autowired
     UsersRepository userRep;
+    @Autowired
+    ObjetRepository objetRep;
 
     @Override
     public Iterable<User> getAllUsers() {
@@ -42,7 +46,6 @@ public class UserManagement implements IUserManagement {
     public User findUserByEmail(String email) {
 
         return userRep.findByEmail(email);
-
     }
 
     @Override
@@ -54,6 +57,4 @@ public class UserManagement implements IUserManagement {
     public void removeUser(long id_user) {
         userRep.delete(id_user);
     }
-
-
 }

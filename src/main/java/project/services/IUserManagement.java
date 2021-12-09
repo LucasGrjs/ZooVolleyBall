@@ -1,5 +1,6 @@
 package project.services;
 
+import project.model.Objet;
 import project.model.User;
 
 public interface IUserManagement {

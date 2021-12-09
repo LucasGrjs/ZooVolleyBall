@@ -22,7 +22,7 @@ public class Objet {
 
     }
 
-    public Objet(String nomObjet, int price, TypeItem type_item) {
+    public Objet(String nom_objet, int price, TypeItem type_item) {
         this.nom_objet = nom_objet;
         this.price = price;
         this.type_item = type_item;

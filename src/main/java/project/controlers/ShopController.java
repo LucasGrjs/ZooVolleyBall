@@ -2,6 +2,9 @@ package project.controlers;
 
 import groovy.util.logging.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,26 +33,13 @@ public class ShopController {
 
     @Autowired
     ObjetRepository objetRepository;
-
-    @RequestMapping("shop")
-    public String shop(Model model)
+    private List<Objet> getNotOwnedItem(User user)
     {
-        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = usersRepository.findByEmail(userDetails.getUsername());
-        model.addAttribute("User", user);
         List<Objet> ownedObject = user.getObjets();
+        List<Objet> notOwned = new ArrayList<>();
 
         List<Objet> allObjets = new ArrayList<>();
         objetRepository.findAll().forEach(allObjets::add);
-
-        System.out.println();
-
-        for(Objet objet : allObjets) {
-
-            System.out.println(objet.getNomObjet() +" : "+objet.getPrice());
-        }
-
-        List<Objet> notOwned = new ArrayList<>();
 
         for(Objet objet : allObjets)
         {
@@ -64,12 +54,35 @@ public class ShopController {
             }
             if(!contains)
             {
-                System.out.println("Not owned "+objet.getNomObjet()+" : "+objet.getPrice());
                 notOwned.add(objet);
             }
         }
+        return notOwned;
+    }
 
-        model.addAttribute("Objets", notOwned);
+
+    @RequestMapping("shop")
+    public String shop(Model model, @RequestParam(value="itemID", required=false) String itemID)
+    {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = usersRepository.findByEmail(userDetails.getUsername());
+
+        if(itemID != null)
+        {
+            Objet item = objetRepository.findById_objet(Integer.parseInt(itemID));
+            if(user.getCredit() >= item.getPrice())
+            {
+                user.setCredit(user.getCredit() - item.getPrice());
+                user.addItem(item);
+                usersRepository.save(user);
+            }else
+            {
+                model.addAttribute("Error", "You don't have enough coins");
+            }
+        }
+
+        model.addAttribute("User", user);
+        model.addAttribute("Objets", getNotOwnedItem(user));
 
         return "shop";
     }

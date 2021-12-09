@@ -146,4 +146,6 @@ public class User {
     public List<User> getAmis() {
         return amis;
     }
+
+    public void addItem(Objet item) { this.objets.add(item); }
 }
