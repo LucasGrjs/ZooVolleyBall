@@ -91,7 +91,12 @@
                     <tbody>
                     <tr th:each="demande: ${Demandes}">
                         <td th:text="${demande.getDemandeur().getPseudo()}"></td>
-                        <!--<td><button type="button" value=demande.getDemandeur().getPseudo() class="btn btn-danger rounded">Accepter</button></td>-->
+                        <td>
+                        <form th:action="@{/main}" method="post" style="max-width: 350px; margin: 0 auto;">
+                            <input type="hidden" name='demandeur' th:value="${demande.getDemandeur().getPseudo()}"/>
+                            <button type="submit" value="" class="btn btn-danger rounded">Accepter</button>
+                        </form>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

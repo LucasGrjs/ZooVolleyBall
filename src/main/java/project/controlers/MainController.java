@@ -31,7 +31,8 @@ public class MainController {
     DemandeAmiRepository demandeAmiRep;
 
     @RequestMapping("main")
-    public String mainPage(@RequestParam(value="friend", required=false) String pseudo, Model model)
+    public String mainPage(@RequestParam(value="friend", required=false) String pseudo,
+                           @RequestParam(value="demandeur", required = false) String demandeur, Model model)
     {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -40,6 +41,16 @@ public class MainController {
         if (pseudo != null && !pseudo.equals(user.getPseudo()) && usersRepository.findByPseudo(pseudo) != null &&
                 !user.getAmis().contains(usersRepository.findByPseudo(pseudo))) {
             demandeAmiManagement.addDemandeAmi(new DemandeAmi(user, usersRepository.findByPseudo(pseudo)));
+        }
+
+        if (demandeur != null) {
+            User dem = usersRepository.findByPseudo(demandeur);
+            demandeAmiManagement.removeDemandeAmi(dem, user);
+            demandeAmiManagement.removeDemandeAmi(user, dem);
+            user.getAmis().add(dem);
+            dem.getAmis().add(user);
+            usersRepository.save(user);
+            usersRepository.save(dem);
         }
 
         model.addAttribute("User",user);

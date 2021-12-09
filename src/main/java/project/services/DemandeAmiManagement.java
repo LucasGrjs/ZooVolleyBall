@@ -25,6 +25,14 @@ public class DemandeAmiManagement implements IDemandeAmiManagement {
     }
 
     @Override
+    public void removeDemandeAmi(User demandeur, User receveur) {
+        List<DemandeAmi> demandes = demandeAmiRep.findByDemandeurAndReceveur(demandeur, receveur);
+        for (DemandeAmi demande : demandes) {
+            removeDemandeAmi(demande.getId_demande());
+        }
+    }
+
+    @Override
     public void removeDemandeAmi(long id_demande) {
         demandeAmiRep.delete(id_demande);
     }
