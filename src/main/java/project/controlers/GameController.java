@@ -96,74 +96,139 @@ public class GameController
     }
     switch(action){
       case "gauche":
-        if(j==0){
-          if(xJ-10<limitLeft[j]) return;
-          game.setxJ1(xJ-10);
-          game.setVelocityXJ1(-jumpVelocity);
-        }else{
-
-        }
+        if(!gauche(j,game)) return;
         reply.setAllAttributesFromGame(game);
         break;
       case "droite":
-        if(j==0){
-          if(xJ+10>limitRight[j]) return;
-          game.setxJ1(xJ+10);
-          game.setVelocityXJ1(jumpVelocity);
-        }else{
-
-        }
+        if(!droite(j,game)) return;
         reply.setAllAttributesFromGame(game);
         break;
       case "saut":
-        if(yJ!=solHeight){ // deja en train de sauter/retomber
-          System.out.println("saut rejeté car dans les airs");
-          return;
-        }
-        if(j==0){
-          game.setVelocityYJ1(jumpVelocity);
-          game.setyJ1(yJ-jumpVelocity); // on soustrait pour sauter car le repere est à l'envers
-          if(game.getVelocityXJ1()!=0){
-            game.setxJ1(xJ+game.getVelocityXJ1());
-            game.setVelocityXJ1(0);
-          }
-        }else{
-
-        }
+        if(!saut(j,game)) return;
         reply.setAllAttributesFromGame(game);
         break;
       case "enSaut":
-        if(j==0){
-          if(yJ<=limitJumpHeight){
-            game.setVelocityYJ1(-jumpVelocity);
-          }else if(game.getVelocityYJ1()<0){
-            game.setVelocityYJ1((long)Math.ceil(game.getVelocityYJ1()*gravity));
-          }
-          game.setyJ1(yJ-game.getVelocityYJ1());
-          if(game.getyJ1()>=solHeight){ // pas <= car on repere à l'envers
-            game.setyJ1(solHeight);
-            game.setVelocityYJ1(0);
-          }
-          if(game.getVelocityXJ1()!=0){
-            long x = xJ+game.getVelocityXJ1();
-            if(x<limitLeft[j]){
-              x=limitLeft[j];
-            }else if(x>limitRight[j]){
-              x=limitRight[j];
-            }
-            game.setxJ1(x);
-            game.setVelocityXJ1(0);
-          }
-        }else{
-
-        }
-
+        enSaut(j,game);
         reply.setAllAttributesFromGame(game);
         break;
       default:
         System.out.println("SALE TRICHEUR");
     }
     simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/game/move", reply);
+  }
+
+  private boolean gauche(int j,Game game){
+    long xJ;
+    if(j==0){
+      xJ=game.getxJ1();
+      if(xJ-10<limitLeft[j]) return false;
+      game.setxJ1(xJ-10);
+      game.setVelocityXJ1(-jumpVelocity);
+    }else{
+      xJ=game.getxJ2();
+      if(xJ-10<limitLeft[j]) return false;
+      game.setxJ2(xJ-10);
+      game.setVelocityXJ2(-jumpVelocity);
+    }
+    return true;
+  }
+  private boolean droite(int j,Game game){
+    long xJ;
+    if(j==0){
+      xJ=game.getxJ1();
+      if(xJ+10>limitRight[j]) return false;
+      game.setxJ1(xJ+10);
+      game.setVelocityXJ1(jumpVelocity);
+    }else{
+      xJ=game.getxJ2();
+      if(xJ+10>limitRight[j]) return false;
+      game.setxJ2(xJ+10);
+      game.setVelocityXJ2(jumpVelocity);
+    }
+    return true;
+  }
+  private boolean saut(int j,Game game){
+    long yJ;
+    long xJ;
+    if(j==0){
+      yJ=game.getyJ1();
+      xJ=game.getxJ1();
+      if(yJ!=solHeight){ // deja en train de sauter/retomber
+        System.out.println("saut rejeté car dans les airs");
+        return false;
+      }
+      game.setVelocityYJ1(jumpVelocity);
+      game.setyJ1(yJ-jumpVelocity); // on soustrait pour sauter car le repere est à l'envers
+      if(game.getVelocityXJ1()!=0){
+        game.setxJ1(xJ+game.getVelocityXJ1());
+        game.setVelocityXJ1(0);
+      }
+    }else{
+      yJ=game.getyJ2();
+      xJ=game.getxJ2();
+      if(yJ!=solHeight){ // deja en train de sauter/retomber
+        System.out.println("saut rejeté car dans les airs");
+        return false;
+      }
+      game.setVelocityYJ2(jumpVelocity);
+      game.setyJ2(yJ-jumpVelocity); // on soustrait pour sauter car le repere est à l'envers
+      if(game.getVelocityXJ2()!=0){
+        game.setxJ2(xJ+game.getVelocityXJ2());
+        game.setVelocityXJ2(0);
+      }
+    }
+    return true;
+  }
+  private void enSaut(int j,Game game){
+    long yJ;
+    long xJ;
+    if(j==0){
+      yJ=game.getyJ1();
+      xJ=game.getxJ1();
+      if(yJ<=limitJumpHeight){
+        game.setVelocityYJ1(-jumpVelocity);
+      }else if(game.getVelocityYJ1()<0){
+        game.setVelocityYJ1((long)Math.ceil(game.getVelocityYJ1()*gravity));
+      }
+      game.setyJ1(yJ-game.getVelocityYJ1());
+      if(game.getyJ1()>=solHeight){ // pas <= car repere à l'envers
+        game.setyJ1(solHeight);
+        game.setVelocityYJ1(0);
+      }
+      if(game.getVelocityXJ1()!=0){
+        long x = xJ+game.getVelocityXJ1();
+        if(x<limitLeft[j]){
+          x=limitLeft[j];
+        }else if(x>limitRight[j]){
+          x=limitRight[j];
+        }
+        game.setxJ1(x);
+        game.setVelocityXJ1(0);
+      }
+    }else{
+      yJ=game.getyJ2();
+      xJ=game.getxJ2();
+      if(yJ<=limitJumpHeight){
+        game.setVelocityYJ2(-jumpVelocity);
+      }else if(game.getVelocityYJ2()<0){
+        game.setVelocityYJ2((long)Math.ceil(game.getVelocityYJ2()*gravity));
+      }
+      game.setyJ2(yJ-game.getVelocityYJ2());
+      if(game.getyJ2()>=solHeight){ // pas <= car repere à l'envers
+        game.setyJ2(solHeight);
+        game.setVelocityYJ2(0);
+      }
+      if(game.getVelocityXJ2()!=0){
+        long x = xJ+game.getVelocityXJ2();
+        if(x<limitLeft[j]){
+          x=limitLeft[j];
+        }else if(x>limitRight[j]){
+          x=limitRight[j];
+        }
+        game.setxJ2(x);
+        game.setVelocityXJ2(0);
+      }
+    }
   }
   
   @MessageMapping("game/connected/{gameId}")
