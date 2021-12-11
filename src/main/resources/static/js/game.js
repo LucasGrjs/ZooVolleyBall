@@ -85,8 +85,10 @@ function updatePlayers(replyActionMessage){
     let yJ1=replyActionMessage.yJ1;
     let xJ2=replyActionMessage.xJ2;
     let yJ2=replyActionMessage.yJ2;
-    if(replyActionMessage.velocityYJ1 !=0){
-        stompClient.send("/zvb/game/move", {}, JSON.stringify({'action': 'enSaut', 'gameId':gameId}));
+    if(replyActionMessage.velocityYJ1 !=0){ // Ne faire ça que pour le joueur qui a sauté (sinon on le fait en double)
+        setTimeout(function () {
+                stompClient.send("/zvb/game/move", {}, JSON.stringify({'action': 'enSaut', 'gameId':gameId}));
+        },100);
     }
     fillRect(xJ1,yJ1,xJ2,yJ2);
 }
@@ -120,31 +122,59 @@ document.addEventListener("DOMContentLoaded", function(_e) {
 
     fillRect(250,800,550,800);
 
+
+    var keysMap = {};
     window.addEventListener("keydown", function(e) {
         // space and arrow keys
         if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
             e.preventDefault();
         }
+        keysMap[e.keyCode] = true;
+    }, false);
+    window.addEventListener("keyup", function(e) {
+        keysMap[e.keyCode] = false;
     }, false);
 
-    window.onkeydown = function(e) {
-        var key = e.keyCode || e.which;
-        if (key == 37 && posb > 0)
+    setInterval(function(){
+        if (keysMap[37] && !keysMap[39]) // fleche gauche sans fleche droite
         {
             // requete demande de mouvement vers la gauche au serveur
+            console.log("= GAUCHE =");
             stompClient.send("/zvb/game/move", {}, JSON.stringify({'action': 'gauche', 'gameId':gameId}));
         }
-        if (key == 39 && posb < 420)
+        if (keysMap[39] && !keysMap[37]) // fleche droite sans fleche gauche
         {
             // requete demande de mouvement vers la droite au serveur
+            console.log("= DROITE =");
             stompClient.send("/zvb/game/move", {}, JSON.stringify({'action': 'droite', 'gameId':gameId}));
         }
-        if(key == 38){ // key up
+        if(keysMap[38]){ // fleche du dessus
             // requete demande de saut au serveur
-            console.log("========== SAUT ==========")
+            console.log("==================== SAUT ====================");
             stompClient.send("/zvb/game/move", {}, JSON.stringify({'action': 'saut', 'gameId':gameId}));
         }
-    };
+    },20);
+    /*window.onkeydown = function(e) {
+        //var key = e.keyCode || e.which;
+        //keysMap[e.keyCode] = e.type=="keydown";
+        if (keysMap[37] && !keysMap[39]) // fleche gauche sans fleche droite
+        {
+            // requete demande de mouvement vers la gauche au serveur
+            console.log("= GAUCHE =");
+            stompClient.send("/zvb/game/move", {}, JSON.stringify({'action': 'gauche', 'gameId':gameId}));
+        }
+        if (keysMap[39] && !keysMap[37]) // fleche droite sans fleche gauche
+        {
+            // requete demande de mouvement vers la droite au serveur
+            console.log("= DROITE =");
+            stompClient.send("/zvb/game/move", {}, JSON.stringify({'action': 'droite', 'gameId':gameId}));
+        }
+        if(keysMap[38]){ // fleche du dessus
+            // requete demande de saut au serveur
+            console.log("==================== SAUT ====================");
+            stompClient.send("/zvb/game/move", {}, JSON.stringify({'action': 'saut', 'gameId':gameId}));
+        }
+    };*/
 
     //gameIntervalObject = setInterval(gameIteration, 20);
 });

@@ -89,12 +89,14 @@ public class GameController
         // comment savoir J1 ou J2 ?
         if(xJ1-10<limitLeftJ1) return;
         game.setxJ1(xJ1-10);
+        game.setVelocityXJ1(-jumpVelocity);
         reply.setAllAttributesFromGame(game);
         break;
       case "droite":
         // comment savoir J1 ou J2 ?
         if(xJ1+10>limitRightJ1) return;
         game.setxJ1(xJ1+10);
+        game.setVelocityXJ1(jumpVelocity);
         reply.setAllAttributesFromGame(game);
         break;
       case "saut":
@@ -104,6 +106,10 @@ public class GameController
         }
         game.setVelocityYJ1(jumpVelocity);
         game.setyJ1(yJ1-jumpVelocity); // on soustrait pour sauter car le repere est à l'envers
+        if(game.getVelocityXJ1()!=0){
+          game.setxJ1(xJ1+game.getVelocityXJ1());
+          game.setVelocityXJ1(0);
+        }
         reply.setAllAttributesFromGame(game);
         break;
       case "enSaut":
@@ -116,6 +122,10 @@ public class GameController
         if(game.getyJ1()>=solHeight){ // pas <= car on repere à l'envers
           game.setyJ1(solHeight);
           game.setVelocityYJ1(0);
+        }
+        if(game.getVelocityXJ1()!=0){
+          game.setxJ1(xJ1+game.getVelocityXJ1());
+          game.setVelocityXJ1(0);
         }
         reply.setAllAttributesFromGame(game);
         break;
