@@ -14,6 +14,13 @@ public class Game
   long xBall=430;
   long yBall=100;
 
+  long velocityXJ1=0;
+  long velocityYJ1=0;
+  long velocityXJ2=0;
+  long velocityYJ2=0;
+  long velocityXBall=0;
+  long velocityYBall=0;
+
   public Game(long id, String playerId1, String playerId2)
   {
     this.id = id;
@@ -85,8 +92,55 @@ public class Game
     this.yBall = yBall;
   }
 
+  public long getVelocityXJ1() {
+    return velocityXJ1;
+  }
 
-    @Override
+  public void setVelocityXJ1(long velocityXJ1) {
+    this.velocityXJ1 = velocityXJ1;
+  }
+
+  public long getVelocityYJ1() {
+    return velocityYJ1;
+  }
+
+  public void setVelocityYJ1(long velocityYJ1) {
+    this.velocityYJ1 = velocityYJ1;
+  }
+
+  public long getVelocityXJ2() {
+    return velocityXJ2;
+  }
+
+  public void setVelocityXJ2(long velocityXJ2) {
+    this.velocityXJ2 = velocityXJ2;
+  }
+
+  public long getVelocityYJ2() {
+    return velocityYJ2;
+  }
+
+  public void setVelocityYJ2(long velocityYJ2) {
+    this.velocityYJ2 = velocityYJ2;
+  }
+
+  public long getVelocityXBall() {
+    return velocityXBall;
+  }
+
+  public void setVelocityXBall(long velocityXBall) {
+    this.velocityXBall = velocityXBall;
+  }
+
+  public long getVelocityYBall() {
+    return velocityYBall;
+  }
+
+  public void setVelocityYBall(long velocityYBall) {
+    this.velocityYBall = velocityYBall;
+  }
+
+  @Override
     public String toString() {
         return "Game{" +
                 "id=" + id +

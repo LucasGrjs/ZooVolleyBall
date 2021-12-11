@@ -1,11 +1,8 @@
 package project.controlers;
 
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
@@ -32,6 +29,11 @@ public class GameController
 
   static long limitLeftJ2=420;
   static long limitRightJ2=840;
+
+  static long solHeight=800;
+  static long limitJumpHeight=600;
+  static long jumpVelocity=20;
+  static double gravity= 1.2;
   
   @RequestMapping("game")
   public String game(Model model)
@@ -81,18 +83,44 @@ public class GameController
     }
     reply.setError(false);
     long xJ1 = game.getxJ1();
-    if(action.equals("gauche")){
-      // comment savoir J1 ou J2 ?
-      if(xJ1-10<limitLeftJ1) return;
-      game.setxJ1(xJ1-10);
-      reply.setxJ1(xJ1-10);
-    }else if(action.equals("droite")){
-      // comment savoir J1 ou J2 ?
-      if(xJ1+10>limitRightJ1) return;
-      game.setxJ1(xJ1+10);
-      reply.setxJ1(xJ1+10);
-    }else{
-      System.out.println("SALE TRICHEUR");
+    long yJ1 = game.getyJ1();
+    switch(action){
+      case "gauche":
+        // comment savoir J1 ou J2 ?
+        if(xJ1-10<limitLeftJ1) return;
+        game.setxJ1(xJ1-10);
+        reply.setAllAttributesFromGame(game);
+        break;
+      case "droite":
+        // comment savoir J1 ou J2 ?
+        if(xJ1+10>limitRightJ1) return;
+        game.setxJ1(xJ1+10);
+        reply.setAllAttributesFromGame(game);
+        break;
+      case "saut":
+        if(yJ1!=solHeight){ // deja en train de sauter/retomber
+          System.out.println("saut rejeté car dans les airs");
+          return;
+        }
+        game.setVelocityYJ1(jumpVelocity);
+        game.setyJ1(yJ1-jumpVelocity); // on soustrait pour sauter car le repere est à l'envers
+        reply.setAllAttributesFromGame(game);
+        break;
+      case "enSaut":
+        if(yJ1<=limitJumpHeight){
+          game.setVelocityYJ1(-jumpVelocity);
+        }else if(game.getVelocityYJ1()<0){
+          game.setVelocityYJ1((long)Math.ceil(game.getVelocityYJ1()*gravity));
+        }
+        game.setyJ1(yJ1-game.getVelocityYJ1());
+        if(game.getyJ1()>=solHeight){ // pas <= car on repere à l'envers
+          game.setyJ1(solHeight);
+          game.setVelocityYJ1(0);
+        }
+        reply.setAllAttributesFromGame(game);
+        break;
+      default:
+        System.out.println("SALE TRICHEUR");
     }
     simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/game/move", reply);
   }
