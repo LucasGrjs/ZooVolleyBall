@@ -65,7 +65,7 @@
                                 <tr>
                                     <th scope="col" class="text-warning">Owned Item</th>
                                     <th scope="col" class="text-warning">Image</th>
-                                    <th scope="col" class="text-warning">Price</th>
+                                    <th scope="col" class="text-warning">Type</th>
                                     <th scope="col" class="text-warning">Achat</th>
                                 </tr>
                                 </thead>
@@ -73,8 +73,18 @@
                                 <tr th:each="objet: ${User.getObjets()}">
                                     <td th:text="${objet.getNomObjet()}"></td>
                                     <td th:text="${objet.getNomObjet()}"></td>
-                                    <td th:text="OWNED"></td>
-                                    <td><button type="button" class="btn btn-danger rounded">Select skin</button></td>
+                                    <td th:text="${objet.getType_item().name()}"></td>
+
+                                    <td th:if="${Selected.get(objet.getId_objet())}">
+                                        <button type="button" class="btn btn-secondary btn-lg" disabled="true" >Selected</button>
+                                    </td>
+                                    <td th:unless="${Selected.get(objet.getId_objet())}">
+                                        <form th:action="@{/select}" method="post" style="max-width: 350px; margin: 0 auto;">
+                                            <input type="hidden" name='selectedItemID' th:value="${objet.getId_objet()}"/>
+                                            <input type="hidden" name='type' th:value="${objet.getType_item().ordinal()}"/>
+                                            <button type="submit" value="" class="btn btn-danger rounded">Select</button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>

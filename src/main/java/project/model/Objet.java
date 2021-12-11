@@ -51,4 +51,12 @@ public class Objet {
     public void setNomObjet(String nomObjet) {
         this.nom_objet = nomObjet;
     }
+
+    public void setType_item(TypeItem type_item) {
+        this.type_item = type_item;
+    }
+
+    public TypeItem getType_item() {
+        return this.type_item;
+    }
 }

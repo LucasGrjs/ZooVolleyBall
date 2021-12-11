@@ -16,12 +16,18 @@ public class User {
     String pwd;
     @Column(name="email", unique=true)
     String email;
+
     int credit = 0;
     int mmr = 0;
     int nbrWin = 0;
     int nbrLoss = 0;
     int nbrTourn = 0;
     int nbrTournWin = 0;
+
+    long idBallSkin;
+    long idNetSkin;
+    long idBackgroundSkin;
+    long idSkin;
 
     @OneToMany
     List<Objet> objets;
@@ -148,4 +154,48 @@ public class User {
     }
 
     public void addItem(Objet item) { this.objets.add(item); }
+
+    public long getIdBallSkin() {
+        return idBallSkin;
+    }
+
+    public void setIdBallSkin(Long idBallSkin) {
+        this.idBallSkin = idBallSkin;
+    }
+
+    public long getIdNetSkin() {
+        return idNetSkin;
+    }
+
+    public void setIdNetSkin(Long idNetSkin) {
+        this.idNetSkin = idNetSkin;
+    }
+
+    public long getIdBackgroundSkin() {
+        return idBackgroundSkin;
+    }
+
+    public void setIdBackgroundSkin(Long idBackgroundSkin) {
+        this.idBackgroundSkin = idBackgroundSkin;
+    }
+
+    public long getIdSkin() {
+        return idSkin;
+    }
+
+    public void setIdSkin(Long idSkin) {
+        this.idSkin = idSkin;
+    }
+
+    public void setObjets(List<Objet> objets) {
+        this.objets = objets;
+    }
+
+    public void setParties(List<Partie> parties) {
+        this.parties = parties;
+    }
+
+    public void setAmis(List<User> amis) {
+        this.amis = amis;
+    }
 }
