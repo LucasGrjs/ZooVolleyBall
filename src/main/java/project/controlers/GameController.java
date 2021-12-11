@@ -26,9 +26,11 @@ public class GameController
   private SimpMessagingTemplate simpMessagingTemplate;
   static long limitLeftJ1=0;
   static long limitRightJ1=420;
-
   static long limitLeftJ2=420;
   static long limitRightJ2=840;
+
+  static long[] limitLeft={0,420};
+  static long[] limitRight={420,840};
 
   static long solHeight=800;
   static long limitJumpHeight=600;
@@ -82,51 +84,80 @@ public class GameController
       return;
     }
     reply.setError(false);
-    long xJ1 = game.getxJ1();
-    long yJ1 = game.getyJ1();
+    int j = 0; // car joueur 1 et pour l'instant je sais pas comme savoir si c'est un mouvement de J1 ou J2
+    long xJ = -1;
+    long yJ = -1;
+    if(j==0){
+      xJ = game.getxJ1();
+      yJ = game.getyJ1();
+    }else{
+      xJ = game.getxJ2();
+      yJ = game.getyJ2();
+    }
     switch(action){
       case "gauche":
-        // comment savoir J1 ou J2 ?
-        if(xJ1-10<limitLeftJ1) return;
-        game.setxJ1(xJ1-10);
-        game.setVelocityXJ1(-jumpVelocity);
+        if(j==0){
+          if(xJ-10<limitLeft[j]) return;
+          game.setxJ1(xJ-10);
+          game.setVelocityXJ1(-jumpVelocity);
+        }else{
+
+        }
         reply.setAllAttributesFromGame(game);
         break;
       case "droite":
-        // comment savoir J1 ou J2 ?
-        if(xJ1+10>limitRightJ1) return;
-        game.setxJ1(xJ1+10);
-        game.setVelocityXJ1(jumpVelocity);
+        if(j==0){
+          if(xJ+10>limitRight[j]) return;
+          game.setxJ1(xJ+10);
+          game.setVelocityXJ1(jumpVelocity);
+        }else{
+
+        }
         reply.setAllAttributesFromGame(game);
         break;
       case "saut":
-        if(yJ1!=solHeight){ // deja en train de sauter/retomber
+        if(yJ!=solHeight){ // deja en train de sauter/retomber
           System.out.println("saut rejeté car dans les airs");
           return;
         }
-        game.setVelocityYJ1(jumpVelocity);
-        game.setyJ1(yJ1-jumpVelocity); // on soustrait pour sauter car le repere est à l'envers
-        if(game.getVelocityXJ1()!=0){
-          game.setxJ1(xJ1+game.getVelocityXJ1());
-          game.setVelocityXJ1(0);
+        if(j==0){
+          game.setVelocityYJ1(jumpVelocity);
+          game.setyJ1(yJ-jumpVelocity); // on soustrait pour sauter car le repere est à l'envers
+          if(game.getVelocityXJ1()!=0){
+            game.setxJ1(xJ+game.getVelocityXJ1());
+            game.setVelocityXJ1(0);
+          }
+        }else{
+
         }
         reply.setAllAttributesFromGame(game);
         break;
       case "enSaut":
-        if(yJ1<=limitJumpHeight){
-          game.setVelocityYJ1(-jumpVelocity);
-        }else if(game.getVelocityYJ1()<0){
-          game.setVelocityYJ1((long)Math.ceil(game.getVelocityYJ1()*gravity));
+        if(j==0){
+          if(yJ<=limitJumpHeight){
+            game.setVelocityYJ1(-jumpVelocity);
+          }else if(game.getVelocityYJ1()<0){
+            game.setVelocityYJ1((long)Math.ceil(game.getVelocityYJ1()*gravity));
+          }
+          game.setyJ1(yJ-game.getVelocityYJ1());
+          if(game.getyJ1()>=solHeight){ // pas <= car on repere à l'envers
+            game.setyJ1(solHeight);
+            game.setVelocityYJ1(0);
+          }
+          if(game.getVelocityXJ1()!=0){
+            long x = xJ+game.getVelocityXJ1();
+            if(x<limitLeft[j]){
+              x=limitLeft[j];
+            }else if(x>limitRight[j]){
+              x=limitRight[j];
+            }
+            game.setxJ1(x);
+            game.setVelocityXJ1(0);
+          }
+        }else{
+
         }
-        game.setyJ1(yJ1-game.getVelocityYJ1());
-        if(game.getyJ1()>=solHeight){ // pas <= car on repere à l'envers
-          game.setyJ1(solHeight);
-          game.setVelocityYJ1(0);
-        }
-        if(game.getVelocityXJ1()!=0){
-          game.setxJ1(xJ1+game.getVelocityXJ1());
-          game.setVelocityXJ1(0);
-        }
+
         reply.setAllAttributesFromGame(game);
         break;
       default:
