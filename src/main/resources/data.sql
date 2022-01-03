@@ -22,12 +22,13 @@ INSERT INTO `objet` (`id_objet`, `nom_objet` ,`price`, `type_item`) VALUES
 (2, 'Net1', 150, 3),
 (3, 'BackGround1', 150, 2),
 (4, 'Skin1', 150, 1),
-(5, 'BallBlack', 5, 0),
+(5, 'BallPurple', 5, 0),
 (6, 'BallWhite', 10, 0),
 (7, 'BallBlue', 15, 0),
 (8, 'BallRed', 15, 0),
 (9, 'Skin2', 150, 1),
-(10, 'BackGround2', 1000, 2);
+(10, 'BackGround2', 1000, 2),
+(11, 'Lion', 500, 1);
 
 
 INSERT INTO `user_objets` (`user_id_user`, `objets_id_objet`) VALUES

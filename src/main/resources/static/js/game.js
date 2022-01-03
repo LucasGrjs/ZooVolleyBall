@@ -106,6 +106,10 @@ function fillRect(xJ1,yJ1,xJ2,yJ2){
 
     ctxoverlay.fillStyle = 'red';
     ctxoverlay.fillRect(xJ2, yJ2, 80, 70);
+
+    // ctxoverlay.drawImage(skin1, xJ1, yJ1, 80, 70);
+    // ctxoverlay.drawImage(skin2, xJ2, yJ2, 80, 70);
+    // todo draw selected skin of players
 }
 
 

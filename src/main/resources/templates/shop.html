@@ -49,7 +49,9 @@
                                 </tr>
                                 <tr th:each="objet: ${Objets}">
                                     <td th:text="${objet.getNomObjet()}"></td>
-                                    <td><img th:src="@{../static/images/16.png}"/></td>
+                                    <td>
+                                        <img th:src="@{'/images/'+${objet.getNomObjet()}+'.png'}"  style="width:64px;height:64px;" alt=""></img>
+                                    </td>
                                     <td th:text="${objet.getPrice()}"></td>
                                     <td>
                                         <form th:action="@{/shop}" method="post" style="max-width: 350px; margin: 0 auto;">
@@ -72,7 +74,9 @@
                                 <tbody>
                                 <tr th:each="objet: ${User.getObjets()}">
                                     <td th:text="${objet.getNomObjet()}"></td>
-                                    <td th:text="${objet.getNomObjet()}"></td>
+                                    <td>
+                                        <img th:src="@{'/images/'+${objet.getNomObjet()}+'.png'}"  style="width:64px;height:64px;" alt=""></img>
+                                    </td>
                                     <td th:text="${objet.getType_item().name()}"></td>
 
                                     <td th:if="${Selected.get(objet.getId_objet())}">
