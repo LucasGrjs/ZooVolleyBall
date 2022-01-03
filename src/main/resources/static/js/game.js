@@ -8,6 +8,11 @@ let contentGame;
 
 var gameIntervalObject;
 
+
+
+var skin1 = new Image();
+var skin2 = new Image();
+
 function randString(length) {
     var text = "";
     var alphanum = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -56,15 +61,16 @@ function connect() {
                 console.log("replyjoin function gameId : " + gameId);
 
                 stompClient.subscribe('/zvb/game/init/' + gameId, function (data) {
-                    console.log(JSON.parse(data.body));
+                    let replyActionMessage = JSON.parse(data.body);
+                    console.log("RAM init = "+replyActionMessage);
                 });
 
                 stompClient.subscribe('/user/game/move', function (data) {
                     // recup le json envoyé par le serveur et update l'affichage
                     let replyActionMessage = JSON.parse(data.body);
-                    console.log(replyActionMessage);
+                    console.log("RAM MOVE = "+replyActionMessage);
 
-                    fillRect(replyActionMessage.xJ1,replyActionMessage.yJ1,replyActionMessage.xJ2,replyActionMessage.yJ2);
+                    fillRect(replyActionMessage.xJ1,replyActionMessage.yJ1,replyActionMessage.xJ2,replyActionMessage.yJ2,replyActionMessage.skinJ1,replyActionMessage.skinJ2);
                     //updatePlayers(replyActionMessage);
                 });
 
@@ -91,24 +97,34 @@ function updatePlayers(replyActionMessage){
     let yJ1=replyActionMessage.yJ1;
     let xJ2=replyActionMessage.xJ2;
     let yJ2=replyActionMessage.yJ2;
+    let skinJ1=replyActionMessage.skinJ1;
+    let skinJ2=replyActionMessage.skinJ2;
+
     if(replyActionMessage.velocityYJ1 !=0){ // Ne faire ça que pour le joueur qui a sauté (sinon on le fait en double)
         setTimeout(function () {
                 stompClient.send("/zvb/game/jump", {}, JSON.stringify({'action': 'enSaut', 'gameId':gameId}));
         },20);
     }
-    fillRect(xJ1,yJ1,xJ2,yJ2);
+    fillRect(xJ1,yJ1,xJ2,yJ2,skinJ1,skinJ2);
 }
 
-function fillRect(xJ1,yJ1,xJ2,yJ2){
+function fillRect(xJ1,yJ1,xJ2,yJ2,skinJ1,skinJ2){
+
     ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);// effacer tout la balle avec
-    ctxoverlay.fillStyle = 'blue';
+    /*ctxoverlay.fillStyle = 'blue';
     ctxoverlay.fillRect(xJ1, yJ1, 80, 70);
 
     ctxoverlay.fillStyle = 'red';
-    ctxoverlay.fillRect(xJ2, yJ2, 80, 70);
+    ctxoverlay.fillRect(xJ2, yJ2, 80, 70);*/
 
-    // ctxoverlay.drawImage(skin1, xJ1, yJ1, 80, 70);
-    // ctxoverlay.drawImage(skin2, xJ2, yJ2, 80, 70);
+    skin1.src = skinJ1;
+    skin2.src = skinJ2;
+
+    console.log("XXXXXXXXXXXXXXXXXXXXXX J1 "+skinJ1);
+    console.log("XXXXXXXXXXXXXXXXXXXXXX J2 "+skinJ2);
+
+    ctxoverlay.drawImage(skin1, xJ1, yJ1, 80, 70);
+    ctxoverlay.drawImage(skin2, xJ2, yJ2, 80, 70);
     // todo draw selected skin of players
 }
 
@@ -130,7 +146,7 @@ document.addEventListener("DOMContentLoaded", function(_e) {
 
     let posb = 50;
 
-    fillRect(250,800,550,800);
+    fillRect(250,800,550,800,"../images/Lion.png","../images/Lion.png");
 
 
     var keysMap = {};

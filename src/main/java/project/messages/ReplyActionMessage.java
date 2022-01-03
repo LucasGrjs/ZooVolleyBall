@@ -21,6 +21,9 @@ public class ReplyActionMessage {
     long velocityXBall=0;
     long velocityYBall=0;
 
+    String skinJ1;
+    String skinJ2;
+
     public ReplyActionMessage()
     {
     }
@@ -29,7 +32,7 @@ public class ReplyActionMessage {
                               long xJ1, long yJ1, long xJ2, long yJ2,
                               long xBall, long yBall, long velocityXJ1,
                               long velocityYJ1, long velocityXJ2, long velocityYJ2,
-                              long velocityXBall, long velocityYBall) {
+                              long velocityXBall, long velocityYBall, String skinJ1, String skinJ2) {
         this.error = error;
         this.errorMessage = errorMessage;
         this.xJ1 = xJ1;
@@ -44,6 +47,8 @@ public class ReplyActionMessage {
         this.velocityYJ2 = velocityYJ2;
         this.velocityXBall = velocityXBall;
         this.velocityYBall = velocityYBall;
+        this.skinJ1 = skinJ1;
+        this.skinJ2 = skinJ2;
     }
 
     public ReplyActionMessage(boolean error, String errorMessage,Game game){
@@ -61,10 +66,12 @@ public class ReplyActionMessage {
         this.velocityYJ2 = game.getVelocityYJ2();
         this.velocityXBall = game.getVelocityXBall();
         this.velocityYBall = game.getVelocityYBall();
+        this.skinJ1 = game.getSkinJ1();
+        this.skinJ2 = game.getSkinJ2();
     }
 
     public ReplyActionMessage(boolean error, String errorMessage,
-                              long xJ1, long yJ1, long xJ2, long yJ2, long xBall, long yBall)
+                              long xJ1, long yJ1, long xJ2, long yJ2, long xBall, long yBall, String skinJ1, String skinJ2)
     {
         this.error = error;
         this.errorMessage = errorMessage;
@@ -74,6 +81,8 @@ public class ReplyActionMessage {
         this.yJ2=yJ2;
         this.xBall=xBall;
         this.yBall=yBall;
+        this.skinJ1=skinJ1;
+        this.skinJ2=skinJ2;
     }
 
     public void setAllAttributesFromGame(Game game){
@@ -89,6 +98,8 @@ public class ReplyActionMessage {
         this.velocityYJ2 = game.getVelocityYJ2();
         this.velocityXBall = game.getVelocityXBall();
         this.velocityYBall = game.getVelocityYBall();
+        this.skinJ1 = game.getSkinJ1();
+        this.skinJ2 = game.getSkinJ2();
     }
 
     public void setError(boolean error)
@@ -209,5 +220,19 @@ public class ReplyActionMessage {
 
     public void setVelocityYBall(long velocityYBall) {
         this.velocityYBall = velocityYBall;
+    }
+
+    public String getSkinJ1() {
+        return skinJ1;
+    }
+    public String getSkinJ2() {
+        return skinJ2;
+    }
+
+    public void setSkinJ1(String skinJ1) {
+        this.skinJ1 = skinJ1;
+    }
+    public void setSkinJ2(String skinJ2) {
+        this.skinJ2 = skinJ2;
     }
 }

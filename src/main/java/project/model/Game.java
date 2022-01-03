@@ -21,11 +21,15 @@ public class Game
   long velocityXBall=0;
   long velocityYBall=0;
 
+  String[] playersSkin = new String[2];
+
   public Game(long id, String playerId1, String playerId2)
   {
     this.id = id;
     this.playersId[0] = playerId1;
     this.playersId[1] = playerId2;
+    this.playersSkin[0] = "../images/Lion.png";
+    this.playersSkin[1] = "../images/Lion.png";
   }
 
   public long getId() {
@@ -70,6 +74,23 @@ public class Game
 
   public long getyJ2() {
     return yJ2;
+  }
+
+
+  public String getSkinJ1() {
+    return playersSkin[0];
+  }
+
+  public String getSkinJ2() {
+    return playersSkin[1];
+  }
+
+  public void setSkinJ1(String skinJ1) {
+    this.playersSkin[0] = skinJ1;
+  }
+
+  public void setSkinJ2(String skinJ2) {
+    this.playersSkin[1] = skinJ2;
   }
 
   public void setyJ2(long yJ2) {
@@ -145,6 +166,7 @@ public class Game
         return "Game{" +
                 "id=" + id +
                 ", playersId=" + Arrays.toString(playersId) +
+                ", playersSkin=" + Arrays.toString(playersSkin) +
                 '}';
     }
 }
