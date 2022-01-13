@@ -110,21 +110,21 @@ function updatePlayers(replyActionMessage){
 
 function fillRect(xJ1,yJ1,xJ2,yJ2,skinJ1,skinJ2){
 
-    /*ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);// effacer tout la balle avec
+    ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);// effacer tout la balle avec
     ctxoverlay.fillStyle = 'blue';
     ctxoverlay.fillRect(xJ1, yJ1, 80, 70);
 
     ctxoverlay.fillStyle = 'red';
-    ctxoverlay.fillRect(xJ2, yJ2, 80, 70);*/
+    ctxoverlay.fillRect(xJ2, yJ2, 80, 70);
 
-    skin1.src = skinJ1;
+    /*skin1.src = skinJ1;
     skin2.src = skinJ2;
 
     console.log("XXXXXXXXXXXXXXXXXXXXXX J1 "+skinJ1);
     console.log("XXXXXXXXXXXXXXXXXXXXXX J2 "+skinJ2);
 
     ctxoverlay.drawImage(skin1, xJ1, yJ1, 80, 70);
-    ctxoverlay.drawImage(skin2, xJ2, yJ2, 80, 70);
+    ctxoverlay.drawImage(skin2, xJ2, yJ2, 80, 70);*/
     // todo draw selected skin of players
 }
 

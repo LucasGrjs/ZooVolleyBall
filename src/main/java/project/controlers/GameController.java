@@ -97,7 +97,9 @@ public class GameController
         return;
     }
     reply.setAllAttributesFromGame(game);
-    simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/game/move", reply);
+    simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[0], "/game/move", reply);
+    simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[1], "/game/move", reply);
+    //simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/game/move", reply);
   }
 
   @MessageMapping("game/jump")
@@ -131,7 +133,9 @@ public class GameController
         return;
     }
     reply.setAllAttributesFromGame(game);
-    simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/game/jump", reply);
+    simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[0], "/game/move", reply);
+    simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[1], "/game/move", reply);
+    //simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/game/jump", reply);
   }
 
   private boolean gauche(int j,Game game){
