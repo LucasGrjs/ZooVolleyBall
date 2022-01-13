@@ -110,8 +110,8 @@ function updatePlayers(replyActionMessage){
 
 function fillRect(xJ1,yJ1,xJ2,yJ2,skinJ1,skinJ2){
 
-    ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);// effacer tout la balle avec
-    /*ctxoverlay.fillStyle = 'blue';
+    /*ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);// effacer tout la balle avec
+    ctxoverlay.fillStyle = 'blue';
     ctxoverlay.fillRect(xJ1, yJ1, 80, 70);
 
     ctxoverlay.fillStyle = 'red';

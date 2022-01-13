@@ -25,8 +25,8 @@ public class GameController
   @Autowired
   private SimpMessagingTemplate simpMessagingTemplate;
 
-  static long[] limitLeft={0,420};
-  static long[] limitRight={500,920};
+  static long[] limitLeft={0,500};
+  static long[] limitRight={420,920};
 
   static long solHeight=800;
   static long limitJumpHeight=600;
@@ -80,33 +80,11 @@ public class GameController
       return;
     }
     reply.setError(false);
-    if(game.isJ1(headerAccessor.getSessionId())){
-      long xJ1 = game.getxJ1();
-      if(action.equals("gauche")){
-        if(xJ1-10<limitLeftJ1) return;
-        game.setxJ1(xJ1-10);
-        reply.setxJ1(xJ1-10);
-      }else if(action.equals("droite")){
-        if(xJ1+10>limitRightJ1) return;
-        game.setxJ1(xJ1+10);
-        reply.setxJ1(xJ1+10);
-      }else{
-        System.out.println("SALE TRICHEUR");
-      }
-    }else{
-      long xJ2 = game.getxJ2();
-      if(action.equals("gauche")){
-        if(xJ2-10<limitLeftJ2) return;
-        game.setxJ2(xJ2-10);
-        reply.setxJ2(xJ2-10);
-      }else if(action.equals("droite")){
-        if(xJ2+10>limitRightJ2) return;
-        game.setxJ2(xJ2+10);
-        reply.setxJ2(xJ2+10);
-      }else{
-        System.out.println("SALE TRICHEUR");
-      }
-    int j = 0; // car joueur 1 et pour l'instant je sais pas comme savoir si c'est un mouvement de J1 ou J2
+
+    int j = 0;
+    if(!game.isJ1(headerAccessor.getSessionId())){
+      j=1;
+    }
     switch(action){
       case "gauche":
         if(!gauche(j,game)) return;
@@ -137,7 +115,10 @@ public class GameController
       return;
     }
     reply.setError(false);
-    int j = 0; // car joueur 1 et pour l'instant je sais pas comme savoir si c'est un mouvement de J1 ou J2
+    int j = 0;
+    if(!game.isJ1(headerAccessor.getSessionId())){
+      j=1;
+    }
     switch(action){
       case "saut":
         if(!saut(j,game)) return;
