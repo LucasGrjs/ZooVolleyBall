@@ -85,6 +85,10 @@ public class Game
     this.yBall = yBall;
   }
 
+  public boolean isJ1(String idJoueur){
+    return this.playersId[0]==idJoueur;
+  }
+
 
     @Override
     public String toString() {

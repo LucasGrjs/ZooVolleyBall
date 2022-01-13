@@ -30,8 +30,8 @@ public class GameController
   static long limitLeftJ1=0;
   static long limitRightJ1=420;
 
-  static long limitLeftJ2=420;
-  static long limitRightJ2=840;
+  static long limitLeftJ2=500;
+  static long limitRightJ2=920;
   
   @RequestMapping("game")
   public String game(Model model)
@@ -80,20 +80,34 @@ public class GameController
       return;
     }
     reply.setError(false);
-    long xJ1 = game.getxJ1();
-    if(action.equals("gauche")){
-      // comment savoir J1 ou J2 ?
-      if(xJ1-10<limitLeftJ1) return;
-      game.setxJ1(xJ1-10);
-      reply.setxJ1(xJ1-10);
-    }else if(action.equals("droite")){
-      // comment savoir J1 ou J2 ?
-      if(xJ1+10>limitRightJ1) return;
-      game.setxJ1(xJ1+10);
-      reply.setxJ1(xJ1+10);
+    if(game.isJ1(headerAccessor.getSessionId())){
+      long xJ1 = game.getxJ1();
+      if(action.equals("gauche")){
+        if(xJ1-10<limitLeftJ1) return;
+        game.setxJ1(xJ1-10);
+        reply.setxJ1(xJ1-10);
+      }else if(action.equals("droite")){
+        if(xJ1+10>limitRightJ1) return;
+        game.setxJ1(xJ1+10);
+        reply.setxJ1(xJ1+10);
+      }else{
+        System.out.println("SALE TRICHEUR");
+      }
     }else{
-      System.out.println("SALE TRICHEUR");
+      long xJ2 = game.getxJ2();
+      if(action.equals("gauche")){
+        if(xJ2-10<limitLeftJ2) return;
+        game.setxJ2(xJ2-10);
+        reply.setxJ2(xJ2-10);
+      }else if(action.equals("droite")){
+        if(xJ2+10>limitRightJ2) return;
+        game.setxJ2(xJ2+10);
+        reply.setxJ2(xJ2+10);
+      }else{
+        System.out.println("SALE TRICHEUR");
+      }
     }
+
     simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/game/move", reply);
   }
   
