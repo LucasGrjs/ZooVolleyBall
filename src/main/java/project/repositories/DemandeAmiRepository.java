@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface DemandeAmiRepository extends CrudRepository<DemandeAmi, Long> {
     List<DemandeAmi> findByReceveur(User receveur);
+    List<DemandeAmi> findByDemandeurAndReceveur(User demandeur, User receveur);
 }

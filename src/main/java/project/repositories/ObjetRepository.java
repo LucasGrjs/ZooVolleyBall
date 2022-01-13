@@ -10,5 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ObjetRepository extends CrudRepository<Objet, Long> {
-
+    @Query("select o from Objet o where o.id_objet = ?1")
+    Objet findById_objet(long Id_objet);
 }

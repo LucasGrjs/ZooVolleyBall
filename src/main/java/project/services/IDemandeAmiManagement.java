@@ -8,6 +8,7 @@ import java.util.List;
 public interface IDemandeAmiManagement {
     Iterable<DemandeAmi> getAllDemande();
     DemandeAmi addDemandeAmi(DemandeAmi demandeAmi);
+    void removeDemandeAmi(User receveur, User demandeur);
     void removeDemandeAmi(long id_demande);
     List<DemandeAmi> findByReceveur(User receveur);
 }
