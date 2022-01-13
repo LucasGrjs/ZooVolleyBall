@@ -133,8 +133,8 @@ public class GameController
         return;
     }
     reply.setAllAttributesFromGame(game);
-    simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[0], "/game/move", reply);
-    simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[1], "/game/move", reply);
+    simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[0], "/game/jump", reply);
+    simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[1], "/game/jump", reply);
     //simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/game/jump", reply);
   }
 
