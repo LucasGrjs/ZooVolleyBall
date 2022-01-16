@@ -21,7 +21,7 @@ public class ReplyActionMessage {
     long velocityXBall=0;
     long velocityYBall=0;
 
-    String idJoueurInAction="";
+    String idJoueurInAction=""; // id à set manuellement avec le setter car il sert uniquement pour la com ingame
 
     String skinJ1;
     String skinJ2;

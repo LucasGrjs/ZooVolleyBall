@@ -11,15 +11,15 @@ public class Game
   long yJ1=800;
   long xJ2=550;
   long yJ2=800;
-  long xBall=430;
-  long yBall=100;
+  long xBall=300;
+  long yBall=300;
 
   long velocityXJ1=0;
   long velocityYJ1=0;
   long velocityXJ2=0;
   long velocityYJ2=0;
   long velocityXBall=0;
-  long velocityYBall=0;
+  long velocityYBall=-20;
 
   String[] playersSkin = new String[2];
 
