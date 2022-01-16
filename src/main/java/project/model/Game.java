@@ -160,6 +160,7 @@ public class Game
   public void setVelocityYBall(long velocityYBall) {
     this.velocityYBall = velocityYBall;
   }
+
   public boolean isJ1(String idJoueur){
     return this.playersId[0]==idJoueur;
   }

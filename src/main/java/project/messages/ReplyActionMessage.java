@@ -21,6 +21,8 @@ public class ReplyActionMessage {
     long velocityXBall=0;
     long velocityYBall=0;
 
+    String idJoueurInAction="";
+
     String skinJ1;
     String skinJ2;
 
@@ -32,7 +34,7 @@ public class ReplyActionMessage {
                               long xJ1, long yJ1, long xJ2, long yJ2,
                               long xBall, long yBall, long velocityXJ1,
                               long velocityYJ1, long velocityXJ2, long velocityYJ2,
-                              long velocityXBall, long velocityYBall, String skinJ1, String skinJ2) {
+                              long velocityXBall, long velocityYBall, String idJoueurInAction, String skinJ1, String skinJ2) {
         this.error = error;
         this.errorMessage = errorMessage;
         this.xJ1 = xJ1;
@@ -47,6 +49,7 @@ public class ReplyActionMessage {
         this.velocityYJ2 = velocityYJ2;
         this.velocityXBall = velocityXBall;
         this.velocityYBall = velocityYBall;
+        this.idJoueurInAction = idJoueurInAction;
         this.skinJ1 = skinJ1;
         this.skinJ2 = skinJ2;
     }
@@ -221,6 +224,15 @@ public class ReplyActionMessage {
     public void setVelocityYBall(long velocityYBall) {
         this.velocityYBall = velocityYBall;
     }
+
+    public String getIdJoueurInAction() {
+        return idJoueurInAction;
+    }
+
+    public void setIdJoueurInAction(String idJoueurInAction) {
+        this.idJoueurInAction = idJoueurInAction;
+    }
+
 
     public String getSkinJ1() {
         return skinJ1;

@@ -97,6 +97,8 @@ public class GameController
         return;
     }
     reply.setAllAttributesFromGame(game);
+    reply.setIdJoueurInAction(headerAccessor.getSessionId());
+
     simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[0], "/game/move", reply);
     simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[1], "/game/move", reply);
     //simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/game/move", reply);
@@ -133,6 +135,12 @@ public class GameController
         return;
     }
     reply.setAllAttributesFromGame(game);
+    reply.setIdJoueurInAction(headerAccessor.getSessionId());
+
+    System.out.println("VELOCITY YJ1 :  "+game.getVelocityYJ1());
+    System.out.println("VELOCITY XJ1 :  "+game.getVelocityXJ1());
+    System.out.println("VELOCITY YJ2 :  "+game.getVelocityYJ2());
+    System.out.println("VELOCITY XJ2 :  "+game.getVelocityXJ2());
     simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[0], "/game/jump", reply);
     simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[1], "/game/jump", reply);
     //simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/game/jump", reply);

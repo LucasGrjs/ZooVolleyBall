@@ -100,16 +100,20 @@ function updatePlayers(replyActionMessage){
     let skinJ1=replyActionMessage.skinJ1;
     let skinJ2=replyActionMessage.skinJ2;
 
-    if(replyActionMessage.velocityYJ1 !=0){ // Ne faire ça que pour le joueur qui a sauté (sinon on le fait en double)
-        setTimeout(function () {
+
+    if(replyActionMessage.idJoueurInAction === sessionId){
+        if(replyActionMessage.velocityYJ1 !=0){ // Ne faire ça que pour le joueur qui a sauté (sinon on le fait en double)
+            setTimeout(function () {
                 stompClient.send("/zvb/game/jump", {}, JSON.stringify({'action': 'enSaut', 'gameId':gameId}));
-        },20);
+            },20);
+        }
+        if(replyActionMessage.velocityYJ2 !=0){ // Ne faire ça que pour le joueur qui a sauté (sinon on le fait en double)
+            setTimeout(function () {
+                stompClient.send("/zvb/game/jump", {}, JSON.stringify({'action': 'enSaut', 'gameId':gameId}));
+            },20);
+        }
     }
-    if(replyActionMessage.velocityYJ2 !=0){ // Ne faire ça que pour le joueur qui a sauté (sinon on le fait en double)
-        setTimeout(function () {
-            stompClient.send("/zvb/game/jump", {}, JSON.stringify({'action': 'enSaut', 'gameId':gameId}));
-        },20);
-    }
+
     fillRect(xJ1,yJ1,xJ2,yJ2,skinJ1,skinJ2);
 }
 
