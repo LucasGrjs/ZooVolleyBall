@@ -322,48 +322,108 @@ public class GameController
 
     //todo verif colision
     private void computeMoveBall(Game game){
+        int radiusBall = 48;
+
+        computeCollision(game);
+
+        game.setVelocityYBall(game.getVelocityYBall()+1); // gravity
+        if(game.getVelocityYBall()>30){
+            game.setVelocityYBall(30);
+        } else if(game.getVelocityYBall()< -30){
+            game.setVelocityYBall(-30);
+        }
+        if(game.getVelocityXBall()>20){
+            game.setVelocityXBall(20);
+        } else if(game.getVelocityXBall()<-20){
+            game.setVelocityXBall(-20);
+        }
+        game.setxBall(game.getxBall()+game.getVelocityXBall());
+        game.setyBall(game.getyBall()+game.getVelocityYBall());
+        System.out.println("velocity ball x : "+game.getVelocityXBall());
+        System.out.println("velocity ball y : "+game.getVelocityYBall());
+        System.out.println("coord ball : "+game.getxBall()+" - "+game.getyBall());
+
+
+        if (game.getxBall() < 25) {
+            game.setxBall(radiusBall);
+            game.setVelocityXBall(game.getVelocityXBall()*-1);
+        } else if(game.getxBall() > 1000-25) {
+            game.setxBall(1000-radiusBall);
+            game.setVelocityXBall(game.getVelocityXBall()*-1);
+        }
+        if (game.getyBall() < plafondHeight+radiusBall) {
+            game.setyBall(plafondHeight+radiusBall);
+            game.setVelocityYBall(game.getVelocityYBall()*-1);
+        } if(game.getyBall() > solHeight-radiusBall) {
+            game.setyBall(solHeight-radiusBall);
+            game.setVelocityYBall(game.getVelocityYBall()*-1);
+        }
+
+    }
+
+    private void computeCollision(Game game){
         long yBall=game.getyBall();
         long xBall=game.getxBall();
         long yJ1=game.getyJ1();
         long xJ1=game.getxJ1();
         long yJ2=game.getyJ2();
         long xJ2=game.getxJ2();
-        //if(yJ>=solHeight) {return false;}
+        long velocityXJ1 = game.getVelocityXJ1();
+        long velocityYJ1 = game.getVelocityYJ1();
+        long velocityXJ2 = game.getVelocityXJ2();
+        long velocityYJ2 = game.getVelocityYJ2();
+        long velocityXBall = game.getVelocityXBall();
+        long velocityYBall = game.getVelocityYBall();
 
-        // on detecte la collision
-        /*int dx = (int)(2 * (xBall -xJ1));
-        int dy = (int)(yBall - yJ1);
+        // on detecte la collision POUR J1
+        int dx = (int)(2 * (xBall -xJ1));
+        int dy = (int)(yBall - yJ1) ;
         int dist = (int)(Math.sqrt(dx * dx + dy * dy));
 
-        int dVelocityX = ball.velocityX - s.velocityX;
-        int dVelocityY = ball.velocityY - s.velocityY;
 
-        if(dy > 0 && dist < ball.radius + s.radius && dist > FUDGE) {
+        long dVelocityX = velocityXBall - velocityXJ1;
+        long dVelocityY = velocityYBall - velocityYJ1;
 
-        }*/
+        int radiusBall = 48;
+        int radiusJ = 70;
 
-        if(yBall<=plafondHeight){
-            game.setVelocityYBall(-jumpVelocity);
-        }else if(game.getVelocityYBall()<0){
-            game.setVelocityYBall((long)Math.ceil(game.getVelocityYBall()*gravity));
-        }
-        game.setyBall(yBall-game.getVelocityYBall());
-        if(game.getyBall()>=solHeight-48){ // pas <= car repere à l'envers
-            game.setyBall(solHeight-48);
-            game.setVelocityYBall(0);
-        }
-        if(game.getVelocityXBall()!=0){
-            long x = xBall+game.getVelocityXBall();
-            if(x<limitLeft[0]){
-                x=limitLeft[0];
-            }else if(x>limitRight[1]){
-                x=limitRight[1];
+        if(dy < 2*radiusBall && dist < radiusBall + radiusJ && dist > 5) {
+            game.setxBall(xJ1 + (((radiusJ + radiusBall) / 2) * dx / dist));
+            game.setyBall(yJ1 + ((radiusJ + radiusBall) * dy / dist));
+            long something = ((dx * dVelocityX + dy * dVelocityY)/dist);
+            //System.out.println("something : "+ something);
+            if(something<=0){
+                game.setVelocityXBall(velocityXBall+velocityXJ1-2*dx*something/dist);
+                game.setVelocityYBall((velocityYBall+velocityYJ1-2*dy*something/dist));
             }
-            game.setxBall(x);
-            game.setVelocityXBall(0);
+
+            System.out.println("COLLISION DETECT J1");
         }
 
-        System.out.println("XBALL : "+game.getxBall());
-        System.out.println("YBALL : "+game.getyBall());
+
+        // on detecte lacollision pour J2
+        dx = (int)(2 * (xBall -xJ2));
+        dy = (int)(yBall - yJ2) ;
+        dist = (int)(Math.sqrt(dx * dx + dy * dy));
+
+
+        dVelocityX = velocityXBall - velocityXJ2;
+        dVelocityY = velocityYBall - velocityYJ2;
+
+
+        if(dy < 2*radiusBall && dist < radiusBall + radiusJ && dist > 5) {
+            game.setxBall(xJ2 + (((radiusJ + radiusBall) / 2) * dx / dist));
+            game.setyBall(yJ2 + ((radiusJ + radiusBall) * dy / dist));
+            long something = ((dx * dVelocityX + dy * dVelocityY)/dist);
+            //System.out.println("something : "+ something);
+            if(something<=0){
+                game.setVelocityXBall(velocityXBall+velocityXJ2-2*dx*something/dist);
+                game.setVelocityYBall((velocityYBall+velocityYJ2-2*dy*something/dist));
+            }
+
+            System.out.println("COLLISION DETECT J2");
+        }
+
+
     }
 }
