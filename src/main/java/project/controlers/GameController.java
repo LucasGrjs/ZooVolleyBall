@@ -25,11 +25,11 @@ public class GameController
   @Autowired
   private SimpMessagingTemplate simpMessagingTemplate;
 
-  static long[] limitLeft={0,500};
-  static long[] limitRight={420,920};
+  static long[] limitLeft={40,540};
+  static long[] limitRight={460,960};
 
   static long plafondHeight = 0;
-  static long solHeight=800;
+  static long solHeight=870;
   static long limitJumpHeight=600;
   static long jumpVelocity=20;
   static double gravity= 1.2;
@@ -324,15 +324,32 @@ public class GameController
     private void computeMoveBall(Game game){
         long yBall=game.getyBall();
         long xBall=game.getxBall();
+        long yJ1=game.getyJ1();
+        long xJ1=game.getxJ1();
+        long yJ2=game.getyJ2();
+        long xJ2=game.getxJ2();
         //if(yJ>=solHeight) {return false;}
+
+        // on detecte la collision
+        /*int dx = (int)(2 * (xBall -xJ1));
+        int dy = (int)(yBall - yJ1);
+        int dist = (int)(Math.sqrt(dx * dx + dy * dy));
+
+        int dVelocityX = ball.velocityX - s.velocityX;
+        int dVelocityY = ball.velocityY - s.velocityY;
+
+        if(dy > 0 && dist < ball.radius + s.radius && dist > FUDGE) {
+
+        }*/
+
         if(yBall<=plafondHeight){
             game.setVelocityYBall(-jumpVelocity);
         }else if(game.getVelocityYBall()<0){
             game.setVelocityYBall((long)Math.ceil(game.getVelocityYBall()*gravity));
         }
         game.setyBall(yBall-game.getVelocityYBall());
-        if(game.getyBall()>=solHeight+24){ // pas <= car repere à l'envers
-            game.setyBall(solHeight+24);
+        if(game.getyBall()>=solHeight-48){ // pas <= car repere à l'envers
+            game.setyBall(solHeight-48);
             game.setVelocityYBall(0);
         }
         if(game.getVelocityXBall()!=0){

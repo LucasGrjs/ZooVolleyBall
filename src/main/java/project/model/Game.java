@@ -8,10 +8,10 @@ public class Game
   
   String[] playersId = new String[2];
   long xJ1=250;
-  long yJ1=800;
+  long yJ1=870;
   long xJ2=550;
-  long yJ2=800;
-  long xBall=300;
+  long yJ2=870;
+  long xBall=250;
   long yBall=300;
 
   long velocityXJ1=0;

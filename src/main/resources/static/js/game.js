@@ -151,10 +151,16 @@ function fillRect(xJ1,yJ1,xJ2,yJ2,xBall,yBall,skinJ1,skinJ2){
 
     ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);// effacer tout la balle avec
     ctxoverlay.fillStyle = 'blue';
-    ctxoverlay.fillRect(xJ1, yJ1, 80, 70);
+    //ctxoverlay.fillRect(xJ1, yJ1, 80, 70);
+    ctxoverlay.beginPath();
+    ctxoverlay.ellipse(xJ1, yJ1, 40, 70, 0, 0, Math.PI,true); // y est 2* plus petit que x car le canva est étiré
+    ctxoverlay.fill();
 
     ctxoverlay.fillStyle = 'red';
-    ctxoverlay.fillRect(xJ2, yJ2, 80, 70);
+    //ctxoverlay.fillRect(xJ2, yJ2, 80, 70);
+    ctxoverlay.beginPath();
+    ctxoverlay.ellipse(xJ2, yJ2, 40, 70, 0, 0, Math.PI,true); // y est 2* plus petit que x car le canva est étiré
+    ctxoverlay.fill();
 
     ctxoverlay.fillStyle = 'black';
     ctxoverlay.beginPath();
