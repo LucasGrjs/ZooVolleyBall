@@ -7,22 +7,38 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
           crossorigin="anonymous" />
+    <link rel="stylesheet" th:href="@{/css/main.css}" />
+    <script src="https://kit.fontawesome.com/3ab8c87f7b.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 
 <body>
     <main>
+        <div id="mySidebar" class="sidebar">
+
+            <img th:src="@{/images/zvb.png}" class="img-thumbnail logo" alt="zvb" width="200" height="200"></img>
+
+            <a th:href="findcasual"><i class="fas fa-volleyball-ball"></i> Casual </a>
+            <a href="game"><i class="fas fa-skull-crossbones"></i> Ranked </a>
+            <a href="chat"><i class="fas fa-comments"></i> Chat </a>
+            <a href="shop"><i class="fas fa-shopping-cart"></i> Magasin </a>
+
+            <a class="deco" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout </a>
+        </div>
+
         <div class="container">
             <div class="row">
-                <a th:href="findcasual" type="button" class="btn btn-primary btn-lg">Jouer</a>
-                <div class="col-sm-5">
-                    Profile
+                <div class="col-sm">
+                    <center> <i class="fas fa-user-alt"></i> Profile </center>
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Rank</th>
-                            <th scope="col">Win/Lose</th>
-                            <th scope="col">Winrate</th>
+                            <th scope="col"> <i class="fas fa-id-card"></i> Name</th>
+                            <th scope="col"> <i class="fas fa-chess-queen"></i> Rank</th>
+                            <th scope="col"> <i class="fas fa-trophy"></i> Ratio</th>
+                            <th scope="col"> <i class="fas fa-percentage"></i> Winrate</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -37,16 +53,36 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="col-sm">
+                    <table class="table">
+                        <center> <i class="fas fa-user-friends"></i> Amis <button class="btn"><i class="fa fa-plus btn btn-danger rounded" style="position: absolute; top: -10px;" data-toggle="modal" data-target="#popAdd"></i></button> </center>
+                        <thead>
+                            <tr>
+                                <th scope="col"> <i class="fas fa-id-card"></i> Name</th>
+                                <th scope="col"> <i class="fas fa-chess-queen"></i> Rank</th>
+                                <th scope="col"> <i class="fas fa-signal"></i> Online</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="friend: ${User.getAmis()}">
+                                <td th:text="${friend.getPseudo()}"></td>
+                                <td th:text="${friend.getMmr()}"></td>
+                                <td>False</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-                <div class="col-sm-4">
-                    History
+            <div class="row ">
+                <div class="col-sm">
+                    <center> <i class="fas fa-history"></i> History </center>
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">Result</th>
-                            <th scope="col">VS</th>
-                            <th scope="col">Score</th>
-                            <th scope="col">Time</th>
+                            <th scope="col"> <i class="fas fa-chart-bar"></i> Result</th>
+                            <th scope="col"> <i class="fas fa-crosshairs"></i> VS</th>
+                            <th scope="col"> <i class="fas fa-bullseye"></i> Score</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -54,39 +90,20 @@
                             <td th:text="${partie.getResult(User)}"></td>
                             <td th:text="${partie.getAdvName(User)}"></td>
                             <td th:text="${partie.getScore(User)}"></td>
-                            <td>Sérieux tu veux laisser le temps là ?</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="col-sm-2">
-                    <table class="table">
-                        Amis
-                        <thead>
-                        <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Rank</th>
-                            <th scope="col">Online</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="friend: ${User.getAmis()}">
-                            <td th:text="${friend.getPseudo()}"></td>
-                            <td th:text="${friend.getMmr()}"></td>
-                            <td>False</td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="col-sm-4">
-                Demande d'ami :
+
+            <div>
+                <i class="fas fa-envelope"></i> Demande d'ami :
                 <table class="table">
                     <thead>
-                    <tr>
-                        <th scope="col">Pseudo</th>
-                        <th scope="col"></th>
-                    </tr>
+                        <tr>
+                            <th scope="col">Pseudo</th>
+                            <th scope="col"></th>
+                        </tr>
                     </thead>
                     <tbody>
                     <tr th:each="demande: ${Demandes}">
@@ -101,20 +118,34 @@
                     </tbody>
                 </table>
             </div>
+
+            <!-- The Modal -->
+            <div class="modal" id="popAdd">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                            <p> <i class="fas fa-paper-plane"></i> Add friend </p>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <!-- Modal body -->
+                        <div>
+                            <form th:action="@{/main}" method="post" style="max-width: 350px; margin: 0 auto;">
+                                <label>
+                                    <input type="text" name="friend" class="form-control" required="required" placeholder="Friend's Name"/>
+                                </label>
+                                <input type="submit" value="Envoyer" class="btn btn-danger rounded"/>
+                            </form>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
     </main>
-    <h1>ZooVolleyBall</h1>
-    <form th:action="@{/main}" method="post" style="max-width: 350px; margin: 0 auto;">
-        <p>Ajouter un ami :</p>
-        <input type="text" name="friend" class="form-control" required="required"/>
-        <input type="submit" value="Envoyer" class="btn btn-primary" />
-    </form>
-    <ul>
-        <li><a href="chat"> Chat</a> </li>
-        <li><a href="game"> Game</a> </li>
-        <li><a href="/logout"> Se déconnecter</a> </li>
-        <li><a href="shop">Magasin</a> </li>
-    </ul>
 </body>
 
 
