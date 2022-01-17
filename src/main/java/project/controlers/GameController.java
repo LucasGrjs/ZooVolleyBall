@@ -94,7 +94,6 @@ public class GameController
         if(!droite(j,game)) return;
         break;
       default:
-        System.out.println("SALE TRICHEUR");
         return;
     }
     reply.setAllAttributesFromGame(game);
@@ -102,7 +101,6 @@ public class GameController
 
     simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[0], "/game/move", reply);
     simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[1], "/game/move", reply);
-    //simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/game/move", reply);
   }
 
   @MessageMapping("game/jump")
@@ -137,11 +135,6 @@ public class GameController
     }
     reply.setAllAttributesFromGame(game);
     reply.setIdJoueurInAction(headerAccessor.getSessionId());
-
-    System.out.println("VELOCITY YJ1 :  "+game.getVelocityYJ1());
-    System.out.println("VELOCITY XJ1 :  "+game.getVelocityXJ1());
-    System.out.println("VELOCITY YJ2 :  "+game.getVelocityYJ2());
-    System.out.println("VELOCITY XJ2 :  "+game.getVelocityXJ2());
     simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[0], "/game/jump", reply);
     simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[1], "/game/jump", reply);
     //simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/game/jump", reply);
@@ -230,7 +223,6 @@ public class GameController
             yJ=game.getyJ1();
             xJ=game.getxJ1();
             if(yJ!=solHeight){ // deja en train de sauter/retomber
-                System.out.println("saut rejeté car dans les airs");
                 return false;
             }
             game.setVelocityYJ1(jumpVelocity);
@@ -249,7 +241,6 @@ public class GameController
             yJ=game.getyJ2();
             xJ=game.getxJ2();
             if(yJ!=solHeight){ // deja en train de sauter/retomber
-                System.out.println("saut rejeté car dans les airs");
                 return false;
             }
             game.setVelocityYJ2(jumpVelocity);
@@ -339,10 +330,6 @@ public class GameController
         }
         game.setxBall(game.getxBall()+game.getVelocityXBall());
         game.setyBall(game.getyBall()+game.getVelocityYBall());
-        System.out.println("velocity ball x : "+game.getVelocityXBall());
-        System.out.println("velocity ball y : "+game.getVelocityYBall());
-        System.out.println("coord ball : "+game.getxBall()+" - "+game.getyBall());
-
 
         if (game.getxBall() < 25) {
             game.setxBall(radiusBall);
@@ -354,11 +341,16 @@ public class GameController
         if (game.getyBall() < plafondHeight+radiusBall) {
             game.setyBall(plafondHeight+radiusBall);
             game.setVelocityYBall(game.getVelocityYBall()*-1);
-        } if(game.getyBall() > solHeight-radiusBall) {
-            game.setyBall(solHeight-radiusBall);
-            game.setVelocityYBall(game.getVelocityYBall()*-1);
-        }
+        } if(game.getyBall() >= solHeight-radiusBall) {
+            if(game.getxBall()<500){
+                System.out.println("joueur 1 gagne le point");
 
+            }else{
+                System.out.println("joueur 2 gagne le point");
+            }
+//            game.setyBall(solHeight-radiusBall);
+//            game.setVelocityYBall(game.getVelocityYBall()*-1);
+        }
     }
 
     private void computeCollision(Game game){
@@ -380,7 +372,6 @@ public class GameController
         int dy = (int)(yBall - yJ1) ;
         int dist = (int)(Math.sqrt(dx * dx + dy * dy));
 
-
         long dVelocityX = velocityXBall - velocityXJ1;
         long dVelocityY = velocityYBall - velocityYJ1;
 
@@ -396,34 +387,24 @@ public class GameController
                 game.setVelocityXBall(velocityXBall+velocityXJ1-2*dx*something/dist);
                 game.setVelocityYBall((velocityYBall+velocityYJ1-2*dy*something/dist));
             }
-
-            System.out.println("COLLISION DETECT J1");
         }
-
 
         // on detecte lacollision pour J2
         dx = (int)(2 * (xBall -xJ2));
         dy = (int)(yBall - yJ2) ;
         dist = (int)(Math.sqrt(dx * dx + dy * dy));
 
-
         dVelocityX = velocityXBall - velocityXJ2;
         dVelocityY = velocityYBall - velocityYJ2;
-
 
         if(dy < 2*radiusBall && dist < radiusBall + radiusJ && dist > 5) {
             game.setxBall(xJ2 + (((radiusJ + radiusBall) / 2) * dx / dist));
             game.setyBall(yJ2 + ((radiusJ + radiusBall) * dy / dist));
             long something = ((dx * dVelocityX + dy * dVelocityY)/dist);
-            //System.out.println("something : "+ something);
             if(something<=0){
                 game.setVelocityXBall(velocityXBall+velocityXJ2-2*dx*something/dist);
                 game.setVelocityYBall((velocityYBall+velocityYJ2-2*dy*something/dist));
             }
-
-            System.out.println("COLLISION DETECT J2");
         }
-
-
     }
 }

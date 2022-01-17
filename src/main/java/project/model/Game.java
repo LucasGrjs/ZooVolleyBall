@@ -21,6 +21,9 @@ public class Game
   long velocityXBall=0;
   long velocityYBall=-20;
 
+  int roundWonJ1=0;
+  int roundWonJ2=0;
+
   String[] playersSkin = new String[2];
 
   public Game(long id, String playerId1, String playerId2)
@@ -159,6 +162,22 @@ public class Game
 
   public void setVelocityYBall(long velocityYBall) {
     this.velocityYBall = velocityYBall;
+  }
+
+  public int getRoundWonJ1() {
+    return roundWonJ1;
+  }
+
+  public void setRoundWonJ1(int roundWonJ1) {
+    this.roundWonJ1 = roundWonJ1;
+  }
+
+  public int getRoundWonJ2() {
+    return roundWonJ2;
+  }
+
+  public void setRoundWonJ2(int roundWonJ2) {
+    this.roundWonJ2 = roundWonJ2;
   }
 
   public boolean isJ1(String idJoueur){

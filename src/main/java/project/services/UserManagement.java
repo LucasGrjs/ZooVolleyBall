@@ -48,6 +48,10 @@ public class UserManagement implements IUserManagement {
         return userRep.findByEmail(email);
     }
 
+    public User findUserById(long id) {
+        return userRep.findById_user(id);
+    }
+
     @Override
     public User findUserByPseudo(String pseudo) {
         return userRep.findByPseudo(pseudo);
@@ -56,5 +60,16 @@ public class UserManagement implements IUserManagement {
     @Override
     public void removeUser(long id_user) {
         userRep.delete(id_user);
+    }
+
+    @Override
+    public void addWinOrLoseUser(long id,boolean isWinner){
+        User u = findUserById(id);
+        if(isWinner){
+            u.setNbrWin(u.getNbrWin()+1);
+        }else{
+            u.setNbrLoss(u.getNbrLoss()+1);
+        }
+        userRep.save(u);
     }
 }

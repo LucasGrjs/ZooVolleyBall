@@ -10,4 +10,5 @@ public interface IUserManagement {
     void removeUser(long id_user);
     User findUserByEmail(String email);
     User findUserByPseudo(String pseudo);
+    void addWinOrLoseUser(long id,boolean isWinner);
 }
