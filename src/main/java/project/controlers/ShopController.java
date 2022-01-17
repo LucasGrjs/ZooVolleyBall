@@ -119,9 +119,12 @@ public class ShopController {
             Objet item = objetRepository.findById_objet(Integer.parseInt(itemID));
             if(user.getCredit() >= item.getPrice())
             {
-                user.setCredit(user.getCredit() - item.getPrice());
-                user.addItem(item);
-                usersRepository.save(user);
+                if(!user.getObjets().contains(item))
+                {
+                    user.setCredit(user.getCredit() - item.getPrice());
+                    user.addItem(item);
+                    usersRepository.save(user);
+                }
             }else
             {
                 model.addAttribute("Error", "You don't have enough coins");

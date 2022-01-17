@@ -7,9 +7,27 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
           crossorigin="anonymous" />
+
+    <script src="https://kit.fontawesome.com/3ab8c87f7b.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/shop.css}" />
+    <!--<link rel="stylesheet" href="../static/css/shop.css" />-->
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-black bg-dark">
+        <a class="navbar-brand" href="#">
+            <img th:src="@{/images/zvb.png}" class="img-thumbnail logo" alt="zvb" width="50" height="50"></img>
+        </a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <a href="main"><i class="fas fa-home bar "></i> Home </a>
+            <a href="findcasual"><i class="fas fa-volleyball-ball bar "></i> Casual </a>
+            <a href="game"><i class="fas fa-skull-crossbones bar "></i> Ranked </a>
+            <a class="deco" href="/logout"><i class="fas fa-sign-out-alt bar "></i> Logout </a>
+        </div>
+    </nav>
     <table class="table">
         <tbody>
             <tr>
@@ -18,8 +36,8 @@
                         <table class="table table-striped table-dark table-bordered table-hover table-sm">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th scope="col" class="text-warning">User</th>
-                                    <th scope="col" class="text-warning">Wallet</th>
+                                    <th scope="col" class="text-warning"> <i class="fas fa-user"></i> User</th>
+                                    <th scope="col" class="text-warning"> <i class="fas fa-wallet"></i> Wallet</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -37,10 +55,10 @@
                             <table class="table thead-dark table-striped table-dark table-bordered table-hover table-sm">
                                 <thead>
                                 <tr>
-                                    <th scope="col" class="text-warning">Item</th>
-                                    <th scope="col" class="text-warning">Image</th>
-                                    <th scope="col" class="text-warning">Price</th>
-                                    <th scope="col" class="text-warning">Achat</th>
+                                    <th scope="col" class="text-warning"> <i class="fab fa-buffer"></i>Item</th>
+                                    <th scope="col" class="text-warning"> <i class="fas fa-image"></i> Image</th>
+                                    <th scope="col" class="text-warning"> <i class="fas fa-tags"></i> Price</th>
+                                    <th scope="col" class="text-warning"> <i class="fas fa-shopping-cart"></i> Buy</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -62,13 +80,15 @@
                                 </tr>
                                 </tbody>
                             </table>
+
+
                             <table class="table thead-dark table-striped table-dark table-bordered table-hover table-sm">
                                 <thead>
                                 <tr>
-                                    <th scope="col" class="text-warning">Owned Item</th>
-                                    <th scope="col" class="text-warning">Image</th>
-                                    <th scope="col" class="text-warning">Type</th>
-                                    <th scope="col" class="text-warning">Achat</th>
+                                    <th scope="col" class="text-warning"> <i class="fab fa-buffer"></i> Owned Item</th>
+                                    <th scope="col" class="text-warning"> <i class="fas fa-image"></i> Image</th>
+                                    <th scope="col" class="text-warning"> <i class="fas fa-filter"></i> Type</th>
+                                    <th scope="col" class="text-warning"> <i class="fas fa-check-circle"></i> Select</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -92,17 +112,6 @@
                                 </tr>
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                    <div class="container center bg-secondary border">
-                        <div class="form-row text-center">
-                            <div class="col-12 ">
-                                <ul class="list-inline">
-                                    <li class="list-inline-item pl-2"><a class="" href="chat"> Chat</a> </li>
-                                    <li class="list-inline-item pl-2"><a class="" href="main"> Game</a> </li>
-                                    <li class="list-inline-item pl-2"><a class="" href="logout"> Se déconnecter</a> </li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                 </th>

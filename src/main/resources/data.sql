@@ -26,13 +26,21 @@ INSERT INTO `objet` (`id_objet`, `nom_objet` ,`price`, `type_item`) VALUES
 (6, 'BallWhite', 10, 0),
 (7, 'BallBlue', 15, 0),
 (8, 'BallRed', 15, 0),
-(9, 'Skin2', 150, 1),
-(10, 'BackGround2', 1000, 2),
-(11, 'Lion', 500, 1);
+(9, 'BackGround2', 120, 2),
+(10, 'BackGround3', 1000, 2),
+(11, 'Lion', 500, 1),
+(12, 'Cat', 500, 1),
+(13, 'Chicken', 500, 1),
+(14, 'Fish', 500, 1),
+(15, 'Dino1', 500, 1),
+(16, 'Hippo', 500, 1),
+(17, 'Snail', 500, 1),
+(18, 'Zebre', 500, 1);
 
 
 INSERT INTO `user_objets` (`user_id_user`, `objets_id_objet`) VALUES
 (1, 1),
 (1, 2),
 (1, 3),
-(1, 4);
+(1, 4),
+(1, 15);

@@ -29,7 +29,7 @@ public class User {
     long idBackgroundSkin;
     long idSkin;
 
-    @OneToMany
+    @ManyToMany
     List<Objet> objets;
 
     @OneToMany
