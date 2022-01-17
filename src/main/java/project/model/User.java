@@ -3,7 +3,6 @@ package project.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,7 +10,7 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id_user;
+    long idUser;
     String pseudo;
     String pwd;
     @Column(name="email", unique=true)
@@ -53,12 +52,12 @@ public class User {
         this.roles= roles;
     }
 
-    public long getId_user() {
-        return id_user;
+    public long getIdUser() {
+        return idUser;
     }
 
-    public void setId_user(long id_user) {
-        this.id_user = id_user;
+    public void setIdUser(long id_user) {
+        this.idUser = id_user;
     }
 
     public String getPseudo() {

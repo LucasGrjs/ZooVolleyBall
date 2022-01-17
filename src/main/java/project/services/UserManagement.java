@@ -49,7 +49,7 @@ public class UserManagement implements IUserManagement {
     }
 
     public User findUserById(long id) {
-        return userRep.findById_user(id);
+        return userRep.findByIdUser(id);
     }
 
     @Override
