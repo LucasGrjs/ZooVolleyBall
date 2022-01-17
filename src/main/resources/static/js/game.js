@@ -89,6 +89,27 @@ function connect() {
                     updateBall(replyActionMessage);
                 });
 
+                stompClient.subscribe('/user/game/winRound', function (data) {
+                    let replyActionMessage = JSON.parse(data.body);
+                    console.log("RAM winRound = " + replyActionMessage);
+                    document.getElementById("score").innerText="Score : "+replyActionMessage.roundWonJ1+" - "+replyActionMessage.roundWonJ2;
+                    document.getElementById("congrats").innerText="Vous avez marqué un point.";
+                    updateBall(replyActionMessage);
+                });
+                stompClient.subscribe('/user/game/loseRound', function (data) {
+                    let replyActionMessage = JSON.parse(data.body);
+                    console.log("RAM loseRound = " + replyActionMessage);
+                    document.getElementById("score").innerText="Score : "+replyActionMessage.roundWonJ1+" - "+replyActionMessage.roundWonJ2;
+                    document.getElementById("congrats").innerText="L'adversaire a marqué un point.";
+                    updateBall(replyActionMessage);
+                });
+                stompClient.subscribe('/user/game/win', function (data) {
+                    let actionMessage = JSON.parse(data.body);
+                    console.log("AM win = " + actionMessage);
+                    document.getElementById("score").innerText=actionMessage.scoreFinal;
+                    document.getElementById("congrats").innerText="Partie terminé, le joueur "+actionMessage.action+" a gagné.";
+                    document.getElementById("btnMain").style.display="block";
+                });
 
                 stompClient.send("/zvb/game/connected/" + gameId, {}, {});
             }
@@ -153,13 +174,11 @@ function fillRect(xJ1, yJ1, xJ2, yJ2, xBall, yBall, skinJ1, skinJ2) {
 
     ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);// effacer tout la balle avec
     ctxoverlay.fillStyle = 'blue';
-    //ctxoverlay.fillRect(xJ1, yJ1, 80, 70);
     ctxoverlay.beginPath();
     ctxoverlay.ellipse(xJ1, yJ1, 40, 70, 0, 0, Math.PI, true); // y est 2* plus petit que x car le canva est étiré
     ctxoverlay.fill();
 
     ctxoverlay.fillStyle = 'red';
-    //ctxoverlay.fillRect(xJ2, yJ2, 80, 70);
     ctxoverlay.beginPath();
     ctxoverlay.ellipse(xJ2, yJ2, 40, 70, 0, 0, Math.PI, true); // y est 2* plus petit que x car le canva est étiré
     ctxoverlay.fill();

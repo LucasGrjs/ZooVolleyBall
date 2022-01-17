@@ -153,8 +153,40 @@ public class GameController
           return;
       }
       reply.setError(false);
-
+      int roundWonJ1 = game.getRoundWonJ1();
+      int roundWonJ2 = game.getRoundWonJ2();
       computeMoveBall(game);
+      if(game.getRoundWonJ1()==3){ // J1 a gagné
+          System.out.println("joueur 1 gagne la partie");
+          ActionMessage msg = new ActionMessage(game.getId(),"1");
+          msg.setScoreFinal("Score : "+game.getRoundWonJ1()+" - "+game.getRoundWonJ2());
+          simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[0], "/game/win", msg);
+          simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[1], "/game/win", msg);
+          return;
+      }else if(game.getRoundWonJ2()==3){ // J2 a gagné
+          System.out.println("joueur 2 gagne la partie");
+          ActionMessage msg = new ActionMessage(game.getId(),"2");
+          msg.setScoreFinal("Score : "+game.getRoundWonJ1()+" - "+game.getRoundWonJ2());
+          simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[0], "/game/win", msg);
+          simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[1], "/game/win", msg);
+          return;
+      }
+
+      if(game.getRoundWonJ1()>roundWonJ1){
+          game.setInitPos();
+          reply.setAllAttributesFromGame(game);
+          reply.setIdJoueurInAction(game.getPlayerSessionIds()[0]);
+          simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[0], "/game/winRound", reply);
+          simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[1], "/game/loseRound", reply);
+          return;
+      }else if(game.getRoundWonJ2()>roundWonJ2){
+          game.setInitPos();
+          reply.setAllAttributesFromGame(game);
+          reply.setIdJoueurInAction(game.getPlayerSessionIds()[0]);
+          simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[0], "/game/loseRound", reply);
+          simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[1], "/game/winRound", reply);
+          return;
+      }
 
       //envoi du premier game/move/ball de la ball à j1
       reply.setAllAttributesFromGame(game);
@@ -342,13 +374,16 @@ public class GameController
             game.setyBall(plafondHeight+radiusBall);
             game.setVelocityYBall(game.getVelocityYBall()*-1);
         } if(game.getyBall() >= solHeight-radiusBall) {
-            if(game.getxBall()<500){
-                System.out.println("joueur 2 gagne le point");
-            }else{
-                System.out.println("joueur 1 gagne le point");
-            }
             game.setyBall(solHeight-radiusBall);
             game.setVelocityYBall(0);
+            long[] playerIds = game.getPlayerIds();
+            if(game.getxBall()<500){
+                System.out.println("joueur 2 gagne le point");
+                game.setRoundWonJ2(game.getRoundWonJ2()+1);
+            }else{
+                System.out.println("joueur 1 gagne le point");
+                game.setRoundWonJ1(game.getRoundWonJ1()+1);
+            }
         }
     }
 

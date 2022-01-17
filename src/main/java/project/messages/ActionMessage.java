@@ -3,6 +3,7 @@ package project.messages;
 public class ActionMessage {
     String action;
     long gameId;
+    String scoreFinal;
 
     public ActionMessage()
     {
@@ -19,4 +20,12 @@ public class ActionMessage {
         return action;
     }
     public long getGameId(){return gameId;}
+
+    public String getScoreFinal() {
+        return scoreFinal;
+    }
+
+    public void setScoreFinal(String scoreFinal) {
+        this.scoreFinal = scoreFinal;
+    }
 }

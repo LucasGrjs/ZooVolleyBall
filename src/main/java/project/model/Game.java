@@ -7,7 +7,7 @@ public class Game
   long id;
   
   String[] playerSessionIds = new String[2];
-  long[] ids = new long[2];
+  long[] playerIds = new long[2];
 
   long xJ1=250;
   long yJ1=870;
@@ -33,8 +33,8 @@ public class Game
     this.id = id;
     this.playerSessionIds[0] = playerSessionId1;
     this.playerSessionIds[1] = playerSessionId2;
-    this.ids[0] = playerId1;
-    this.ids[1] = playerId2;
+    this.playerIds[0] = playerId1;
+    this.playerIds[1] = playerId2;
     this.playersSkin[0] = "../images/Lion.png";
     this.playersSkin[1] = "../images/Lion.png";
   }
@@ -184,18 +184,33 @@ public class Game
     this.roundWonJ2 = roundWonJ2;
   }
 
-  public long[] getIds() {
-    return ids;
+  public long[] getPlayerIds() {
+    return playerIds;
   }
 
-  public void setIds(long[] ids) {
-    this.ids = ids;
+  public void setPlayerIds(long[] playerIds) {
+    this.playerIds = playerIds;
   }
 
   public boolean isJ1(String idJoueur){
     return this.playerSessionIds[0]==idJoueur;
   }
 
+  public void setInitPos(){
+    xJ1=250;
+    yJ1=870;
+    xJ2=550;
+    yJ2=870;
+    velocityXBall=0;
+    velocityYBall=-20;
+    if((roundWonJ1+roundWonJ2)%2 == 0){
+      xBall=getxJ1();
+      yBall=300;
+    }else{
+      xBall=getxJ2();
+      yBall=300;
+    }
+  }
 
   @Override
     public String toString() {

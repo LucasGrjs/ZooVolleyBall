@@ -21,6 +21,9 @@ public class ReplyActionMessage {
     long velocityXBall=0;
     long velocityYBall=0;
 
+    int roundWonJ1=0;
+    int roundWonJ2=0;
+
     String idJoueurInAction=""; // id à set manuellement avec le setter car il sert uniquement pour la com ingame
 
     String skinJ1;
@@ -103,6 +106,8 @@ public class ReplyActionMessage {
         this.velocityYBall = game.getVelocityYBall();
         this.skinJ1 = game.getSkinJ1();
         this.skinJ2 = game.getSkinJ2();
+        this.roundWonJ1 = game.getRoundWonJ1();
+        this.roundWonJ2 = game.getRoundWonJ2();
     }
 
     public void setError(boolean error)
@@ -223,6 +228,22 @@ public class ReplyActionMessage {
 
     public void setVelocityYBall(long velocityYBall) {
         this.velocityYBall = velocityYBall;
+    }
+
+    public int getRoundWonJ1() {
+        return roundWonJ1;
+    }
+
+    public void setRoundWonJ1(int roundWonJ1) {
+        this.roundWonJ1 = roundWonJ1;
+    }
+
+    public int getRoundWonJ2() {
+        return roundWonJ2;
+    }
+
+    public void setRoundWonJ2(int roundWonJ2) {
+        this.roundWonJ2 = roundWonJ2;
     }
 
     public String getIdJoueurInAction() {
