@@ -28,10 +28,10 @@ public class GamesManagement implements IGamesManagement
   }
 
   @Override
-  public Game createNewGame(String playerId1, String playerId2)
+  public Game createNewGame(String playerSessionId1,Long playerId1, String playerSessionId2,Long playerId2)
   {
     long id=getNextId();
-    Game g = new Game(id, playerId1, playerId2);
+    Game g = new Game(id, playerSessionId1,playerId1, playerSessionId2,playerId2);
     games.put(id,g);
     return g;
   }

@@ -49,7 +49,7 @@ public class GameController
     
     ReplyJoinMessage reply = new ReplyJoinMessage();
 
-    gamesManagement.createNewGame("a","b"); // en attendant
+    //gamesManagement.createNewGame("a","b"); // en attendant
     Game game = gamesManagement.getGameById(gameId);
     
     if (game != null)
@@ -99,8 +99,8 @@ public class GameController
     reply.setAllAttributesFromGame(game);
     reply.setIdJoueurInAction(headerAccessor.getSessionId());
 
-    simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[0], "/game/move", reply);
-    simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[1], "/game/move", reply);
+    simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[0], "/game/move", reply);
+    simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[1], "/game/move", reply);
   }
 
   @MessageMapping("game/jump")
@@ -135,8 +135,8 @@ public class GameController
     }
     reply.setAllAttributesFromGame(game);
     reply.setIdJoueurInAction(headerAccessor.getSessionId());
-    simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[0], "/game/jump", reply);
-    simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[1], "/game/jump", reply);
+    simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[0], "/game/jump", reply);
+    simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[1], "/game/jump", reply);
     //simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/game/jump", reply);
   }
 
@@ -158,9 +158,9 @@ public class GameController
 
       //envoi du premier game/move/ball de la ball à j1
       reply.setAllAttributesFromGame(game);
-      reply.setIdJoueurInAction(game.getPlayersId()[0]);
-      simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[0], "/game/moveBall", reply);
-      simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[1], "/game/moveBall", reply);
+      reply.setIdJoueurInAction(game.getPlayerSessionIds()[0]);
+      simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[0], "/game/moveBall", reply);
+      simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[1], "/game/moveBall", reply);
   }
 
   @MessageMapping("game/connected/{gameId}")
@@ -176,12 +176,12 @@ public class GameController
     reply.setAllAttributesFromGame(game);
     simpMessagingTemplate.convertAndSendToUser(headerAccessor.getSessionId(), "/game/init", reply);
 
-    if(headerAccessor.getSessionId().equals(game.getPlayersId()[0])){
+    if(headerAccessor.getSessionId().equals(game.getPlayerSessionIds()[0])){
         computeMoveBall(game);
         reply.setAllAttributesFromGame(game);
-        reply.setIdJoueurInAction(game.getPlayersId()[0]);
-        simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[0], "/game/moveBall", reply);
-        simpMessagingTemplate.convertAndSendToUser(game.getPlayersId()[1], "/game/moveBall", reply);
+        reply.setIdJoueurInAction(game.getPlayerSessionIds()[0]);
+        simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[0], "/game/moveBall", reply);
+        simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[1], "/game/moveBall", reply);
     }
 
   }
@@ -343,13 +343,12 @@ public class GameController
             game.setVelocityYBall(game.getVelocityYBall()*-1);
         } if(game.getyBall() >= solHeight-radiusBall) {
             if(game.getxBall()<500){
-                System.out.println("joueur 1 gagne le point");
-
-            }else{
                 System.out.println("joueur 2 gagne le point");
+            }else{
+                System.out.println("joueur 1 gagne le point");
             }
-//            game.setyBall(solHeight-radiusBall);
-//            game.setVelocityYBall(game.getVelocityYBall()*-1);
+            game.setyBall(solHeight-radiusBall);
+            game.setVelocityYBall(0);
         }
     }
 

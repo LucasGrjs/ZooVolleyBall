@@ -6,7 +6,9 @@ public class Game
 {
   long id;
   
-  String[] playersId = new String[2];
+  String[] playerSessionIds = new String[2];
+  long[] ids = new long[2];
+
   long xJ1=250;
   long yJ1=870;
   long xJ2=550;
@@ -26,11 +28,13 @@ public class Game
 
   String[] playersSkin = new String[2];
 
-  public Game(long id, String playerId1, String playerId2)
+  public Game(long id, String playerSessionId1, Long playerId1, String playerSessionId2, Long playerId2)
   {
     this.id = id;
-    this.playersId[0] = playerId1;
-    this.playersId[1] = playerId2;
+    this.playerSessionIds[0] = playerSessionId1;
+    this.playerSessionIds[1] = playerSessionId2;
+    this.ids[0] = playerId1;
+    this.ids[1] = playerId2;
     this.playersSkin[0] = "../images/Lion.png";
     this.playersSkin[1] = "../images/Lion.png";
   }
@@ -43,12 +47,12 @@ public class Game
     this.id = id;
   }
 
-  public String[] getPlayersId() {
-    return playersId;
+  public String[] getPlayerSessionIds() {
+    return playerSessionIds;
   }
 
-  public void setPlayersId(String[] playersId) {
-    this.playersId = playersId;
+  public void setPlayerSessionIds(String[] playerSessionIds) {
+    this.playerSessionIds = playerSessionIds;
   }
 
   public long getxJ1() {
@@ -180,8 +184,16 @@ public class Game
     this.roundWonJ2 = roundWonJ2;
   }
 
+  public long[] getIds() {
+    return ids;
+  }
+
+  public void setIds(long[] ids) {
+    this.ids = ids;
+  }
+
   public boolean isJ1(String idJoueur){
-    return this.playersId[0]==idJoueur;
+    return this.playerSessionIds[0]==idJoueur;
   }
 
 
@@ -189,7 +201,7 @@ public class Game
     public String toString() {
         return "Game{" +
                 "id=" + id +
-                ", playersId=" + Arrays.toString(playersId) +
+                ", playersId=" + Arrays.toString(playerSessionIds) +
                 ", playersSkin=" + Arrays.toString(playersSkin) +
                 '}';
     }
