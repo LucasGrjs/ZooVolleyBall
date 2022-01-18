@@ -174,14 +174,14 @@ function fillRect(xJ1, yJ1, xJ2, yJ2, xBall, yBall) {
 
     ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);// effacer tout la balle avec
 
-    ctxoverlay.beginPath();
+/*    ctxoverlay.beginPath();
     ctxoverlay.ellipse(xJ1, yJ1, 40, 70, 0, 0, Math.PI, true); // y est 2* plus petit que x car le canva est étiré
     ctxoverlay.stroke();
 
 
     ctxoverlay.beginPath();
     ctxoverlay.ellipse(xJ2, yJ2, 40, 70, 0, 0, Math.PI, true); // y est 2* plus petit que x car le canva est étiré
-    ctxoverlay.stroke();
+    ctxoverlay.stroke();*/
 
 /*    ctxoverlay.beginPath();
     ctxoverlay.ellipse(xBall, yBall, 25, 48, 0, 0, 2 * Math.PI); // y est 2* plus petit que x car le canva est étiré
