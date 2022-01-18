@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import project.model.DemandeAmi;
+import project.model.DemandePartie;
 import project.model.User;
 import project.repositories.DemandeAmiRepository;
+import project.repositories.DemandePartieRepository;
 import project.repositories.UsersRepository;
 import project.services.IDemandeAmiManagement;
 
@@ -27,6 +29,9 @@ public class MainController {
 
     @Autowired
     DemandeAmiRepository demandeAmiRep;
+
+    @Autowired
+    DemandePartieRepository demandePartieRep;
 
     @RequestMapping("main")
     public String mainPage(@RequestParam(value="friend", required=false) String pseudo,
@@ -61,6 +66,9 @@ public class MainController {
 
         List<DemandeAmi> demandes = demandeAmiRep.findByReceveur(user);
         model.addAttribute("Demandes", demandes);
+
+        List<DemandePartie> demandesPartie = demandePartieRep.findByReceveur(user);
+        model.addAttribute("DemandesPartie", demandesPartie);
 
         return "main";
     }
