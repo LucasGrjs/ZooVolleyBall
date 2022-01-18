@@ -182,12 +182,28 @@ function fillRect(xJ1, yJ1, xJ2, yJ2, xBall, yBall) {
     ctxoverlay.beginPath();
     ctxoverlay.ellipse(xJ2, yJ2, 40, 70, 0, 0, Math.PI, true); // y est 2* plus petit que x car le canva est étiré
     ctxoverlay.stroke();*/
+    ctxoverlay.fillStyle='black';
+    ctxoverlay.fillRect(485,735,30,15); // 120 h
+    ctxoverlay.fillStyle='yellow';
+    ctxoverlay.fillRect(485,750,30,120);
 
-/*    ctxoverlay.beginPath();
-    ctxoverlay.ellipse(xBall, yBall, 25, 48, 0, 0, 2 * Math.PI); // y est 2* plus petit que x car le canva est étiré
-    ctxoverlay.stroke();*/
+    /*    ctxoverlay.beginPath();
+        ctxoverlay.ellipse(xBall, yBall, 25, 48, 0, 0, 2 * Math.PI); // y est 2* plus petit que x car le canva est étiré
+        ctxoverlay.fill();
 
+        ctxoverlay.fillStyle='black';
+        ctxoverlay.fillRect(485,735,30,15); // 120 h
+        ctxoverlay.fillStyle='yellow';
+        ctxoverlay.fillRect(485,750,30,120);
+        /*skin1.src = skinJ1;
+        skin2.src = skinJ2;
 
+        console.log("XXXXXXXXXXXXXXXXXXXXXX J1 "+skinJ1);
+        console.log("XXXXXXXXXXXXXXXXXXXXXX J2 "+skinJ2);
+
+        ctxoverlay.drawImage(skin1, xJ1, yJ1, 80, 70);
+        ctxoverlay.drawImage(skin2, xJ2, yJ2, 80, 70);*/
+    /*ctxoverlay.stroke();*/
     ctxoverlay.drawImage(skin1, xJ1-20, yJ1-70, 40 ,70);
     ctxoverlay.drawImage(skin2, xJ2-20, yJ2-70, 40 ,70);
     ctxoverlay.drawImage(skinBall, xBall-30, yBall-50, 60 ,100);

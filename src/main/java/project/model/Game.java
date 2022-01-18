@@ -30,6 +30,8 @@ public class Game
   int roundWonJ1=0;
   int roundWonJ2=0;
 
+  int lastPlayerTouche=0;
+
   public Game(long id, String playerSessionId1, Long playerId1, String playerSessionId2, Long playerId2)
   {
     this.id = id;
@@ -175,6 +177,14 @@ public class Game
     this.playerIds = playerIds;
   }
 
+  public int getLastPlayerTouche() {
+    return lastPlayerTouche;
+  }
+
+  public void setLastPlayerTouche(int lastPlayerTouche) {
+    this.lastPlayerTouche = lastPlayerTouche;
+  }
+
   public boolean isJ1(String idJoueur){
     return this.playerSessionIds[0]==idJoueur;
   }
@@ -184,14 +194,20 @@ public class Game
     yJ1=870;
     xJ2=550;
     yJ2=870;
+    velocityXJ1=0;
+    velocityYJ1=0;
+    velocityXJ2=0;
+    velocityYJ2=0;
     velocityXBall=0;
     velocityYBall=-20;
     if((roundWonJ1+roundWonJ2)%2 == 0){
       xBall=getxJ1();
       yBall=300;
+      lastPlayerTouche=0;
     }else{
       xBall=getxJ2();
       yBall=300;
+      lastPlayerTouche=1;
     }
   }
 
