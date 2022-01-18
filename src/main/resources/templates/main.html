@@ -110,7 +110,7 @@
                     <tr th:each="demande: ${Demandes}">
                         <td th:text="${demande.getDemandeur().getPseudo()}"></td>
                         <td>
-                        <form th:action="@{/main}" method="post" style="max-width: 350px; margin: 0 auto;">
+                        <form th:action="@{/demandeur}" method="post" style="max-width: 350px; margin: 0 auto;">
                             <input type="hidden" name='demandeur' th:value="${demande.getDemandeur().getPseudo()}"/>
                             <button type="submit" value="" class="btn btn-danger rounded">Accepter</button>
                         </form>
@@ -133,7 +133,7 @@
                     <tr th:each="demandesPartie: ${DemandesPartie}">
                         <td th:text="${demandesPartie.getDemandeur().getPseudo()}"></td>
                         <td>
-                            <form th:action="@{/main}" method="post" style="max-width: 350px; margin: 0 auto;">
+                            <form th:action="@{/demandeurPartie}" method="post" style="max-width: 350px; margin: 0 auto;">
                                 <input type="hidden" name='demandeur' th:value="${demandesPartie.getDemandeur().getPseudo()}"/>
                                 <button type="submit" value="" class="btn btn-danger rounded">Accepter</button>
                             </form>
@@ -154,7 +154,7 @@
                         </div>
                         <!-- Modal body -->
                         <div>
-                            <form th:action="@{/main}" method="post" style="max-width: 350px; margin: 0 auto;">
+                            <form th:action="@{/friend}" method="post" style="max-width: 350px; margin: 0 auto;">
                                 <label>
                                     <input type="text" name="friend" class="form-control" required="required" placeholder="Friend's Name"/>
                                 </label>
