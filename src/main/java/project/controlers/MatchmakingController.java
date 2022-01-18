@@ -75,7 +75,7 @@ public class MatchmakingController {
             System.out.println("RQT JOIN : ====== "+sessionID+ " | "+adversaireIDs);
 
             if(adversaireIDs != null){
-                Game newG = gamesManagement.createNewGame(sessionID,user.getIdUser(),adversaireIDs.getKey(),adversaireIDs.getValue());
+                Game newG = gamesManagement.createNewGame(sessionID,user.getIdUser(),adversaireIDs.getKey(),adversaireIDs.getValue(),false);
                 System.out.println(newG);
 
                 long gameId = newG.getId();
@@ -97,6 +97,61 @@ public class MatchmakingController {
                 simpMessagingTemplate.convertAndSendToUser(adversaireIDs.getKey(), "/findcasual/replyjoin", reply);
                 System.out.println("ENVOI REPONSE /findcasual/replyjoin : "+sessionID );
                 simpMessagingTemplate.convertAndSendToUser(sessionID, "/findcasual/replyjoin", reply);
+                System.out.println(reply);
+            }
+        }else{
+            System.out.println("ERROR: user is null");
+        }
+    }
+
+    @RequestMapping("findranked")
+    public String rechercheRanked(Model model) throws JsonProcessingException {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(userDetails);
+        User user = usersRepository.findByEmail(userDetails.getUsername());
+        ObjectMapper objectMapper = new ObjectMapper();
+        //String idStrUser = ""+user.getIdUser();
+//        System.out.println(user.getIdUser());
+//        model.put("idUser", user.getIdUser());
+        model.addAttribute("idUser",user.getIdUser());
+        model.addAttribute("isRanked","true");
+        return "game";
+    }
+
+    @MessageMapping("findranked/join")
+    public void joinRanked(SimpMessageHeaderAccessor headerAccessor, JoinMessage message) {
+
+        String sessionID = headerAccessor.getSessionId();
+
+        User user = usersRepository.findByIdUser(message.getIdUser());
+        if(user!=null){
+            Map.Entry<String,Long> adversaireIDs = matchmakingManagement.findRanked(sessionID,user.getIdUser());
+
+            System.out.println("RQT JOIN : ====== "+sessionID+ " | "+adversaireIDs);
+
+            if(adversaireIDs != null){
+                Game newG = gamesManagement.createNewGame(sessionID,user.getIdUser(),adversaireIDs.getKey(),adversaireIDs.getValue(),true);
+                System.out.println(newG);
+
+                long gameId = newG.getId();
+
+                ReplyJoinMessage reply = new ReplyJoinMessage();
+
+                if (newG != null)
+                {
+                    reply.setError(false);
+                    reply.setGameId(gameId);
+                }
+                else
+                {
+                    reply.setError(true);
+                    reply.setErrorMessage("Can't find game with id " + gameId);
+                }
+
+                System.out.println("ENVOI REPONSE /findranked/replyjoin : "+adversaireIDs );
+                simpMessagingTemplate.convertAndSendToUser(adversaireIDs.getKey(), "/findranked/replyjoin", reply);
+                System.out.println("ENVOI REPONSE /findranked/replyjoin : "+sessionID );
+                simpMessagingTemplate.convertAndSendToUser(sessionID, "/findranked/replyjoin", reply);
                 System.out.println(reply);
             }
         }else{

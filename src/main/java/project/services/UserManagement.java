@@ -72,4 +72,28 @@ public class UserManagement implements IUserManagement {
         }
         userRep.save(u);
     }
+
+    @Override
+    public void addRankedResult(long idWinner, long idLoser){
+        User us1 = findUserById(idWinner);
+        User us2 = findUserById(idLoser);
+
+
+        us1.setMmr(us1.getMmr()+10);
+
+        us1.setNbrWin(us1.getNbrWin()+1);
+        us2.setNbrLoss(us2.getNbrLoss()+1);
+
+        if(us2.getMmr() <= 10){
+            us2.setMmr(0);
+        }else{
+            us2.setMmr(us2.getMmr()-10);
+        }
+
+        us1.setCredit(us1.getCredit() + 100);
+
+        userRep.save(us1);
+        userRep.save(us2);
+
+    }
 }

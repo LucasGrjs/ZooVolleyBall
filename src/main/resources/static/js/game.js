@@ -37,9 +37,24 @@ function connect() {
         console.log('Connected: ' + frame);
         let idUser = document.getElementById("idUser").value;
         console.log('idUser: ' + idUser);
-        stompClient.send("/zvb/findcasual/join", {}, JSON.stringify({'gameId': 0, 'idUser': idUser}));
+        let isRanked = document.getElementById("isRanked").value;
+        if(isRanked != null && isRanked === "true"){
+            stompClient.send("/zvb/findranked/join", {}, JSON.stringify({'gameId': 0, 'idUser': idUser}));
+        }else{
+            stompClient.send("/zvb/findcasual/join", {}, JSON.stringify({'gameId': 0, 'idUser': idUser}));
+        }
 
         stompClient.subscribe('/user/findcasual/replyjoin', function (replyOutput) {
+            console.log("==================== Found match");
+            let replyActionMessage = JSON.parse(replyOutput.body);
+            console.log(replyActionMessage);
+            contentSearch.hidden = true;
+            contentGame.hidden = false;
+            stompClient.send("/zvb/game/join", {}, JSON.stringify({'gameId': replyActionMessage.gameId}));
+            console.log("==================== ");
+        });
+
+        stompClient.subscribe('/user/findranked/replyjoin', function (replyOutput) {
             console.log("==================== Found match");
             let replyActionMessage = JSON.parse(replyOutput.body);
             console.log(replyActionMessage);

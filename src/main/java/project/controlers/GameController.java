@@ -18,12 +18,16 @@ import project.model.User;
 import project.repositories.ObjetRepository;
 import project.repositories.UsersRepository;
 import project.services.IGamesManagement;
+import project.services.UserManagement;
 
 @Controller
 public class GameController
 {
   @Autowired
   private IGamesManagement gamesManagement;
+
+  @Autowired
+  private UserManagement userManagement;
 
   @Autowired
   private UsersRepository usersRepository;
@@ -183,6 +187,12 @@ public class GameController
           System.out.println("joueur 1 gagne la partie");
           ActionMessage msg = new ActionMessage(game.getId(),"1");
           msg.setScoreFinal("Score : "+game.getRoundWonJ1()+" - "+game.getRoundWonJ2());
+          if(game.isRanked()){
+              long p1Id = game.getPlayerIds()[0];
+              long p2Id = game.getPlayerIds()[1];
+
+              userManagement.addRankedResult(p1Id,p2Id);
+          }
           simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[0], "/game/win", msg);
           simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[1], "/game/win", msg);
           return;
@@ -190,6 +200,12 @@ public class GameController
           System.out.println("joueur 2 gagne la partie");
           ActionMessage msg = new ActionMessage(game.getId(),"2");
           msg.setScoreFinal("Score : "+game.getRoundWonJ1()+" - "+game.getRoundWonJ2());
+          if(game.isRanked()){
+              long p1Id = game.getPlayerIds()[1];
+              long p2Id = game.getPlayerIds()[0];
+
+              userManagement.addRankedResult(p1Id,p2Id);
+          }
           simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[0], "/game/win", msg);
           simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[1], "/game/win", msg);
           return;
@@ -508,4 +524,5 @@ public class GameController
             }
         }
     }
+
 }

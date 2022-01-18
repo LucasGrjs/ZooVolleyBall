@@ -33,7 +33,7 @@ public class SessionDisconnectedEventListener implements ApplicationListener<Ses
 
     System.out.println("SessionDisconnectEvent playerId : " + playerId);
     //template.convertAndSend("/ttt/gamestate/" + game.id, game);
-    if(!matchmakingManagement.quitCasual(playerId)){
+    if(!matchmakingManagement.quitQueue(playerId)){
       gamesManagement.quitGame(playerId);
     }
 

@@ -30,6 +30,8 @@ public class Game
   int roundWonJ1=0;
   int roundWonJ2=0;
 
+  boolean isRanked = false;
+
   int lastPlayerTouche=0;
 
   public Game(long id, String playerSessionId1, Long playerId1, String playerSessionId2, Long playerId2)
@@ -187,6 +189,14 @@ public class Game
 
   public boolean isJ1(String idJoueur){
     return this.playerSessionIds[0]==idJoueur;
+  }
+
+  public boolean isRanked() {
+    return isRanked;
+  }
+
+  public void setRanked(boolean ranked) {
+    isRanked = ranked;
   }
 
   public void setInitPos(){
