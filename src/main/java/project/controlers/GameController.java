@@ -25,8 +25,8 @@ public class GameController
   @Autowired
   private SimpMessagingTemplate simpMessagingTemplate;
 
-  static long[] limitLeft={40,540};
-  static long[] limitRight={460,960};
+  static long[] limitLeft={60,560};
+  static long[] limitRight={440,940};
 
   static long plafondHeight = 0;
   static long solHeight=870;
@@ -345,7 +345,7 @@ public class GameController
 
     //todo verif colision
     private void computeMoveBall(Game game){
-        int radiusBall = 48;
+        int radiusBall = 25;
 
         computeCollision(game);
 
@@ -373,8 +373,8 @@ public class GameController
         if (game.getyBall() < plafondHeight+radiusBall) {
             game.setyBall(plafondHeight+radiusBall);
             game.setVelocityYBall(game.getVelocityYBall()*-1);
-        } if(game.getyBall() >= solHeight-radiusBall) {
-            game.setyBall(solHeight-radiusBall);
+        } if(game.getyBall() >= solHeight-(radiusBall/2)) {
+            game.setyBall(solHeight-(radiusBall));
             game.setVelocityYBall(0);
             long[] playerIds = game.getPlayerIds();
             if(game.getxBall()<500){
@@ -409,11 +409,11 @@ public class GameController
         long dVelocityX = velocityXBall - velocityXJ1;
         long dVelocityY = velocityYBall - velocityYJ1;
 
-        int radiusBall = 48;
-        int radiusJ = 70;
+        int radiusBall = 25;
+        int radiusJ = 60;
 
         if(dy < 2*radiusBall && dist < radiusBall + radiusJ && dist > 5) {
-            game.setxBall(xJ1 + (((radiusJ + radiusBall) / 2) * dx / dist));
+            game.setxBall(xJ1 + (((radiusJ + radiusBall)) * dx / dist));
             game.setyBall(yJ1 + ((radiusJ + radiusBall) * dy / dist));
             long something = ((dx * dVelocityX + dy * dVelocityY)/dist);
             //System.out.println("something : "+ something);
@@ -431,8 +431,8 @@ public class GameController
         dVelocityX = velocityXBall - velocityXJ2;
         dVelocityY = velocityYBall - velocityYJ2;
 
-        if(dy < 2*radiusBall && dist < radiusBall + radiusJ && dist > 5) {
-            game.setxBall(xJ2 + (((radiusJ + radiusBall) / 2) * dx / dist));
+        if(dy < radiusBall && dist < radiusBall + radiusJ && dist > 5) {
+            game.setxBall(xJ2 + (((radiusJ + radiusBall)) * dx / dist));
             game.setyBall(yJ2 + ((radiusJ + radiusBall) * dy / dist));
             long something = ((dx * dVelocityX + dy * dVelocityY)/dist);
             if(something<=0){
