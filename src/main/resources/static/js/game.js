@@ -8,13 +8,12 @@ let contentGame;
 
 var gameIntervalObject;
 
-// var bpmn = JSON.parse(idJsonString);
-// var bpmnXML = bpmn;
-// var idUser = document.getElementById("idUser").value;
-// alert(idUser)
 
 var skin1 = new Image();
 var skin2 = new Image();
+var skinBall = new Image();
+var skinNet = new Image();
+var skinBackGround = new Image();
 
 function randString(length) {
     var text = "";
@@ -49,7 +48,6 @@ function connect() {
             contentGame.hidden = false;
             stompClient.send("/zvb/game/join", {}, JSON.stringify({'gameId': replyActionMessage.gameId}));
             console.log("==================== ");
-
         });
 
         stompClient.subscribe('/user/game/replyjoin', function (replyOutput) {
@@ -60,12 +58,21 @@ function connect() {
             } else {
                 gameId = JSON.parse(replyOutput.body).gameId;
 
+                skin1.src = JSON.parse(replyOutput.body).skinJ1;
+                skin2.src = JSON.parse(replyOutput.body).skinJ2;
+
+                skinBall.src = JSON.parse(replyOutput.body).skinBallJ1;
+                skinNet.src = JSON.parse(replyOutput.body).skinNetJ1;
+                skinBackGround.src = JSON.parse(replyOutput.body).skinBackGroundJ1;
+
+                document.getElementById("jeu").backgroundImage = "url("+skinBackGround.src+")";
+
                 console.log("replyjoin function gameId : " + gameId);
 
                 stompClient.subscribe('/user/game/init', function (data) {
                     let replyActionMessage = JSON.parse(data.body);
                     console.log("RAM init = " + replyActionMessage);
-                    fillRect(replyActionMessage.xJ1, replyActionMessage.yJ1, replyActionMessage.xJ2, replyActionMessage.yJ2, replyActionMessage.xBall, replyActionMessage.yBall, replyActionMessage.skinJ1, replyActionMessage.skinJ2);
+                    fillRect(replyActionMessage.xJ1, replyActionMessage.yJ1, replyActionMessage.xJ2, replyActionMessage.yJ2, replyActionMessage.xBall, replyActionMessage.yBall);
                 });
 
                 stompClient.subscribe('/user/game/move', function (data) {
@@ -73,7 +80,7 @@ function connect() {
                     let replyActionMessage = JSON.parse(data.body);
                     console.log("RAM MOVE = " + replyActionMessage);
 
-                    fillRect(replyActionMessage.xJ1, replyActionMessage.yJ1, replyActionMessage.xJ2, replyActionMessage.yJ2, replyActionMessage.xBall, replyActionMessage.yBall, replyActionMessage.skinJ1, replyActionMessage.skinJ2);
+                    fillRect(replyActionMessage.xJ1, replyActionMessage.yJ1, replyActionMessage.xJ2, replyActionMessage.yJ2, replyActionMessage.xBall, replyActionMessage.yBall);
                     //updatePlayers(replyActionMessage);
                 });
 
@@ -130,8 +137,6 @@ function updatePlayers(replyActionMessage) {
     let yJ2 = replyActionMessage.yJ2;
     let xBall = replyActionMessage.xBall;
     let yBall = replyActionMessage.yBall;
-    let skinJ1 = replyActionMessage.skinJ1;
-    let skinJ2 = replyActionMessage.skinJ2;
 
 
     if (replyActionMessage.idJoueurInAction === sessionId) {
@@ -147,7 +152,7 @@ function updatePlayers(replyActionMessage) {
         }
     }
 
-    fillRect(xJ1, yJ1, xJ2, yJ2, xBall, yBall, skinJ1, skinJ2);
+    fillRect(xJ1, yJ1, xJ2, yJ2, xBall, yBall);
 }
 
 function updateBall(replyActionMessage) {
@@ -157,8 +162,6 @@ function updateBall(replyActionMessage) {
     let yJ2 = replyActionMessage.yJ2;
     let xBall = replyActionMessage.xBall;
     let yBall = replyActionMessage.yBall;
-    let skinJ1 = replyActionMessage.skinJ1;
-    let skinJ2 = replyActionMessage.skinJ2;
 
 
     if (replyActionMessage.idJoueurInAction === sessionId) {
@@ -167,23 +170,28 @@ function updateBall(replyActionMessage) {
         }, 20);
     }
 
-    fillRect(xJ1, yJ1, xJ2, yJ2, xBall, yBall, skinJ1, skinJ2);
+    fillRect(xJ1, yJ1, xJ2, yJ2, xBall, yBall);
 }
 
-function fillRect(xJ1, yJ1, xJ2, yJ2, xBall, yBall, skinJ1, skinJ2) {
+function fillRect(xJ1, yJ1, xJ2, yJ2, xBall, yBall) {
+
+    console.log("skin1 = "+skin1.src);
+    console.log("skin2 = "+skin2.src);
+    console.log("skinBall = "+skinBall.src);
+    console.log("skinBackGroundJ1 = "+skinBackGround.src);
+    console.log("skinNet = "+skinNet.src);
 
     ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);// effacer tout la balle avec
-    ctxoverlay.fillStyle = 'blue';
+
     ctxoverlay.beginPath();
     ctxoverlay.ellipse(xJ1, yJ1, 60, 60, 0, 0, Math.PI, true); // y est 2* plus petit que x car le canva est étiré
     ctxoverlay.fill();
 
-    ctxoverlay.fillStyle = 'red';
+
     ctxoverlay.beginPath();
     ctxoverlay.ellipse(xJ2, yJ2, 60, 60, 0, 0, Math.PI, true); // y est 2* plus petit que x car le canva est étiré
     ctxoverlay.fill();
 
-    ctxoverlay.fillStyle = 'black';
     ctxoverlay.beginPath();
     ctxoverlay.ellipse(xBall, yBall, 25, 25, 0, 0, 2 * Math.PI); // y est 2* plus petit que x car le canva est étiré
     ctxoverlay.fill();
@@ -191,12 +199,10 @@ function fillRect(xJ1, yJ1, xJ2, yJ2, xBall, yBall, skinJ1, skinJ2) {
     /*skin1.src = skinJ1;
     skin2.src = skinJ2;
 
-    console.log("XXXXXXXXXXXXXXXXXXXXXX J1 "+skinJ1);
-    console.log("XXXXXXXXXXXXXXXXXXXXXX J2 "+skinJ2);
-
-    ctxoverlay.drawImage(skin1, xJ1, yJ1, 80, 70);
-    ctxoverlay.drawImage(skin2, xJ2, yJ2, 80, 70);*/
-    // todo draw selected skin of players
+    ctxoverlay.drawImage(skin1, xJ1-50, yJ1-50, 70 ,70);
+    ctxoverlay.drawImage(skin2, xJ2-50, yJ2-50, 70 ,70);
+    //ctxoverlay.drawImage(skinNet, 870, 500, 1000 ,1000);
+    ctxoverlay.drawImage(skinBall, xBall-50, yBall-50, 50 ,50);
 }
 
 
@@ -213,11 +219,6 @@ document.addEventListener("DOMContentLoaded", function (_e) {
     contentGame.hidden = true;
 
     connect();
-
-    let posb = 50;
-
-    fillRect(250, 800, 550, 800, "../images/Lion.png", "../images/Lion.png");
-
 
     var keysMap = {};
     window.addEventListener("keydown", function (e) {

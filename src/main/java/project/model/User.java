@@ -42,7 +42,10 @@ public class User {
     private List<Roles> roles;
 
     public User() {
-
+        setIdSkin(13L);
+        setIdBallSkin(5L);
+        setIdBackgroundSkin(3L);
+        setIdNetSkin(2L);
     }
 
     public User(String pseudo, String pwd, String email, List<Roles> roles) {
@@ -50,6 +53,11 @@ public class User {
         this.pwd = pwd;
         this.email = email;
         this.roles= roles;
+
+        setIdSkin(13L);
+        setIdBallSkin(5L);
+        setIdBackgroundSkin(3L);
+        setIdNetSkin(2L);
     }
 
     public long getIdUser() {

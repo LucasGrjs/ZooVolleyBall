@@ -24,7 +24,7 @@
             <a href="game"><i class="fas fa-skull-crossbones"></i> Ranked </a>
             <a href="chat"><i class="fas fa-comments"></i> Chat </a>
             <a href="shop"><i class="fas fa-shopping-cart"></i> Magasin </a>
-            <a href="lobby"> Lobby </a>
+            <a href="lobby"><i class="fas fa-user-friends"></i> Lobby </a>
 
             <a class="deco" href="/logout"><i class="fas fa-sign-out-alt"></i> Logout </a>
         </div>
@@ -110,10 +110,33 @@
                     <tr th:each="demande: ${Demandes}">
                         <td th:text="${demande.getDemandeur().getPseudo()}"></td>
                         <td>
-                        <form th:action="@{/main}" method="post" style="max-width: 350px; margin: 0 auto;">
+                        <form th:action="@{/demandeur}" method="post" style="max-width: 350px; margin: 0 auto;">
                             <input type="hidden" name='demandeur' th:value="${demande.getDemandeur().getPseudo()}"/>
                             <button type="submit" value="" class="btn btn-danger rounded">Accepter</button>
                         </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div>
+                <i class="fas fa-paper-plane"></i> Demande de partie :
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">Demande de</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="demandesPartie: ${DemandesPartie}">
+                        <td th:text="${demandesPartie.getDemandeur().getPseudo()}"></td>
+                        <td>
+                            <form th:action="@{/demandeurPartie}" method="post" style="max-width: 350px; margin: 0 auto;">
+                                <input type="hidden" name='demandeurPartie' th:value="${demandesPartie.getDemandeur().getPseudo()}"/>
+                                <button type="submit" value="" class="btn btn-danger rounded">Accepter</button>
+                            </form>
                         </td>
                     </tr>
                     </tbody>
@@ -131,7 +154,7 @@
                         </div>
                         <!-- Modal body -->
                         <div>
-                            <form th:action="@{/main}" method="post" style="max-width: 350px; margin: 0 auto;">
+                            <form th:action="@{/friend}" method="post" style="max-width: 350px; margin: 0 auto;">
                                 <label>
                                     <input type="text" name="friend" class="form-control" required="required" placeholder="Friend's Name"/>
                                 </label>

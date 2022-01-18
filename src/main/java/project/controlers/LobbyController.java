@@ -34,6 +34,7 @@ public class LobbyController {
         }
 
         demandePartieManagement.addDemandePartie(new DemandePartie(user, usersRepository.findByPseudo(adversaire)));
+        model.addAttribute("idUser",user.getIdUser());
         return "game";
     }
 }
