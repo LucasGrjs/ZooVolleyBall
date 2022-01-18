@@ -1,6 +1,5 @@
 package project.controlers;
 
-import groovy.util.logging.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +13,6 @@ import project.model.User;
 import project.repositories.DemandeAmiRepository;
 import project.repositories.UsersRepository;
 import project.services.IDemandeAmiManagement;
-import project.services.IUserManagement;
 
 import java.util.List;
 
@@ -67,7 +65,6 @@ public class MainController {
         return "main";
     }
 
-    // CELUI QUI SUPPRIME JE LUI BAISE SA MERE
     @GetMapping("/")
     public String index() {
         return "redirect:/main";
