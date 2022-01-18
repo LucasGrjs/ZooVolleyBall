@@ -12,7 +12,8 @@ var gameIntervalObject;
 var skin1 = new Image();
 var skin2 = new Image();
 var skinBall = new Image();
-skinBall.src = "../images/BallRed.png";
+var skinNet = new Image();
+var skinBackGround = new Image();
 
 function randString(length) {
     var text = "";
@@ -59,6 +60,12 @@ function connect() {
 
                 skin1.src = JSON.parse(replyOutput.body).skinJ1;
                 skin2.src = JSON.parse(replyOutput.body).skinJ2;
+
+                skinBall.src = JSON.parse(replyOutput.body).skinBallJ1;
+                skinNet.src = JSON.parse(replyOutput.body).skinNetJ1;
+                skinBackGround.src = JSON.parse(replyOutput.body).skinBackGroundJ1;
+
+                document.getElementById("jeu").backgroundImage = "url("+skinBackGround.src+")";
 
                 console.log("replyjoin function gameId : " + gameId);
 
@@ -171,6 +178,8 @@ function fillRect(xJ1, yJ1, xJ2, yJ2, xBall, yBall) {
     console.log("skin1 = "+skin1.src);
     console.log("skin2 = "+skin2.src);
     console.log("skinBall = "+skinBall.src);
+    console.log("skinBackGroundJ1 = "+skinBackGround.src);
+    console.log("skinNet = "+skinNet.src);
 
     ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);// effacer tout la balle avec
 
@@ -186,6 +195,7 @@ function fillRect(xJ1, yJ1, xJ2, yJ2, xBall, yBall) {
 
     ctxoverlay.drawImage(skin1, xJ1-50, yJ1-50, 70 ,70);
     ctxoverlay.drawImage(skin2, xJ2-50, yJ2-50, 70 ,70);
+    //ctxoverlay.drawImage(skinNet, 870, 500, 1000 ,1000);
     ctxoverlay.drawImage(skinBall, xBall-50, yBall-50, 50 ,50);
 }
 
