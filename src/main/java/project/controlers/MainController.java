@@ -15,6 +15,7 @@ import project.repositories.DemandeAmiRepository;
 import project.repositories.DemandePartieRepository;
 import project.repositories.UsersRepository;
 import project.services.IDemandeAmiManagement;
+import project.services.IDemandePartieManagement;
 
 import java.util.List;
 
@@ -28,6 +29,9 @@ public class MainController {
     private IDemandeAmiManagement demandeAmiManagement;
 
     @Autowired
+    private IDemandePartieManagement demandePartieManagement;
+
+    @Autowired
     DemandeAmiRepository demandeAmiRep;
 
     @Autowired
@@ -35,7 +39,9 @@ public class MainController {
 
     @RequestMapping("main")
     public String mainPage(@RequestParam(value="friend", required=false) String pseudo,
-                           @RequestParam(value="demandeur", required = false) String demandeur, Model model)
+                           @RequestParam(value="demandeur", required = false) String demandeur,
+                           @RequestParam(value = "demandeurPartie", required = false) String demandeurPartie,
+                           Model model)
     {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
@@ -54,6 +60,13 @@ public class MainController {
             dem.getAmis().add(user);
             usersRepository.save(user);
             usersRepository.save(dem);
+        }
+
+        if (demandeurPartie != null) {
+            User dem = usersRepository.findByPseudo(demandeurPartie);
+            demandePartieManagement.removeDemandePartie(dem, user);
+            model.addAttribute("idUser",user.getIdUser());
+            return "game";
         }
 
         model.addAttribute("User",user);
