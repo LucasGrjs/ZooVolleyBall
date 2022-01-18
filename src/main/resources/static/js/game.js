@@ -176,17 +176,21 @@ function fillRect(xJ1, yJ1, xJ2, yJ2, xBall, yBall) {
 
     ctxoverlay.beginPath();
     ctxoverlay.ellipse(xJ1, yJ1, 40, 70, 0, 0, Math.PI, true); // y est 2* plus petit que x car le canva est étiré
+    ctxoverlay.stroke();
 
 
     ctxoverlay.beginPath();
     ctxoverlay.ellipse(xJ2, yJ2, 40, 70, 0, 0, Math.PI, true); // y est 2* plus petit que x car le canva est étiré
+    ctxoverlay.stroke();
 
-    ctxoverlay.beginPath();
+/*    ctxoverlay.beginPath();
     ctxoverlay.ellipse(xBall, yBall, 25, 48, 0, 0, 2 * Math.PI); // y est 2* plus petit que x car le canva est étiré
+    ctxoverlay.stroke();*/
 
-    ctxoverlay.drawImage(skin1, xJ1-50, yJ1-50, 70 ,70);
-    ctxoverlay.drawImage(skin2, xJ2-50, yJ2-50, 70 ,70);
-    ctxoverlay.drawImage(skinBall, xBall-50, yBall-50, 50 ,50);
+
+    ctxoverlay.drawImage(skin1, xJ1-20, yJ1-70, 40 ,70);
+    ctxoverlay.drawImage(skin2, xJ2-20, yJ2-70, 40 ,70);
+    ctxoverlay.drawImage(skinBall, xBall-30, yBall-50, 60 ,100);
 }
 
 
