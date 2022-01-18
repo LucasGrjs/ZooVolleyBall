@@ -70,15 +70,6 @@ public class GameController
     reply.setSkinJ1( "../images/"+objetRepository.findById_objet(us1.getIdSkin()).getNomObjet()+".png");
     reply.setSkinJ2( "../images/"+objetRepository.findById_objet(us2.getIdSkin()).getNomObjet()+".png");
 
-    reply.setSkinBallJ1( "../images/"+objetRepository.findById_objet(us1.getIdBallSkin()).getNomObjet()+".png");
-    reply.setSkinBallJ2( "../images/"+objetRepository.findById_objet(us2.getIdBallSkin()).getNomObjet()+".png");
-
-    reply.setSkinBackGroundJ1( "../images/"+objetRepository.findById_objet(us1.getIdBackgroundSkin()).getNomObjet()+".png");
-    reply.setSkinBackGroundJ2( "../images/"+objetRepository.findById_objet(us2.getIdBackgroundSkin()).getNomObjet()+".png");
-
-    reply.setSkinNetJ1( "../images/"+objetRepository.findById_objet(us1.getIdNetSkin()).getNomObjet()+".png");
-    reply.setSkinNetJ2( "../images/"+objetRepository.findById_objet(us2.getIdNetSkin()).getNomObjet()+".png");
-
     System.out.println("Skin J1 ID= "+us1.getIdSkin());
     System.out.println("Skin J2 ID= "+us1.getIdSkin());
     System.out.println("Skin J1 = "+reply.getSkinJ1());
