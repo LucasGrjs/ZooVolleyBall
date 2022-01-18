@@ -20,14 +20,11 @@ INSERT INTO roles (ref_role, role, user_id_user) VALUES
 INSERT INTO `objet` (`id_objet`, `nom_objet` ,`price`, `type_item`) VALUES
 (1, 'BallBlack', 5, 0),
 (2, 'Net1', 150, 3),
-(3, 'BackGround1', 150, 2),
 (4, 'Lion', 150, 1),
 (5, 'BallPurple', 5, 0),
 (6, 'BallWhite', 10, 0),
 (7, 'BallBlue', 15, 0),
 (8, 'BallRed', 15, 0),
-(9, 'BackGround2', 120, 2),
-(10, 'BackGround3', 1000, 2),
 (11, 'Cat', 500, 1),
 (12, 'Chicken', 500, 1),
 (13, 'Fish', 500, 1),
@@ -38,10 +35,6 @@ INSERT INTO `objet` (`id_objet`, `nom_objet` ,`price`, `type_item`) VALUES
 
 
 INSERT INTO `user_objets` (`user_id_user`, `objets_id_objet`) VALUES
-(1, 1),
-(1, 2),
-(1, 3),
 (1, 4),
 (2, 4),
-(3, 4),
-(1, 15);
+(3, 4);
