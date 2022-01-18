@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+    <title>Lobby</title>
+</head>
+<body>
+<form th:action="@{/lobby}" method="post" style="max-width: 350px; margin: 0 auto;">
+    <h1>Création d'un lobby</h1>
+    <p>Quel ami en ligne souhaitez-vous inviter ?</p>
+    <select name="invite" id="invite">
+        <tr th:each="friend: ${User.getAmis()}">
+            <option th:name="invite" th:text="${friend.getPseudo()}" th:value="${friend.getPseudo()}"></option>
+        </tr>
+    </select>
+    <input type="submit" value="Inviter" class="btn btn-primary" />
+</form>
+</body>
+</html>
