@@ -14,6 +14,9 @@ import project.messages.JoinMessage;
 import project.messages.ReplyActionMessage;
 import project.messages.ReplyJoinMessage;
 import project.model.Game;
+import project.model.User;
+import project.repositories.ObjetRepository;
+import project.repositories.UsersRepository;
 import project.services.IGamesManagement;
 
 @Controller
@@ -21,7 +24,13 @@ public class GameController
 {
   @Autowired
   private IGamesManagement gamesManagement;
-  
+
+  @Autowired
+  private UsersRepository usersRepository;
+
+  @Autowired
+  private ObjetRepository objetRepository;
+
   @Autowired
   private SimpMessagingTemplate simpMessagingTemplate;
 
@@ -51,7 +60,21 @@ public class GameController
 
     //gamesManagement.createNewGame("a","b"); // en attendant
     Game game = gamesManagement.getGameById(gameId);
-    
+
+    long p1Id = game.getPlayerIds()[0];
+    long p2Id = game.getPlayerIds()[1];
+
+    User us1 = usersRepository.findByIdUser(p1Id);
+    User us2 = usersRepository.findByIdUser(p2Id);
+
+    reply.setSkinJ1( "../images/"+objetRepository.findById_objet(us1.getIdSkin()).getNomObjet()+".png");
+    reply.setSkinJ2( "../images/"+objetRepository.findById_objet(us2.getIdSkin()).getNomObjet()+".png");
+
+    System.out.println("Skin J1 ID= "+us1.getIdSkin());
+    System.out.println("Skin J2 ID= "+us1.getIdSkin());
+    System.out.println("Skin J1 = "+reply.getSkinJ1());
+    System.out.println("Skin J2 = "+reply.getSkinJ2());
+
     if (game != null)
     {
       reply.setError(false);

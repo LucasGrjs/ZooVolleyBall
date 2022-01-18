@@ -167,6 +167,7 @@ public class ShopController {
                 default:
                     break;
             }
+            System.out.println("ID SKIN STP MEC "+user.getIdSkin());
             usersRepository.save(user);
         }
 

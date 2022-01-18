@@ -27,7 +27,7 @@ public class UserManagement implements IUserManagement {
 
     @Override
     public User addUser(String pseudo, String pwd, String email) {
-        User user=new User();
+        User user = new User();
         user.setPseudo(pseudo);
         user.setPwd(pwd);
         user.setEmail(email);

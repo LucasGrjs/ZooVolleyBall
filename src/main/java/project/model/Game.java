@@ -1,5 +1,9 @@
 package project.model;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import project.repositories.ObjetRepository;
+import project.repositories.UsersRepository;
+
 import java.util.Arrays;
 
 public class Game
@@ -26,8 +30,6 @@ public class Game
   int roundWonJ1=0;
   int roundWonJ2=0;
 
-  String[] playersSkin = new String[2];
-
   public Game(long id, String playerSessionId1, Long playerId1, String playerSessionId2, Long playerId2)
   {
     this.id = id;
@@ -35,8 +37,6 @@ public class Game
     this.playerSessionIds[1] = playerSessionId2;
     this.playerIds[0] = playerId1;
     this.playerIds[1] = playerId2;
-    this.playersSkin[0] = "../images/Lion.png";
-    this.playersSkin[1] = "../images/Lion.png";
   }
 
   public long getId() {
@@ -81,23 +81,6 @@ public class Game
 
   public long getyJ2() {
     return yJ2;
-  }
-
-
-  public String getSkinJ1() {
-    return playersSkin[0];
-  }
-
-  public String getSkinJ2() {
-    return playersSkin[1];
-  }
-
-  public void setSkinJ1(String skinJ1) {
-    this.playersSkin[0] = skinJ1;
-  }
-
-  public void setSkinJ2(String skinJ2) {
-    this.playersSkin[1] = skinJ2;
   }
 
   public void setyJ2(long yJ2) {
@@ -217,7 +200,6 @@ public class Game
         return "Game{" +
                 "id=" + id +
                 ", playersId=" + Arrays.toString(playerSessionIds) +
-                ", playersSkin=" + Arrays.toString(playersSkin) +
                 '}';
     }
 }

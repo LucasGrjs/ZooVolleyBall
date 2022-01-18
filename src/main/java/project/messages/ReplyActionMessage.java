@@ -26,9 +26,6 @@ public class ReplyActionMessage {
 
     String idJoueurInAction=""; // id à set manuellement avec le setter car il sert uniquement pour la com ingame
 
-    String skinJ1;
-    String skinJ2;
-
     public ReplyActionMessage()
     {
     }
@@ -53,8 +50,6 @@ public class ReplyActionMessage {
         this.velocityXBall = velocityXBall;
         this.velocityYBall = velocityYBall;
         this.idJoueurInAction = idJoueurInAction;
-        this.skinJ1 = skinJ1;
-        this.skinJ2 = skinJ2;
     }
 
     public ReplyActionMessage(boolean error, String errorMessage,Game game){
@@ -72,8 +67,6 @@ public class ReplyActionMessage {
         this.velocityYJ2 = game.getVelocityYJ2();
         this.velocityXBall = game.getVelocityXBall();
         this.velocityYBall = game.getVelocityYBall();
-        this.skinJ1 = game.getSkinJ1();
-        this.skinJ2 = game.getSkinJ2();
     }
 
     public ReplyActionMessage(boolean error, String errorMessage,
@@ -87,8 +80,6 @@ public class ReplyActionMessage {
         this.yJ2=yJ2;
         this.xBall=xBall;
         this.yBall=yBall;
-        this.skinJ1=skinJ1;
-        this.skinJ2=skinJ2;
     }
 
     public void setAllAttributesFromGame(Game game){
@@ -104,8 +95,6 @@ public class ReplyActionMessage {
         this.velocityYJ2 = game.getVelocityYJ2();
         this.velocityXBall = game.getVelocityXBall();
         this.velocityYBall = game.getVelocityYBall();
-        this.skinJ1 = game.getSkinJ1();
-        this.skinJ2 = game.getSkinJ2();
         this.roundWonJ1 = game.getRoundWonJ1();
         this.roundWonJ2 = game.getRoundWonJ2();
     }
@@ -252,20 +241,5 @@ public class ReplyActionMessage {
 
     public void setIdJoueurInAction(String idJoueurInAction) {
         this.idJoueurInAction = idJoueurInAction;
-    }
-
-
-    public String getSkinJ1() {
-        return skinJ1;
-    }
-    public String getSkinJ2() {
-        return skinJ2;
-    }
-
-    public void setSkinJ1(String skinJ1) {
-        this.skinJ1 = skinJ1;
-    }
-    public void setSkinJ2(String skinJ2) {
-        this.skinJ2 = skinJ2;
     }
 }

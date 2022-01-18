@@ -18,6 +18,7 @@ import project.messages.JoinMessage;
 import project.messages.ReplyJoinMessage;
 import project.model.Game;
 import project.model.User;
+import project.repositories.ObjetRepository;
 import project.repositories.UsersRepository;
 import project.services.IGamesManagement;
 import project.services.IMatchmakingManagement;
@@ -46,6 +47,9 @@ public class MatchmakingController {
     @Autowired
     UsersRepository usersRepository;
 
+    @Autowired
+    ObjetRepository objetRepository;
+
     @RequestMapping("findcasual")
     public String rechercheCasual(Model model) throws JsonProcessingException {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -73,6 +77,7 @@ public class MatchmakingController {
             if(adversaireIDs != null){
                 Game newG = gamesManagement.createNewGame(sessionID,user.getIdUser(),adversaireIDs.getKey(),adversaireIDs.getValue());
                 System.out.println(newG);
+
                 long gameId = newG.getId();
 
                 ReplyJoinMessage reply = new ReplyJoinMessage();
