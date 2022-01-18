@@ -134,7 +134,7 @@
                         <td th:text="${demandesPartie.getDemandeur().getPseudo()}"></td>
                         <td>
                             <form th:action="@{/demandeurPartie}" method="post" style="max-width: 350px; margin: 0 auto;">
-                                <input type="hidden" name='demandeur' th:value="${demandesPartie.getDemandeur().getPseudo()}"/>
+                                <input type="hidden" name='demandeurPartie' th:value="${demandesPartie.getDemandeur().getPseudo()}"/>
                                 <button type="submit" value="" class="btn btn-danger rounded">Accepter</button>
                             </form>
                         </td>

@@ -1,4 +1,5 @@
 package project.controlers;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +16,9 @@ import project.repositories.DemandePartieRepository;
 import project.repositories.UsersRepository;
 import project.services.IDemandeAmiManagement;
 import project.services.IDemandePartieManagement;
+
 import java.util.List;
+
 @Controller
 public class MainController {
 
@@ -56,7 +59,6 @@ public class MainController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         User user = usersRepository.findByEmail(userDetails.getUsername());
-
         if (pseudo != null && !pseudo.equals(user.getPseudo()) && usersRepository.findByPseudo(pseudo) != null &&
                 !user.getAmis().contains(usersRepository.findByPseudo(pseudo))) {
             demandeAmiManagement.addDemandeAmi(new DemandeAmi(user, usersRepository.findByPseudo(pseudo)));
