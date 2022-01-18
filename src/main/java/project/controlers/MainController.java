@@ -37,12 +37,25 @@ public class MainController {
     @Autowired
     DemandePartieRepository demandePartieRep;
 
-    @RequestMapping("main")
-    public String mainPage(@RequestParam(value="friend", required=false) String pseudo,
-                           @RequestParam(value="demandeur", required = false) String demandeur,
-                           @RequestParam(value = "demandeurPartie", required = false) String demandeurPartie,
-                           Model model)
-    {
+    @RequestMapping("demandeur")
+    public String demandeur(@RequestParam(value="demandeur", required = true) String demandeur, Model model) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        User user = usersRepository.findByEmail(userDetails.getUsername());
+
+        User dem = usersRepository.findByPseudo(demandeur);
+        demandeAmiManagement.removeDemandeAmi(dem, user);
+        demandeAmiManagement.removeDemandeAmi(user, dem);
+        user.getAmis().add(dem);
+        dem.getAmis().add(user);
+        usersRepository.save(user);
+        usersRepository.save(dem);
+
+        return "redirect:/main";
+    }
+
+    @RequestMapping("friend")
+    public String friend(@RequestParam(value="friend", required=true) String pseudo, Model model) {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         User user = usersRepository.findByEmail(userDetails.getUsername());
@@ -52,22 +65,28 @@ public class MainController {
             demandeAmiManagement.addDemandeAmi(new DemandeAmi(user, usersRepository.findByPseudo(pseudo)));
         }
 
-        if (demandeur != null) {
-            User dem = usersRepository.findByPseudo(demandeur);
-            demandeAmiManagement.removeDemandeAmi(dem, user);
-            demandeAmiManagement.removeDemandeAmi(user, dem);
-            user.getAmis().add(dem);
-            dem.getAmis().add(user);
-            usersRepository.save(user);
-            usersRepository.save(dem);
-        }
+        return "redirect:/main";
+    }
 
-        if (demandeurPartie != null) {
-            User dem = usersRepository.findByPseudo(demandeurPartie);
-            demandePartieManagement.removeDemandePartie(dem, user);
-            model.addAttribute("idUser",user.getIdUser());
-            return "game";
-        }
+    @RequestMapping("demandeurPartie")
+    public String demandeurPartie(@RequestParam(value = "demandeurPartie", required = true) String demandeurPartie,
+                                  Model model) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        User user = usersRepository.findByEmail(userDetails.getUsername());
+
+        User dem = usersRepository.findByPseudo(demandeurPartie);
+        demandePartieManagement.removeDemandePartie(dem, user);
+        model.addAttribute("idUser",user.getIdUser());
+        return "game";
+    }
+
+    @RequestMapping("main")
+    public String mainPage(Model model)
+    {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+        User user = usersRepository.findByEmail(userDetails.getUsername());
 
         model.addAttribute("User",user);
         if(!(user.getNbrWin() + user.getNbrLoss() == 0))
