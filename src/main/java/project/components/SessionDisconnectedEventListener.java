@@ -8,12 +8,20 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
+import project.services.GamesManagement;
+import project.services.MatchmakingManagement;
 
 @Component
 public class SessionDisconnectedEventListener implements ApplicationListener<SessionDisconnectEvent>
 {
   @Autowired
   private SimpMessagingTemplate template;
+
+  @Autowired
+  private MatchmakingManagement matchmakingManagement;
+
+  @Autowired
+  private GamesManagement gamesManagement;
 
   private static final Logger logger = LoggerFactory.getLogger(SessionDisconnectedEventListener.class);
 
@@ -25,6 +33,10 @@ public class SessionDisconnectedEventListener implements ApplicationListener<Ses
 
     System.out.println("SessionDisconnectEvent playerId : " + playerId);
     //template.convertAndSend("/ttt/gamestate/" + game.id, game);
+    if(!matchmakingManagement.quitCasual(playerId)){
+      gamesManagement.quitGame(playerId);
+    }
+
   }
 
 }

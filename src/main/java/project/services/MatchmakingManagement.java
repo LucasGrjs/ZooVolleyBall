@@ -37,4 +37,17 @@ public class MatchmakingManagement implements IMatchmakingManagement {
         queueCasual.put(sessionID,playerId);
         return null;
     }
+
+    @Override
+    public boolean quitCasual(String sessionID){
+        Long id = queueCasual.get(sessionID);
+        if(id != null){
+            queueCasual.remove(sessionID);
+            return true;
+        }
+        return false;
+
+    }
+
+
 }
