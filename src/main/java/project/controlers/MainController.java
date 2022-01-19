@@ -89,7 +89,10 @@ public class MainController {
         model.addAttribute("User",user);
         if(!(user.getNbrWin() + user.getNbrLoss() == 0))
         {
-            model.addAttribute("Winrate",( user.getNbrWin()  / (user.getNbrWin()+ user.getNbrLoss())));
+            System.out.println(user.getNbrWin());
+            System.out.println(user.getNbrLoss());
+            System.out.println(((float)user.getNbrWin()  / (user.getNbrWin()+ user.getNbrLoss()))*100);
+            model.addAttribute("Winrate",(int)(((float)user.getNbrWin()  / (user.getNbrWin()+ user.getNbrLoss()))*100));
         }else{
             model.addAttribute("Winrate", "You need to play match");
         }

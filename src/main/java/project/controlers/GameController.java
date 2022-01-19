@@ -195,11 +195,8 @@ public class GameController
               long p1Id = game.getPlayerIds()[0];
               long p2Id = game.getPlayerIds()[1];
 
-              User u1 = usersRepository.findByIdUser(p1Id);
-              User u2 = usersRepository.findByIdUser(p2Id);
 
               userManagement.addRankedResult(p1Id,p2Id);
-              partieManagement.addPartie(u1,u2,game.getRoundWonJ1(),game.getRoundWonJ2());
           }
           simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[0], "/game/win", msg);
           simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[1], "/game/win", msg);
@@ -213,11 +210,7 @@ public class GameController
               long p2Id = game.getPlayerIds()[0];
 
 
-              User u1 = usersRepository.findByIdUser(p2Id);
-              User u2 = usersRepository.findByIdUser(p1Id);
-
               userManagement.addRankedResult(p1Id,p2Id);
-              partieManagement.addPartie(u1,u2,game.getRoundWonJ1(),game.getRoundWonJ2());
           }
           simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[0], "/game/win", msg);
           simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[1], "/game/win", msg);
