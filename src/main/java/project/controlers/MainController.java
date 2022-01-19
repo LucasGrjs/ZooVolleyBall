@@ -59,12 +59,10 @@ public class MainController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         User user = usersRepository.findByEmail(userDetails.getUsername());
-
         if (pseudo != null && !pseudo.equals(user.getPseudo()) && usersRepository.findByPseudo(pseudo) != null &&
                 !user.getAmis().contains(usersRepository.findByPseudo(pseudo))) {
             demandeAmiManagement.addDemandeAmi(new DemandeAmi(user, usersRepository.findByPseudo(pseudo)));
         }
-
         return "redirect:/main";
     }
 
@@ -95,13 +93,10 @@ public class MainController {
         }else{
             model.addAttribute("Winrate", "You need to play match");
         }
-
         List<DemandeAmi> demandes = demandeAmiRep.findByReceveur(user);
         model.addAttribute("Demandes", demandes);
-
         List<DemandePartie> demandesPartie = demandePartieRep.findByReceveur(user);
         model.addAttribute("DemandesPartie", demandesPartie);
-
         return "main";
     }
 

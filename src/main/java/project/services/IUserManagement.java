@@ -11,4 +11,5 @@ public interface IUserManagement {
     User findUserByEmail(String email);
     User findUserByPseudo(String pseudo);
     void addWinOrLoseUser(long id,boolean isWinner);
+    void addRankedResult(long winner, long loser);
 }

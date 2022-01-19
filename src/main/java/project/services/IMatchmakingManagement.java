@@ -8,5 +8,7 @@ public interface IMatchmakingManagement {
 
     Map.Entry<String,Long> findCasual(String sessionID,Long playerId);
 
-    boolean quitCasual(String sessionID);
+    Map.Entry<String,Long> findRanked(String sessionID,Long playerId);
+
+    boolean quitQueue(String sessionID);
 }

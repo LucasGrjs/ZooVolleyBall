@@ -1,15 +1,15 @@
 #contentGame {
     position: relative;
-    width: 1000px;
-    height: 1000px;
+    width: 1300px;
+    height: 700px;
     margin: 10px auto;
 }
     
 #contentGame canvas {
     cursor: none;
     border: solid 1px #000;
-    width: 1000px;
-    height: 1000px;
+    width: 1300px;
+    height: 700px;
     position: absolute;
     top: 0; 
     left: 0;
@@ -17,6 +17,6 @@
 
 #contentGame canvas#jeu {
     background-image: url('/images/fond.jpg');
-    background-size: 1000px 1000px;
+    background-size: 1300px 700px;
 	background-repeat: round;
 }

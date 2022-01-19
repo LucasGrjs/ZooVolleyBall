@@ -14,6 +14,8 @@ public class MatchmakingManagement implements IMatchmakingManagement {
 
     private Map<String,Long> queueCasual = new LinkedHashMap<>();
 
+    private Map<String,Long> queueRanked = new LinkedHashMap<>();
+
     @Autowired
     IUserManagement userManagement;
 
@@ -39,14 +41,37 @@ public class MatchmakingManagement implements IMatchmakingManagement {
     }
 
     @Override
-    public boolean quitCasual(String sessionID){
+    public boolean quitQueue(String sessionID){
         Long id = queueCasual.get(sessionID);
         if(id != null){
             queueCasual.remove(sessionID);
             return true;
         }
+        id = queueRanked.get(sessionID);
+        if (id != null) {
+            queueRanked.remove(sessionID);
+            return true;
+        }
         return false;
 
+    }
+
+    /*
+     * Retourne l'adversaire si dispo, null si on est mis en attente
+     * */
+    @Override
+    public Map.Entry<String,Long> findRanked(String sessionID,Long playerId) {
+
+        if(queueRanked.size() > 0){
+            Map.Entry<String,Long> last = null ;
+            for( Map.Entry<String,Long> entry : queueRanked.entrySet() ) last = entry;
+
+            queueRanked.remove(last.getKey());
+            return last;
+        }
+
+        queueRanked.put(sessionID,playerId);
+        return null;
     }
 
 

@@ -18,12 +18,16 @@ import project.model.User;
 import project.repositories.ObjetRepository;
 import project.repositories.UsersRepository;
 import project.services.IGamesManagement;
+import project.services.UserManagement;
 
 @Controller
 public class GameController
 {
   @Autowired
   private IGamesManagement gamesManagement;
+
+  @Autowired
+  private UserManagement userManagement;
 
   @Autowired
   private UsersRepository usersRepository;
@@ -34,8 +38,8 @@ public class GameController
   @Autowired
   private SimpMessagingTemplate simpMessagingTemplate;
 
-  static long[] limitLeft={60,560};
-  static long[] limitRight={440,940};
+  static long[] limitLeft={40,540};
+  static long[] limitRight={460,960};
 
   static long plafondHeight = 0;
   static long solHeight=870;
@@ -69,15 +73,6 @@ public class GameController
 
     reply.setSkinJ1( "../images/"+objetRepository.findById_objet(us1.getIdSkin()).getNomObjet()+".png");
     reply.setSkinJ2( "../images/"+objetRepository.findById_objet(us2.getIdSkin()).getNomObjet()+".png");
-
-    reply.setSkinBallJ1( "../images/"+objetRepository.findById_objet(us1.getIdBallSkin()).getNomObjet()+".png");
-    reply.setSkinBallJ2( "../images/"+objetRepository.findById_objet(us2.getIdBallSkin()).getNomObjet()+".png");
-
-    reply.setSkinBackGroundJ1( "../images/"+objetRepository.findById_objet(us1.getIdBackgroundSkin()).getNomObjet()+".png");
-    reply.setSkinBackGroundJ2( "../images/"+objetRepository.findById_objet(us2.getIdBackgroundSkin()).getNomObjet()+".png");
-
-    reply.setSkinNetJ1( "../images/"+objetRepository.findById_objet(us1.getIdNetSkin()).getNomObjet()+".png");
-    reply.setSkinNetJ2( "../images/"+objetRepository.findById_objet(us2.getIdNetSkin()).getNomObjet()+".png");
 
     System.out.println("Skin J1 ID= "+us1.getIdSkin());
     System.out.println("Skin J2 ID= "+us1.getIdSkin());
@@ -192,6 +187,12 @@ public class GameController
           System.out.println("joueur 1 gagne la partie");
           ActionMessage msg = new ActionMessage(game.getId(),"1");
           msg.setScoreFinal("Score : "+game.getRoundWonJ1()+" - "+game.getRoundWonJ2());
+          if(game.isRanked()){
+              long p1Id = game.getPlayerIds()[0];
+              long p2Id = game.getPlayerIds()[1];
+
+              userManagement.addRankedResult(p1Id,p2Id);
+          }
           simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[0], "/game/win", msg);
           simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[1], "/game/win", msg);
           return;
@@ -199,6 +200,12 @@ public class GameController
           System.out.println("joueur 2 gagne la partie");
           ActionMessage msg = new ActionMessage(game.getId(),"2");
           msg.setScoreFinal("Score : "+game.getRoundWonJ1()+" - "+game.getRoundWonJ2());
+          if(game.isRanked()){
+              long p1Id = game.getPlayerIds()[1];
+              long p2Id = game.getPlayerIds()[0];
+
+              userManagement.addRankedResult(p1Id,p2Id);
+          }
           simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[0], "/game/win", msg);
           simpMessagingTemplate.convertAndSendToUser(game.getPlayerSessionIds()[1], "/game/win", msg);
           return;
@@ -375,9 +382,8 @@ public class GameController
         }
     }
 
-    //todo verif colision
     private void computeMoveBall(Game game){
-        int radiusBall = 25;
+        int radiusBall = 48;
 
         computeCollision(game);
 
@@ -402,11 +408,54 @@ public class GameController
             game.setxBall(1000-radiusBall);
             game.setVelocityXBall(game.getVelocityXBall()*-1);
         }
+        if(game.getxBall()>485 && game.getxBall()<515 && game.getyBall()>=750){ // y 750
+            // bounces off top of net
+            System.out.println("velocityX ball :"+game.getVelocityXBall());
+            System.out.println("velocityY ball :"+game.getVelocityYBall());
+            System.out.println("coord ball : ["+game.getxBall()+","+game.getyBall()+"]");
+            if (game.getVelocityYBall() > 0 && game.getyBall() < 765) { // touche le dessus du filet et la balle
+                game.setVelocityYBall(game.getVelocityYBall()*-1); // ok
+                System.out.println("============ if 1 ===========");
+                game.setyBall(500); // ok
+            } else if (game.getxBall() < 500) { // touche le coté gauche du filet
+                System.out.println("============ if 2 ===========");
+                game.setxBall(485);
+                if(game.getVelocityXBall()>=0){ // la balle vient de gauche (J1)
+                    System.out.println("============ if 2.1 ===========");
+                    game.setVelocityXBall(-1*game.getVelocityXBall());
+                }else{ // la balle vient de droite (J2 ou J1) TRAVERSE ?
+                    System.out.println("============ if 2.2 : "+game.getLastPlayerTouche()+"===========");
+                    if(game.getLastPlayerTouche()==1){
+                        game.setxBall(515);
+                        game.setVelocityXBall(-1*game.getVelocityXBall());
+                    }else{
+                        game.setVelocityXBall(-1*game.getVelocityXBall());
+                    }
+                }
+                //game.setVelocityXBall(game.getVelocityXBall() >= 0 ? game.getVelocityXBall() : -game.getVelocityXBall());
+            } else { // touche le coté droit du filet
+                System.out.println("============ if 3 ===========");
+                game.setxBall(515);
+                if(game.getVelocityXBall()<=0){ // la balle vient de droite (J2)
+                    System.out.println("============ if 3.1 ===========");
+                    game.setVelocityXBall(-1*game.getVelocityXBall());
+                }else{ // la balle vient de gauche (J1 ou J2) TRAVERSE ?
+                    System.out.println("============ if 3.2 : "+game.getLastPlayerTouche()+"===========");
+                    if(game.getLastPlayerTouche()==0){
+                        game.setxBall(485);
+                        game.setVelocityXBall(-1*game.getVelocityXBall());
+                    }else{
+                        game.setVelocityXBall(-1*game.getVelocityXBall());
+                    }
+                }
+                //game.setVelocityXBall(game.getVelocityXBall() <= 0 ? game.getVelocityXBall() : -game.getVelocityXBall());
+            }
+        }
         if (game.getyBall() < plafondHeight+radiusBall) {
             game.setyBall(plafondHeight+radiusBall);
             game.setVelocityYBall(game.getVelocityYBall()*-1);
-        } if(game.getyBall() >= solHeight-(radiusBall/2)) {
-            game.setyBall(solHeight-(radiusBall));
+        } if(game.getyBall() >= solHeight-radiusBall) {
+            game.setyBall(solHeight-radiusBall);
             game.setVelocityYBall(0);
             long[] playerIds = game.getPlayerIds();
             if(game.getxBall()<500){
@@ -434,43 +483,46 @@ public class GameController
         long velocityYBall = game.getVelocityYBall();
 
         // on detecte la collision POUR J1
-        int dx = (int)(2 * (xBall -xJ1));
-        int dy = (int)(yBall - yJ1) ;
-        int dist = (int)(Math.sqrt(dx * dx + dy * dy));
+        double dx = (2 * (xBall -xJ1));
+        double dy = (yBall - yJ1) ;
+        double dist = (Math.sqrt(dx * dx + dy * dy));
 
         long dVelocityX = velocityXBall - velocityXJ1;
         long dVelocityY = velocityYBall - velocityYJ1;
 
-        int radiusBall = 25;
-        int radiusJ = 60;
+        int radiusBall = 48;
+        int radiusJ = 70;
 
         if(dy < 2*radiusBall && dist < radiusBall + radiusJ && dist > 5) {
-            game.setxBall(xJ1 + (((radiusJ + radiusBall)) * dx / dist));
-            game.setyBall(yJ1 + ((radiusJ + radiusBall) * dy / dist));
-            long something = ((dx * dVelocityX + dy * dVelocityY)/dist);
+            game.setLastPlayerTouche(0);
+            game.setxBall(xJ1 + (long)(((radiusJ + radiusBall) / 2) * dx / dist));
+            game.setyBall(yJ1 + (long)((radiusJ + radiusBall) * dy / dist));
+            long something = (long)((dx * dVelocityX + dy * dVelocityY)/dist);
             //System.out.println("something : "+ something);
             if(something<=0){
-                game.setVelocityXBall(velocityXBall+velocityXJ1-2*dx*something/dist);
-                game.setVelocityYBall((velocityYBall+velocityYJ1-2*dy*something/dist));
+                game.setVelocityXBall((long)(velocityXBall+velocityXJ1-2*dx*something/dist));
+                game.setVelocityYBall((long)(velocityYBall+velocityYJ1-2*dy*something/dist));
             }
         }
 
         // on detecte lacollision pour J2
-        dx = (int)(2 * (xBall -xJ2));
-        dy = (int)(yBall - yJ2) ;
-        dist = (int)(Math.sqrt(dx * dx + dy * dy));
+        dx = (2 * (xBall -xJ2));
+        dy = (yBall - yJ2) ;
+        dist = (Math.sqrt(dx * dx + dy * dy));
 
         dVelocityX = velocityXBall - velocityXJ2;
         dVelocityY = velocityYBall - velocityYJ2;
 
-        if(dy < radiusBall && dist < radiusBall + radiusJ && dist > 5) {
-            game.setxBall(xJ2 + (((radiusJ + radiusBall)) * dx / dist));
-            game.setyBall(yJ2 + ((radiusJ + radiusBall) * dy / dist));
-            long something = ((dx * dVelocityX + dy * dVelocityY)/dist);
+        if(dy < 2*radiusBall && dist < radiusBall + radiusJ && dist > 5) {
+            game.setLastPlayerTouche(1);
+            game.setxBall((long)(xJ2 + (((radiusJ + radiusBall) / 2) * dx / dist)));
+            game.setyBall((long)(yJ2 + ((radiusJ + radiusBall) * dy / dist)));
+            long something = (long)((dx * dVelocityX + dy * dVelocityY)/dist);
             if(something<=0){
-                game.setVelocityXBall(velocityXBall+velocityXJ2-2*dx*something/dist);
-                game.setVelocityYBall((velocityYBall+velocityYJ2-2*dy*something/dist));
+                game.setVelocityXBall((long)(velocityXBall+velocityXJ2-2*dx*something/dist));
+                game.setVelocityYBall((long)(velocityYBall+velocityYJ2-2*dy*something/dist));
             }
         }
     }
+
 }

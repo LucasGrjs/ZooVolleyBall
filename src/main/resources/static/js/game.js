@@ -12,8 +12,7 @@ var gameIntervalObject;
 var skin1 = new Image();
 var skin2 = new Image();
 var skinBall = new Image();
-var skinNet = new Image();
-var skinBackGround = new Image();
+skinBall.src = "../images/BallRed.png";
 
 function randString(length) {
     var text = "";
@@ -38,9 +37,24 @@ function connect() {
         console.log('Connected: ' + frame);
         let idUser = document.getElementById("idUser").value;
         console.log('idUser: ' + idUser);
-        stompClient.send("/zvb/findcasual/join", {}, JSON.stringify({'gameId': 0, 'idUser': idUser}));
+        let isRanked = document.getElementById("isRanked").value;
+        if(isRanked != null && isRanked === "true"){
+            stompClient.send("/zvb/findranked/join", {}, JSON.stringify({'gameId': 0, 'idUser': idUser}));
+        }else{
+            stompClient.send("/zvb/findcasual/join", {}, JSON.stringify({'gameId': 0, 'idUser': idUser}));
+        }
 
         stompClient.subscribe('/user/findcasual/replyjoin', function (replyOutput) {
+            console.log("==================== Found match");
+            let replyActionMessage = JSON.parse(replyOutput.body);
+            console.log(replyActionMessage);
+            contentSearch.hidden = true;
+            contentGame.hidden = false;
+            stompClient.send("/zvb/game/join", {}, JSON.stringify({'gameId': replyActionMessage.gameId}));
+            console.log("==================== ");
+        });
+
+        stompClient.subscribe('/user/findranked/replyjoin', function (replyOutput) {
             console.log("==================== Found match");
             let replyActionMessage = JSON.parse(replyOutput.body);
             console.log(replyActionMessage);
@@ -60,12 +74,6 @@ function connect() {
 
                 skin1.src = JSON.parse(replyOutput.body).skinJ1;
                 skin2.src = JSON.parse(replyOutput.body).skinJ2;
-
-                skinBall.src = JSON.parse(replyOutput.body).skinBallJ1;
-                skinNet.src = JSON.parse(replyOutput.body).skinNetJ1;
-                skinBackGround.src = JSON.parse(replyOutput.body).skinBackGroundJ1;
-
-                document.getElementById("jeu").backgroundImage = "url("+skinBackGround.src+")";
 
                 console.log("replyjoin function gameId : " + gameId);
 
@@ -178,31 +186,42 @@ function fillRect(xJ1, yJ1, xJ2, yJ2, xBall, yBall) {
     console.log("skin1 = "+skin1.src);
     console.log("skin2 = "+skin2.src);
     console.log("skinBall = "+skinBall.src);
-    console.log("skinBackGroundJ1 = "+skinBackGround.src);
-    console.log("skinNet = "+skinNet.src);
 
     ctxoverlay.clearRect(0, 0, overlay.width, overlay.height);// effacer tout la balle avec
 
-    ctxoverlay.beginPath();
-    ctxoverlay.ellipse(xJ1, yJ1, 60, 60, 0, 0, Math.PI, true); // y est 2* plus petit que x car le canva est étiré
-    ctxoverlay.fill();
+/*    ctxoverlay.beginPath();
+    ctxoverlay.ellipse(xJ1, yJ1, 40, 70, 0, 0, Math.PI, true); // y est 2* plus petit que x car le canva est étiré
+    ctxoverlay.stroke();
 
 
     ctxoverlay.beginPath();
-    ctxoverlay.ellipse(xJ2, yJ2, 60, 60, 0, 0, Math.PI, true); // y est 2* plus petit que x car le canva est étiré
-    ctxoverlay.fill();
+    ctxoverlay.ellipse(xJ2, yJ2, 40, 70, 0, 0, Math.PI, true); // y est 2* plus petit que x car le canva est étiré
+    ctxoverlay.stroke();*/
+    ctxoverlay.fillStyle='black';
+    ctxoverlay.fillRect(485,735,30,15); // 120 h
+    ctxoverlay.fillStyle='yellow';
+    ctxoverlay.fillRect(485,750,30,120);
 
-    ctxoverlay.beginPath();
-    ctxoverlay.ellipse(xBall, yBall, 25, 25, 0, 0, 2 * Math.PI); // y est 2* plus petit que x car le canva est étiré
-    ctxoverlay.fill();
+    /*    ctxoverlay.beginPath();
+        ctxoverlay.ellipse(xBall, yBall, 25, 48, 0, 0, 2 * Math.PI); // y est 2* plus petit que x car le canva est étiré
+        ctxoverlay.fill();
 
-    /*skin1.src = skinJ1;
-    skin2.src = skinJ2;
+        ctxoverlay.fillStyle='black';
+        ctxoverlay.fillRect(485,735,30,15); // 120 h
+        ctxoverlay.fillStyle='yellow';
+        ctxoverlay.fillRect(485,750,30,120);
+        /*skin1.src = skinJ1;
+        skin2.src = skinJ2;
 
-    ctxoverlay.drawImage(skin1, xJ1-50, yJ1-50, 70 ,70);
-    ctxoverlay.drawImage(skin2, xJ2-50, yJ2-50, 70 ,70);
-    //ctxoverlay.drawImage(skinNet, 870, 500, 1000 ,1000);
-    ctxoverlay.drawImage(skinBall, xBall-50, yBall-50, 50 ,50);
+        console.log("XXXXXXXXXXXXXXXXXXXXXX J1 "+skinJ1);
+        console.log("XXXXXXXXXXXXXXXXXXXXXX J2 "+skinJ2);
+
+        ctxoverlay.drawImage(skin1, xJ1, yJ1, 80, 70);
+        ctxoverlay.drawImage(skin2, xJ2, yJ2, 80, 70);*/
+    /*ctxoverlay.stroke();*/
+    ctxoverlay.drawImage(skin1, xJ1-20, yJ1-70, 40 ,70);
+    ctxoverlay.drawImage(skin2, xJ2-20, yJ2-70, 40 ,70);
+    ctxoverlay.drawImage(skinBall, xBall-30, yBall-50, 60 ,100);
 }
 
 
