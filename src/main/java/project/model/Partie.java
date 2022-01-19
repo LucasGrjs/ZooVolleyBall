@@ -27,6 +27,13 @@ public class Partie {
         this.user_2 = user_2;
     }
 
+    public Partie(User user_1, User user_2, int score1, int score2) {
+        this.user_1 = user_1;
+        this.user_2 = user_2;
+        this.score_us_1 = score1;
+        this.score_us_2 = score2;
+    }
+
     public long getId_partie() {
         return id_partie;
     }

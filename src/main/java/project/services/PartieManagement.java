@@ -24,6 +24,13 @@ public class PartieManagement implements IPartieManagement {
     }
 
     @Override
+    public Partie addPartie(User user_1, User user_2, int score_1, int score_2){
+        Partie partie = new Partie(user_1,user_2,score_1,score_2);
+        return partieRep.save(partie);
+    }
+
+
+    @Override
     public void removePartie(long id_partie) {
         partieRep.delete(id_partie);
     }
