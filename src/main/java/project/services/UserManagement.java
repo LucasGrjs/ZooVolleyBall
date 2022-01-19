@@ -90,7 +90,7 @@ public class UserManagement implements IUserManagement {
             us2.setMmr(us2.getMmr()-10);
         }
 
-        us1.setCredit(us1.getCredit() + 100);
+        us1.setCredit(us1.getCredit() + 5000);
 
         userRep.save(us1);
         userRep.save(us2);
