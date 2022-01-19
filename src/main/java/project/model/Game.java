@@ -15,7 +15,7 @@ public class Game
 
   long xJ1=250;
   long yJ1=870;
-  long xJ2=550;
+  long xJ2=750;
   long yJ2=870;
   long xBall=250;
   long yBall=300;
@@ -202,7 +202,7 @@ public class Game
   public void setInitPos(){
     xJ1=250;
     yJ1=870;
-    xJ2=550;
+    xJ2=750;
     yJ2=870;
     velocityXJ1=0;
     velocityYJ1=0;
